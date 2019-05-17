@@ -1,15 +1,21 @@
+using Car_rental.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using System.Threading.Tasks;
 
 namespace Car_rental
 {
     public class Startup
     {
+        /*
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -63,6 +69,50 @@ namespace Car_rental
                     spa.UseReactDevelopmentServer(npmScript: "start");
                 }
             });
+        }
+        */
+
+        /*
+            string Name;
+            public Startup()
+            {
+                Name = "Startup name";
+            }
+
+            public void ConfigureServices(IServiceCollection services)
+            {
+            }
+
+            public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+            {
+
+
+                app.Run(async (context) =>
+                {
+                    await context.Response.WriteAsync($"Hello, {Name}");
+                });
+            }
+        */
+
+        public Startup(IConfiguration configuration)
+        {
+            Configuration = configuration;
+        }
+
+        public IConfiguration Configuration { get; }
+
+        public void ConfigureServices(IServiceCollection services)
+        {
+            string connection = Configuration.GetConnectionString("DefaultConnection");
+
+            services.AddDbContext<CarsContext>(options =>
+                options.UseSqlServer(connection));
+            services.AddMvc();
+        }
+
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
+        {
+            
         }
     }
 }
