@@ -105,14 +105,24 @@ namespace Car_rental
         {
             string connection = Configuration.GetConnectionString("DefaultConnection");
 
-            services.AddDbContext<CarsContext>(options =>
+            services.AddDbContext<AutomobileContext>(options =>
                 options.UseSqlServer(connection));
             services.AddMvc();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
-            
+            app.UseMvc(routes =>
+            {
+                routes.MapRoute(
+                    name: "default",
+                    template: "{controller=CarController}/{action=Create}/{id?}");
+            });
+
+            app.Run(async (context) =>
+            {
+                await context.Response.WriteAsync($"Hello, world!");
+            });
         }
     }
 }

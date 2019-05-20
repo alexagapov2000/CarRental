@@ -1,25 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Car_rental.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace Car_rental.Controllers
 {
-    class CarsController : Controller
+    class AutomobileController : Controller
     {
-
-        private CarsContext db;
-        public CarsController(CarsContext context)
+        private AutomobileContext db;
+        public AutomobileController(AutomobileContext context)
         {
             db = context;
         }
 
         public async Task<IActionResult> Index()
         {
-            return View(await db.Cars.ToListAsync());
+            return View(await db.AutomobilesSet.ToListAsync());
         }
 
         public IActionResult Create()
@@ -28,9 +24,9 @@ namespace Car_rental.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(Car car)
+        public async Task<IActionResult> Create(Automobile car)
         {
-            db.Cars.Add(car);
+            db.AutomobilesSet.Add(car);
             await db.SaveChangesAsync();
             return RedirectToAction("Index");
         }
