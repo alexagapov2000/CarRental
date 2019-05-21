@@ -108,16 +108,18 @@ namespace Car_rental
             services.AddDbContext<AutomobileContext>(options =>
                 options.UseSqlServer(connection));
             services.AddMvc();
+            services.AddDirectoryBrowser();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
-            app.UseMvc(routes =>
-            {
-                routes.MapRoute(
-                    name: "default",
-                    template: "{controller=CarController}/{action=Create}/{id?}");
-            });
+            app.UseDirectoryBrowser();
+            //app.UseDefaultFiles();
+            app.UseStaticFiles();
+            
+
+            //app.UseAutenticationMiddleware();
+            //app.UseRoutingMiddleware();
 
             app.Run(async (context) =>
             {

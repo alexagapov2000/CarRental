@@ -19,6 +19,7 @@ namespace Car_rental
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
+                .UseWebRoot("ClientApp/public")
                 .UseStartup<Startup>();
     }
 }

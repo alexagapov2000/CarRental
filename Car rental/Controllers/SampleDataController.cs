@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Car_rental.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api")]
     public class SampleDataController : Controller
     {
         private static string[] Summaries = new[]
@@ -14,7 +14,7 @@ namespace Car_rental.Controllers
             "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
         };
 
-        [HttpGet("[action]")]
+        [HttpGet("weather")]
         public IEnumerable<WeatherForecast> WeatherForecasts()
         {
             var rng = new Random();
