@@ -9,6 +9,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using System.Collections.Generic;
+using System.IO;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace Car_rental
@@ -105,12 +108,13 @@ namespace Car_rental
         {
             string connection = Configuration.GetConnectionString("DefaultConnection");
 
-            services.AddDbContext<AutomobileContext>(options =>
+            services.AddDbContext<DBContext>(options =>
                 options.UseSqlServer(connection));
             services.AddMvc();
             services.AddDirectoryBrowser();
         }
 
+        /*
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
             app.UseDirectoryBrowser();
@@ -125,6 +129,28 @@ namespace Car_rental
             {
                 await context.Response.WriteAsync($"Hello, world!");
             });
+        }рпор
+        */
+
+        public void Configure(IApplicationBuilder app)
+        {
+            app.UseOwin(pipeline =>
+            {
+                pipeline(next => SendResponseAsync);
+            });
+        }
+
+        public Task SendResponseAsync(IDictionary<string, object> environment)
+        {
+            // определяем ответ
+            string responseText = "Hello ASP.NET Core";
+            // кодируем его в массив байтов
+            byte[] responseBytes = Encoding.UTF8.GetBytes(responseText);
+
+            // получаем поток ответа
+            var responseStream = (Stream)environment["owin.ResponseBody"];
+            // отправка ответа
+            return responseStream.WriteAsync(responseBytes, 0, responseBytes.Length);
         }
     }
 }

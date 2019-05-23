@@ -6,15 +6,13 @@ using System.Threading.Tasks;
 
 namespace Car_rental.Models
 {
-    public class Automobile
+    public class Manufacturer
     {
         [Key]
         public int Id { get; set; }
 
         public string Name { get; set; }
 
-        public int FuelConsumption { get; set; }
-
-
+        public ICollection<Automobile> Automobiles { get; set; }
     }
 }
