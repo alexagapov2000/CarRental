@@ -1,0 +1,6 @@
+﻿CREATE TABLE [dbo].[Services]
+(
+	[Id] INT NOT NULL PRIMARY KEY IDENTITY, 
+    [Name] NCHAR(10) NOT NULL, 
+    [Cost] INT NOT NULL
+)

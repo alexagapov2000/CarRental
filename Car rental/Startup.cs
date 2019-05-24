@@ -14,7 +14,7 @@ using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Car_rental
+namespace CarRental.Web
 {
     public class Startup
     {

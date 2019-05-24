@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using System.Threading.Tasks;
 
-namespace Car_rental
+namespace CarRental.Web
 {
     public class RoutingMiddleware
     {

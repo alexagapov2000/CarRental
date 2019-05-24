@@ -1,0 +1,5 @@
+﻿CREATE TABLE [dbo].[Gearboxes]
+(
+	[Id] INT NOT NULL PRIMARY KEY IDENTITY, 
+    [Type] NCHAR(10) NOT NULL
+)

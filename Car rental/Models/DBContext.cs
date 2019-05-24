@@ -25,7 +25,7 @@ namespace Car_rental.Models
             var rentCompanyServices = modelBuilder.Entity<RentCompanyService>();
             rentCompanyServices.HasKey(joinElement => new { joinElement.ServiceId, joinElement.RentCompanyId });
             var cityStreet = modelBuilder.Entity<CityStreet>();
-            cityStreet.HasKey(smth => new { smth.CityId, smth.StreetId});
+            cityStreet.HasKey(joinElement => new { joinElement.CityId, joinElement.StreetId});
             /*
             rentCompanyServices
                 .HasOne(smth => smth.RentCompany)

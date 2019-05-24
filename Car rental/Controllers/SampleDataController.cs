@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Car_rental.Controllers
+namespace CarRental.Web.Controllers
 {
     [Route("api")]
     public class SampleDataController : Controller
