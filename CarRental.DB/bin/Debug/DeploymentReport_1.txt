@@ -1,0 +1,23 @@
+﻿** Highlights
+     Tables that will be rebuilt
+       [dbo].[Cities]
+     Clustered indexes that will be dropped
+       unnamed constraint on [dbo].[CityStreets]
+     Clustered indexes that will be created
+       None
+     Possible data issues
+       None
+
+** User actions
+     Drop
+       unnamed constraint on [dbo].[CityStreets] (Primary Key)
+     Table rebuild
+       [dbo].[Cities] (Table)
+
+** Supporting actions
+     Drop
+       [dbo].[FK_CityStreets_Cities] (Foreign Key)
+       [dbo].[FK_Cities_Countries] (Foreign Key)
+     Create
+       [dbo].[FK_CityStreets_Cities] (Foreign Key)
+       [dbo].[FK_Cities_Countries] (Foreign Key)

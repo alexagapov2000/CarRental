@@ -1,0 +1,27 @@
+﻿** Highlights
+     Tables that will be rebuilt
+       None
+     Clustered indexes that will be dropped
+       None
+     Clustered indexes that will be created
+       None
+     Possible data issues
+       None
+
+** User actions
+     Create
+       [dbo].[Automobiles] (Table)
+       [dbo].[Cities] (Table)
+       [dbo].[CityStreets] (Table)
+       [dbo].[Countries] (Table)
+       [dbo].[Firms] (Table)
+       [dbo].[Gearboxes] (Table)
+       [dbo].[RentCompanies] (Table)
+       [dbo].[RentCompanyServices] (Table)
+       [dbo].[Services] (Table)
+       [dbo].[Streets] (Table)
+       [dbo].[FK_Cities_Countries] (Foreign Key)
+       [dbo].[FK_CityStreets_Cities] (Foreign Key)
+       [dbo].[FK_CityStreets_Streets] (Foreign Key)
+
+** Supporting actions

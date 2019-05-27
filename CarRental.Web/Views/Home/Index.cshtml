@@ -1,0 +1,35 @@
+﻿@model IEnumerable<CarRental.Web.Models.Automobiles>
+@{
+    //ViewData["Title"] = "Список автомобилей";
+    Layout = null;
+}
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>Countries list</title>
+</head>
+<body>
+    <h3>Countries</h3>
+    <table>
+        <tr>
+            <td>ID</td>
+            <td>Manufacturer ID</td>
+            <td>Name</td>
+            <td>Fuel consumption</td>
+            <td>Gear box</td>
+        </tr>
+        @foreach (var automobile in Model)
+        {
+            <tr>
+                <td>@automobile.Id</td>
+                <td>@automobile.ManufacturerId</td>
+                <td>@automobile.Name</td>
+                <td>@automobile.FuelConsumption</td>
+                <td>@automobile.GearboxId</td>
+                <td><a href="~/Home/Buy/@automobile.Id">Buy</a></td>
+            </tr>
+        }
+    </table>
+</body>
+</html>

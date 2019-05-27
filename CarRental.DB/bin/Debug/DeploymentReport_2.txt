@@ -1,0 +1,15 @@
+﻿** Highlights
+     Tables that will be rebuilt
+       None
+     Clustered indexes that will be dropped
+       None
+     Clustered indexes that will be created
+       [dbo].[PK_CityStreets] on [dbo].[CityStreets]
+     Possible data issues
+       None
+
+** User actions
+     Create
+       [dbo].[PK_CityStreets] (Primary Key)
+
+** Supporting actions

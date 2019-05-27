@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using CarRental.Web.Models;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -14,6 +15,16 @@ namespace CarRental.Web
     {
         public static void Main(string[] args)
         {
+            var db = new CarRentalContext();
+            db.Automobiles.Add(new Automobiles
+            {
+                Id = db.Automobiles.Count(),
+                Name = "Solaris",
+                FuelConsumption = 25,
+                GearboxId = 2,
+                ManufacturerId = 1,
+            });
+            //db.SaveChanges();
             CreateWebHostBuilder(args).Build().Run();
         }
 
