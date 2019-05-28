@@ -69,4 +69,7 @@
     <Build Include="CityStreets.sql" />
     <Build Include="Streets.sql" />
   </ItemGroup>
+  <ItemGroup>
+    <RefactorLog Include="CarRental.DB.refactorlog" />
+  </ItemGroup>
 </Project>

@@ -17,6 +17,7 @@ namespace CarRental.Web.Models
 
         public virtual DbSet<Automobiles> Automobiles { get; set; }
         public virtual DbSet<Cities> Cities { get; set; }
+        public virtual DbSet<CityStreets> CityStreets { get; set; }
         public virtual DbSet<Countries> Countries { get; set; }
         public virtual DbSet<Firms> Firms { get; set; }
         public virtual DbSet<Gearboxes> Gearboxes { get; set; }
@@ -24,8 +25,6 @@ namespace CarRental.Web.Models
         public virtual DbSet<RentCompanyServices> RentCompanyServices { get; set; }
         public virtual DbSet<Services> Services { get; set; }
         public virtual DbSet<Streets> Streets { get; set; }
-
-        // Unable to generate entity type for table 'dbo.CityStreets'. Please see the warning messages.
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -60,6 +59,23 @@ namespace CarRental.Web.Models
                     .HasConstraintName("FK_Cities_Countries");
             });
 
+            modelBuilder.Entity<CityStreets>(entity =>
+            {
+                entity.HasKey(e => new { e.StreetId, e.CityId });
+
+                entity.HasOne(d => d.City)
+                    .WithMany(p => p.CityStreets)
+                    .HasForeignKey(d => d.CityId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_CityStreets_Cities");
+
+                entity.HasOne(d => d.Street)
+                    .WithMany(p => p.CityStreets)
+                    .HasForeignKey(d => d.StreetId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_CityStreets_Streets");
+            });
+
             modelBuilder.Entity<Countries>(entity =>
             {
                 entity.Property(e => e.Name)
@@ -90,10 +106,20 @@ namespace CarRental.Web.Models
 
             modelBuilder.Entity<RentCompanyServices>(entity =>
             {
-                entity.HasKey(e => e.RentCompanyId)
-                    .HasName("PK__RentComp__DFA780C60130D52F");
+                entity.HasKey(e => new { e.ServiceId, e.RentCompanyId })
+                    .HasName("PK__tmp_ms_x__B8E1C806DF79AE24");
 
-                entity.Property(e => e.RentCompanyId).ValueGeneratedNever();
+                entity.HasOne(d => d.RentCompany)
+                    .WithMany(p => p.RentCompanyServices)
+                    .HasForeignKey(d => d.RentCompanyId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_RentCompanyServices_RentCompanies");
+
+                entity.HasOne(d => d.Service)
+                    .WithMany(p => p.RentCompanyServices)
+                    .HasForeignKey(d => d.ServiceId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_RentCompanyServices_Services");
             });
 
             modelBuilder.Entity<Services>(entity =>

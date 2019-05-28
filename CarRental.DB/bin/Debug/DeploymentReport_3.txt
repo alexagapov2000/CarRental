@@ -1,0 +1,18 @@
+﻿** Highlights
+     Tables that will be rebuilt
+       [dbo].[RentCompanyServices]
+     Clustered indexes that will be dropped
+       None
+     Clustered indexes that will be created
+       None
+     Possible data issues
+       None
+
+** User actions
+     Table rebuild
+       [dbo].[RentCompanyServices] (Table)
+     Create
+       [dbo].[FK_RentCompanyServices_Services] (Foreign Key)
+       [dbo].[FK_RentCompanyServices_RentCompanies] (Foreign Key)
+
+** Supporting actions

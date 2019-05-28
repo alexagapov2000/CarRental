@@ -7,5 +7,8 @@ namespace CarRental.Web.Models
     {
         public int RentCompanyId { get; set; }
         public int ServiceId { get; set; }
+
+        public virtual RentCompanies RentCompany { get; set; }
+        public virtual Services Service { get; set; }
     }
 }

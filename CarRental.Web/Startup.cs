@@ -9,11 +9,13 @@ namespace CarRental.Web
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
+            services.AddSpaStaticFiles();
             services.AddDbContext<CarRentalContext>();
         }
 
         public void Configure(IApplicationBuilder app)
         {
+            app.UseStaticFiles();
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
