@@ -24,22 +24,13 @@
 
   <ItemGroup>
     <!-- Don't publish the SPA source files, but do show them in the project files list -->
+    <Compile Remove="Migrations\**" />
     <Content Remove="$(SpaRoot)**" />
+    <Content Remove="Migrations\**" />
+    <EmbeddedResource Remove="Migrations\**" />
     <None Remove="$(SpaRoot)**" />
+    <None Remove="Migrations\**" />
     <None Include="$(SpaRoot)**" Exclude="$(SpaRoot)node_modules\**" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Compile Remove="Migrations\20190520153643_InitMigration.cs" />
-    <Compile Remove="Migrations\20190520153643_InitMigration.Designer.cs" />
-    <Compile Remove="Migrations\20190520161119_InitMigration.cs" />
-    <Compile Remove="Migrations\20190520161119_InitMigration.Designer.cs" />
-    <Compile Remove="Migrations\20190520161617_InitMigration.cs" />
-    <Compile Remove="Migrations\20190520161617_InitMigration.Designer.cs" />
-    <Compile Remove="Migrations\20190520162351_InitMigration.cs" />
-    <Compile Remove="Migrations\20190520162351_InitMigration.Designer.cs" />
-    <Compile Remove="Migrations\20190520162939_AddTmpPropToAutomobiles.cs" />
-    <Compile Remove="Migrations\20190520162939_AddTmpPropToAutomobiles.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -58,7 +49,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Migrations\" />
     <Folder Include="Views\" />
   </ItemGroup>
 

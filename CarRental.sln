@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarRental.Web", "CarRental.
 EndProject
 Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "CarRental.DB", "CarRental.DB\CarRental.DB.sqlproj", "{8BB03155-679A-4638-82A7-4E326350B8B5}"
 EndProject
-Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "SomeDB", "SomeDB\SomeDB.sqlproj", "{77A491A8-1043-4CA9-9E73-AEC9E8708DB8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Car_rental.Web", "Car rental\Car_rental.Web.csproj", "{4FAF3FDC-7E82-4293-9F44-607EB816F11E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -37,12 +37,10 @@ Global
 		{8BB03155-679A-4638-82A7-4E326350B8B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8BB03155-679A-4638-82A7-4E326350B8B5}.Release|Any CPU.Build.0 = Release|Any CPU
 		{8BB03155-679A-4638-82A7-4E326350B8B5}.Release|Any CPU.Deploy.0 = Release|Any CPU
-		{77A491A8-1043-4CA9-9E73-AEC9E8708DB8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{77A491A8-1043-4CA9-9E73-AEC9E8708DB8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{77A491A8-1043-4CA9-9E73-AEC9E8708DB8}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-		{77A491A8-1043-4CA9-9E73-AEC9E8708DB8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{77A491A8-1043-4CA9-9E73-AEC9E8708DB8}.Release|Any CPU.Build.0 = Release|Any CPU
-		{77A491A8-1043-4CA9-9E73-AEC9E8708DB8}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{4FAF3FDC-7E82-4293-9F44-607EB816F11E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4FAF3FDC-7E82-4293-9F44-607EB816F11E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4FAF3FDC-7E82-4293-9F44-607EB816F11E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4FAF3FDC-7E82-4293-9F44-607EB816F11E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

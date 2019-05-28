@@ -8,6 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace CarRental.Web
 {
+    /*
     public class Startup
     {
         public Startup(IConfiguration configuration)
@@ -62,6 +63,25 @@ namespace CarRental.Web
                 {
                     spa.UseReactDevelopmentServer(npmScript: "start");
                 }
+            });
+        }
+    }
+    */
+
+    public class Startup
+    {
+        public void ConfigureServices(IServiceCollection services)
+        {
+            services.AddMvc();
+        }
+
+        public void Configure(IApplicationBuilder app)
+        {
+            app.UseMvc(routes =>
+            {
+                routes.MapRoute(
+                name: "default",
+                template: "{controller=Home}/{action=Index}/{id?}");
             });
         }
     }

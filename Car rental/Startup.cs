@@ -1,4 +1,3 @@
-using Car_rental.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -108,13 +107,12 @@ namespace CarRental.Web
         {
             string connection = Configuration.GetConnectionString("DefaultConnection");
 
-            services.AddDbContext<DBContext>(options =>
+            services.AddDbContext<DbContext>(options =>
                 options.UseSqlServer(connection));
             services.AddMvc();
             services.AddDirectoryBrowser();
         }
 
-        /*
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
             app.UseDirectoryBrowser();
@@ -129,28 +127,6 @@ namespace CarRental.Web
             {
                 await context.Response.WriteAsync($"Hello, world!");
             });
-        }рпор
-        */
-
-        public void Configure(IApplicationBuilder app)
-        {
-            app.UseOwin(pipeline =>
-            {
-                pipeline(next => SendResponseAsync);
-            });
-        }
-
-        public Task SendResponseAsync(IDictionary<string, object> environment)
-        {
-            // определяем ответ
-            string responseText = "Hello ASP.NET Core";
-            // кодируем его в массив байтов
-            byte[] responseBytes = Encoding.UTF8.GetBytes(responseText);
-
-            // получаем поток ответа
-            var responseStream = (Stream)environment["owin.ResponseBody"];
-            // отправка ответа
-            return responseStream.WriteAsync(responseBytes, 0, responseBytes.Length);
         }
     }
 }
