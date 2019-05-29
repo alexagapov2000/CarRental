@@ -1,5 +1,6 @@
 ﻿using CarRental.Web.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
@@ -51,6 +52,7 @@ namespace EmptyApp.Controllers
         }
 
         [HttpGet]
+        [ActionName("CascadeDropDown")]
         public IActionResult CountriesCitiesStreets()
         {
             ViewBag.Countries = DB.Countries;
@@ -59,19 +61,14 @@ namespace EmptyApp.Controllers
             return View();
         }
 
-        [HttpPost]
-        public IActionResult CountriesCitiesStreets(Countries country)
+        [HttpGet]
+        [ActionName("GetCityList")]
+        [Route("/Home/GetCityList")]
+        public JsonResult GetCityList(int countryId)
         {
-            return View(country.Cities);
-        }
+            var citylist = new SelectList(DB.Countries.First(c => c.Id == countryId).Cities, "Id", "Name");
+            return Json(citylist);
 
-        [HttpPost]
-        public IActionResult CountriesCitiesStreets(Cities city)
-        {
-            var streets = city.CityStreets
-                .Where(correspond => correspond.CityId == city.Id)
-                .Select(correspond => correspond.Street);
-            return View(streets);
         }
     }
 }

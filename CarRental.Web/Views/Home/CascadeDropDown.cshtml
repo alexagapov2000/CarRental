@@ -1,0 +1,71 @@
+﻿@using CarRental.Web.Models;
+@using CarRental.Web;
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Cascade dropdown</title>
+</head>
+<body>
+    <div>
+        <h3>Car removing form</h3>
+        <table>
+
+            <tr>
+                <td>Country:</td>
+                <td>
+                    <select asp-items="@ViewBag.Country" id="countrylist">
+                        <option>Select</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>City:</td>
+                <td>
+                    <select asp-items="@ViewBag.Cities" id="citylist">
+                        <option>Select</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>Street:</td>
+                <td>
+                    <select asp-items="@ViewBag.Streets" id="streetlist">
+                        <option>Select</option>
+                    </select>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    @section Scripts
+{
+        <script type="text/javascript">
+            //Insert default item "Select" in dropdownlist on load
+            $(document).ready(function () {
+                var items = "<option value='0'>Select</option>";
+                $("#citylist").html(items);
+            });
+
+            //Bind City dropdownlist
+            $("#countrylist").change(function () {
+                var Id = $("#countrylist").val();
+                var url = "/Home/GetCityList";
+
+                $.getJSON(url, { CountryId: Id }, function (data) {
+                    var item = "";
+                    $("#citylist").empty();
+                    $.each(data, function (i, city) {
+                        item += '<option value="' + city.value + '">' + city.text + '</option>'
+                    });
+                    $("#citylist").html(item);
+                });
+            });
+        </script>
+    }
+
+</body>
+</html>
