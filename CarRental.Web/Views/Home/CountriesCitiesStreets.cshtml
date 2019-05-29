@@ -10,22 +10,29 @@
 <body>
     <div>
         <h3>Car removing form</h3>
-        <form method="post">
-            <table>
-                <tr>
-                    <td>Country:</td>
-                    <td><select name="Name" /> </td>
-                </tr>
-                <tr>
-                    <td>City:</td>
-                    <td><input name="Name" /> </td>
-                </tr>
-                <tr>
-                    <td>Street:</td>
-                    <td><input name="Name" /> </td>
-                </tr>
-            </table>
-        </form>
+        <table>
+            <tr>
+                <td>Country:</td>
+                <td>
+                    <form method="post">
+                        <select name="Name">
+                            @foreach (CarRental.Web.Models.Countries country in ViewBag.Countries)
+                            {
+                                <option value="@country.Name">@country.Name</option>
+                            }
+                        </select>
+                    </form>
+                </td>
+            </tr>
+            <tr>
+                <td>City:</td>
+                <td><select name="Name" /> </td>
+            </tr>
+            <tr>
+                <td>Street:</td>
+                <td><select name="Name" /> </td>
+            </tr>
+        </table>
     </div>
 </body>
 </html>

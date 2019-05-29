@@ -1,0 +1,27 @@
+﻿** Выделение
+     Таблицы, которые будут перестроены
+       [dbo].[RentCompanyServices]
+       [dbo].[Cities]
+     Кластеризованные индексы, которые будут удалены
+       Нет
+     Кластеризованные индексы, которые будут созданы
+       [dbo].[PK_CityStreets] на [dbo].[CityStreets]
+     Возможные проблемы, связанные с данными
+       Нет
+
+** Действия пользователя
+     Восстановление таблицы
+       [dbo].[RentCompanyServices] (Таблица)
+       [dbo].[Cities] (Таблица)
+     Создать
+       [dbo].[PK_CityStreets] (Первичный ключ)
+       [dbo].[FK_RentCompanyServices_Services] (Внешний ключ)
+       [dbo].[FK_RentCompanyServices_RentCompanies] (Внешний ключ)
+
+** Корректирующие действия
+     Удалить
+       [dbo].[FK_CityStreets_Cities] (Внешний ключ)
+       [dbo].[FK_Cities_Countries] (Внешний ключ)
+     Создать
+       [dbo].[FK_CityStreets_Cities] (Внешний ключ)
+       [dbo].[FK_Cities_Countries] (Внешний ключ)

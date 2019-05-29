@@ -53,6 +53,9 @@ namespace EmptyApp.Controllers
         [HttpGet]
         public IActionResult CountriesCitiesStreets()
         {
+            ViewBag.Countries = DB.Countries;
+            ViewBag.Cities = DB.Cities;
+            ViewBag.Streets = DB.Streets;
             return View();
         }
 
