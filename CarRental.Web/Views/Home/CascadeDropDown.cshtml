@@ -1,4 +1,5 @@
 ﻿@using CarRental.Web.Models;
+@using CarRental.Web.Extensions;
 @using CarRental.Web;
 @{
     Layout = null;
@@ -8,6 +9,31 @@
 <html>
 <head>
     <title>Cascade dropdown</title>
+    <link href="~/style.css" rel="stylesheet" />
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+
+    <script type="text/javascript">
+        //Insert default item "Select" in dropdownlist on load
+        /*
+        $(document).ready(function () {
+            var items = "<option value='0'>Select</option>";
+            $("#citylist").html(items);
+        });
+        */
+
+        function smth(parentId, childId, controller) {
+            var url = "/Home/" + controller;
+            $.getJSON(url, { ParentId: parentId }, function (data) {
+                var item = "";
+                $(childId).empty();
+                $.each(data, function (i, child) {
+                    item += '<option value="' + child.value + '">' + child.text + '</option>'
+                });
+                $(childId).html(item);
+            });
+        }
+    </script>
 </head>
 <body>
     <div>
@@ -17,55 +43,22 @@
             <tr>
                 <td>Country:</td>
                 <td>
-                    <select asp-items="@ViewBag.Country" id="countrylist">
-                        <option>Select</option>
-                    </select>
+                    @Html.CreateSelect(ViewBag.Countries as IEnumerable<INumerated>, "countrylist", "citylist", "GetCities");
                 </td>
             </tr>
             <tr>
                 <td>City:</td>
                 <td>
-                    <select asp-items="@ViewBag.Cities" id="citylist">
-                        <option>Select</option>
-                    </select>
+                    @Html.CreateSelect(ViewBag.Cities as IEnumerable<INumerated>, "citylist", "streetlist", "GetStreets");
                 </td>
             </tr>
             <tr>
                 <td>Street:</td>
                 <td>
-                    <select asp-items="@ViewBag.Streets" id="streetlist">
-                        <option>Select</option>
-                    </select>
+                    @Html.CreateSelect(ViewBag.Cities as IEnumerable<INumerated>, "streetlist");
                 </td>
             </tr>
         </table>
     </div>
-
-    @section Scripts
-{
-        <script type="text/javascript">
-            //Insert default item "Select" in dropdownlist on load
-            $(document).ready(function () {
-                var items = "<option value='0'>Select</option>";
-                $("#citylist").html(items);
-            });
-
-            //Bind City dropdownlist
-            $("#countrylist").change(function () {
-                var Id = $("#countrylist").val();
-                var url = "/Home/GetCityList";
-
-                $.getJSON(url, { CountryId: Id }, function (data) {
-                    var item = "";
-                    $("#citylist").empty();
-                    $.each(data, function (i, city) {
-                        item += '<option value="' + city.value + '">' + city.text + '</option>'
-                    });
-                    $("#citylist").html(item);
-                });
-            });
-        </script>
-    }
-
 </body>
 </html>

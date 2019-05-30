@@ -7,14 +7,16 @@ namespace CarRental.Web
 {
     public static class HtmlHelper
     {
-        public static HtmlString CreateSelect(this IHtmlHelper html, IEnumerable<INumeratedEntity> collection, string name)
+        public static HtmlString CreateSelect(
+            this IHtmlHelper html, IEnumerable<INumerated> collection,
+            string name, string child = null, string controller = null)
         {
-            string result = $"<select name={name} onchange=\"this.form.submit()\"";
+            string result = $"<select name=\"{name}\" class=\"dropdown\" id=\"{name}\" onchange=\"smth('#{name}', '#{child}', '{controller}')\">\n";
             foreach (var item in collection)
             {
-                result += $"<option value={item.Id}>{item.Name}</option>";
+                result += $"<option value={item.Id}>{item.Name}</option>\n";
             }
-            result += "</select>";
+            result += "</select>\n";
             return new HtmlString(result);
         }
     }

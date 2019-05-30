@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace CarRental.Web.Models
 {
-    public partial class Countries : INumeratedEntity
+    public partial class Countries : INumerated
     {
         public Countries()
         {

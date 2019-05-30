@@ -61,14 +61,36 @@ namespace EmptyApp.Controllers
             return View();
         }
 
-        [HttpGet]
+        /*
+        [HttpPost]
         [ActionName("GetCityList")]
         [Route("/Home/GetCityList")]
-        public JsonResult GetCityList(int countryId)
+        public IActionResult GetCityList(int countryId)
         {
-            var citylist = new SelectList(DB.Countries.First(c => c.Id == countryId).Cities, "Id", "Name");
-            return Json(citylist);
+            ViewBag.Cities = new SelectList(DB.Countries.First(c => c.Id == countryId).Cities, "Id", "Name");
+            return View();
+        }
+        */
 
+        private static void Void()
+        {
+
+        }
+
+        [HttpGet]
+        public JsonResult GetCities(int countryId)
+        {
+            var cityList = DB.Cities
+                .Where(x => x.Country.Id == countryId);
+            return Json(new SelectList(cityList, "Id", "Name"));
+        }
+
+        public JsonResult GetStreets(int cityId)
+        {
+            var streetList = DB.CityStreets
+                .Where(x => x.CityId == cityId)
+                .Select(x => x.Street);
+            return Json(new SelectList(streetList, "Id", "Name"));
         }
     }
 }

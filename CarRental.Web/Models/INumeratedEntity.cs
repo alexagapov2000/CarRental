@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace CarRental.Web.Models
 {
-    public interface INumeratedEntity
+    public interface INumerated
     {
         int Id { get; set; }
         string Name { get; set; }
