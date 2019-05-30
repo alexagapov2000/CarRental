@@ -23,14 +23,17 @@
         */
 
         function smth(parentId, childId, controller) {
-            var url = "/Home/" + controller;
-            $.getJSON(url, { ParentId: parentId }, function (data) {
-                var item = "";
-                $(childId).empty();
-                $.each(data, function (i, child) {
-                    item += '<option value="' + child.value + '">' + child.text + '</option>'
+            $(parentId).change(function () {
+                var parent = $(parentId).val();
+                var url = "/Home/" + controller;
+                $.getJSON(url, { id: parent }, function (data) {
+                    var item = "";
+                    $(childId).empty();
+                    $.each(data, function (i, child) {
+                        item += '<option value="' + child.value + '">' + child.text + '</option>'
+                    });
+                    $(childId).html(item);
                 });
-                $(childId).html(item);
             });
         }
     </script>
@@ -39,7 +42,6 @@
     <div>
         <h3>Car removing form</h3>
         <table>
-
             <tr>
                 <td>Country:</td>
                 <td>
@@ -55,7 +57,7 @@
             <tr>
                 <td>Street:</td>
                 <td>
-                    @Html.CreateSelect(ViewBag.Cities as IEnumerable<INumerated>, "streetlist");
+                    @Html.CreateSelect(ViewBag.Streets as IEnumerable<INumerated>, "streetlist");
                 </td>
             </tr>
         </table>

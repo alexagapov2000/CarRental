@@ -72,23 +72,18 @@ namespace EmptyApp.Controllers
         }
         */
 
-        private static void Void()
-        {
-
-        }
-
         [HttpGet]
-        public JsonResult GetCities(int countryId)
+        public JsonResult GetCities(int id)
         {
             var cityList = DB.Cities
-                .Where(x => x.Country.Id == countryId);
+                .Where(x => x.Country.Id == id);
             return Json(new SelectList(cityList, "Id", "Name"));
         }
 
-        public JsonResult GetStreets(int cityId)
+        public JsonResult GetStreets(int id)
         {
             var streetList = DB.CityStreets
-                .Where(x => x.CityId == cityId)
+                .Where(x => x.CityId == id)
                 .Select(x => x.Street);
             return Json(new SelectList(streetList, "Id", "Name"));
         }

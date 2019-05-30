@@ -686,23 +686,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Aliaksei.Ahapau\\.nuget\\packages\\": {},
+    "C:\\Users\\Алексей\\.nuget\\packages\\": {},
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\W\\CarRental.DAL\\CarRental.DAL.csproj",
+      "projectUniqueName": "C:\\Users\\Алексей\\source\\CarRental\\CarRental.DAL\\CarRental.DAL.csproj",
       "projectName": "CarRental.DAL",
-      "projectPath": "C:\\W\\CarRental.DAL\\CarRental.DAL.csproj",
-      "packagesPath": "C:\\Users\\Aliaksei.Ahapau\\.nuget\\packages\\",
-      "outputPath": "C:\\W\\CarRental.DAL\\obj\\",
+      "projectPath": "C:\\Users\\Алексей\\source\\CarRental\\CarRental.DAL\\CarRental.DAL.csproj",
+      "packagesPath": "C:\\Users\\Алексей\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Алексей\\source\\CarRental\\CarRental.DAL\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "C:\\Users\\Aliaksei.Ahapau\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Алексей\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [

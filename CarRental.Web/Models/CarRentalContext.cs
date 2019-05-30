@@ -31,8 +31,8 @@ namespace CarRental.Web.Models
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                optionsBuilder.UseSqlServer("Data Source=WSC-165-71\\SQLEXPRESS01;Initial Catalog=CarRental;Integrated Security=True;");
-                //optionsBuilder.UseSqlServer("Data Source=DESKTOP-24VF33H;Initial Catalog=CarRental;Integrated Security=True;");
+                //optionsBuilder.UseSqlServer("Data Source=WSC-165-71\\SQLEXPRESS01;Initial Catalog=CarRental;Integrated Security=True;");
+                optionsBuilder.UseSqlServer("Data Source=DESKTOP-24VF33H;Initial Catalog=CarRental;Integrated Security=True;");
             }
         }
 
