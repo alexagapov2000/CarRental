@@ -7,4 +7,18 @@
     <Property Name="ParentElementType" Value="SqlTable" />
     <Property Name="NewName" Value="[FK_RentCompanyServices_RentCompanies]" />
   </Operation>
+  <Operation Name="Rename Refactor" Key="b84b3f14-8b80-414e-b85f-05374ac4de42" ChangeDateTime="05/31/2019 15:14:55">
+    <Property Name="ElementName" Value="[dbo].[Automobiles].[GearboxId]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Automobiles]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="Gearbox" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="948a8b4c-cbe2-4ccc-94bc-3c01ca4d4446" ChangeDateTime="05/31/2019 15:15:36">
+    <Property Name="ElementName" Value="[dbo].[Automobiles].[ManufacturerId]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Automobiles]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="CarMarkId" />
+  </Operation>
 </Operations>

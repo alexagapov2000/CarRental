@@ -58,16 +58,13 @@
     <Folder Include="Properties" />
   </ItemGroup>
   <ItemGroup>
-    <Build Include="Gearboxes.sql" />
-    <Build Include="Firms.sql" />
-    <Build Include="Automobiles.sql" />
+    <Build Include="CarMarks.sql" />
+    <Build Include="Cars.sql" />
     <Build Include="Services.sql" />
     <Build Include="RentCompanies.sql" />
     <Build Include="RentCompanyServices.sql" />
     <Build Include="Countries.sql" />
     <Build Include="Cities.sql" />
-    <Build Include="CityStreets.sql" />
-    <Build Include="Streets.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="CarRental.DB.refactorlog" />

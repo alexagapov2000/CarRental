@@ -11,7 +11,7 @@ namespace CarRental.Web
             this IHtmlHelper html, IEnumerable<INumerated> collection,
             string name, string child = null, string controller = null)
         {
-            string result = $"<select name=\"{name}\" class=\"dropdown\" id=\"{name}\" onchange=\"smth('#{name}', '#{child}', '{controller}')\">\n";
+            string result = $"<select name=\"{name}\" class=\"dropdown\" id=\"{name}\" onchange=\"smth('{name}', '{child}', '{controller}')\">\n";
             foreach (var item in collection)
             {
                 result += $"<option value={item.Id}>{item.Name}</option>\n";
