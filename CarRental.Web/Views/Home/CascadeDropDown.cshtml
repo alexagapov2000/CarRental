@@ -1,4 +1,4 @@
-﻿@using CarRental.Web.Models;
+﻿@using CarRental.DAL;
 @using CarRental.Web.Extensions;
 @using CarRental.Web;
 @{
@@ -22,19 +22,13 @@
             <tr>
                 <td>Country:</td>
                 <td>
-                    @Html.CreateSelect(ViewBag.Countries as IEnumerable<INumerated>, "countrylist", "citylist", "GetCities");
+                    @Html.CreateSelect(ViewBag.Countries as IEnumerable<INamed>, "countrylist", "citylist", "GetCities");
                 </td>
             </tr>
             <tr>
                 <td>City:</td>
                 <td>
-                    @Html.CreateSelect(ViewBag.Cities as IEnumerable<INumerated>, "citylist", "streetlist", "GetStreets");
-                </td>
-            </tr>
-            <tr>
-                <td>Street:</td>
-                <td>
-                    @Html.CreateSelect(ViewBag.Streets as IEnumerable<INumerated>, "streetlist");
+                    @Html.CreateSelect(ViewBag.Cities as IEnumerable<INamed>, "citylist");
                 </td>
             </tr>
         </table>

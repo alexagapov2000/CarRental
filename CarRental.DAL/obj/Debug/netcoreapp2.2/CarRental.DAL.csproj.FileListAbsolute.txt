@@ -1,9 +1,11 @@
 C:\W\CarRental.DAL\bin\Debug\netcoreapp2.2\CarRental.DAL.deps.json
 C:\W\CarRental.DAL\bin\Debug\netcoreapp2.2\CarRental.DAL.dll
-C:\W\CarRental.DAL\bin\Debug\netcoreapp2.2\CarRental.DAL.pdb
-C:\W\CarRental.DAL\obj\Debug\netcoreapp2.2\CarRental.DAL.csprojAssemblyReference.cache
 C:\W\CarRental.DAL\obj\Debug\netcoreapp2.2\CarRental.DAL.csproj.CoreCompileInputs.cache
 C:\W\CarRental.DAL\obj\Debug\netcoreapp2.2\CarRental.DAL.AssemblyInfoInputs.cache
 C:\W\CarRental.DAL\obj\Debug\netcoreapp2.2\CarRental.DAL.AssemblyInfo.cs
+C:\W\CarRental.DAL\bin\Debug\netcoreapp2.2\CarRental.DAL.pdb
+C:\W\CarRental.DAL\obj\Debug\netcoreapp2.2\CarRental.DAL.csprojAssemblyReference.cache
 C:\W\CarRental.DAL\obj\Debug\netcoreapp2.2\CarRental.DAL.dll
 C:\W\CarRental.DAL\obj\Debug\netcoreapp2.2\CarRental.DAL.pdb
+C:\W\CarRental.DAL\bin\Debug\netcoreapp2.2\CarRental.DAL.runtimeconfig.json
+C:\W\CarRental.DAL\bin\Debug\netcoreapp2.2\CarRental.DAL.runtimeconfig.dev.json

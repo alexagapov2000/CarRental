@@ -1,4 +1,4 @@
-﻿CREATE TABLE [dbo].[Firms]
+﻿CREATE TABLE [dbo].[CarMarks]
 (
 	[Id] INT NOT NULL PRIMARY KEY IDENTITY, 
     [Name] NCHAR(500) NOT NULL

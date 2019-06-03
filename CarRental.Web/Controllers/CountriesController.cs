@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using CarRental.Web.Models;
+using CarRental.DAL.Models;
 
 namespace CarRental.Web.Controllers
 {

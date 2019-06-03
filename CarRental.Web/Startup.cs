@@ -1,6 +1,6 @@
-using CarRental.Web.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
+using CarRental.DAL.Models;
 
 namespace CarRental.Web
 {
