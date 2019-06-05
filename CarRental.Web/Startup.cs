@@ -30,7 +30,7 @@ namespace CarRental.Web
             {
                 routes.MapRoute(
                 name: "default",
-                template: "{controller=Home}/{action=CascadeDropDown}/{id?}");
+                template: "{controller=countries}/{action=GetCountries}/{id?}");
             });
         }
     }
