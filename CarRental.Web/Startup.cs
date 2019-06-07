@@ -23,14 +23,16 @@ namespace CarRental.Web
 
         public void Configure(IApplicationBuilder app)
         {
-            app.UseReact(config => { });
+            app.UseReact(config => {  });
             app.UseDefaultFiles();
             app.UseStaticFiles();
+            app.UseWebpackDevMiddleware();
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
-                name: "default",
-                template: "{controller=countries}/{action=GetCountries}/{id?}");
+                    name: "DefaultApi",
+                    template: "api/{controller}/{action}");
+                routes.MapSpaFallbackRoute("spa-fallback", new { controller = "Home", action = "Index" });
             });
         }
     }
