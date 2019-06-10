@@ -17,9 +17,10 @@ namespace EmptyApp.Controllers
             DB = context;
         }
 
+        [HttpGet]
         public IActionResult Index()
         {
-            return View(DB.Cars.ToList());
+            return View();
         }
 
         [HttpGet]

@@ -8,10 +8,10 @@ export default class Header extends React.Component {
                 <menu>
                     <ul>
                         <li>
-                            <Link to="/">Блог</Link>
+                            <Link to="/selects">Selects</Link>
                         </li>
                         <li>
-                            <Link to="/about">Обо мне</Link>
+                            <Link to="/creating">Creating a new location</Link>
                         </li>
                     </ul>
                 </menu>
