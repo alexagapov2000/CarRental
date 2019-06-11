@@ -73,6 +73,13 @@ namespace EmptyApp.Controllers
         */
 
         [HttpGet]
+        public JsonResult GetCountries()
+        {
+            var countryList = DB.Countries;
+            return Json(new SelectList(countryList, "Id", "Name"));
+        }
+
+        [HttpGet]
         public JsonResult GetCities(int id)
         {
             var cityList = DB.Cities

@@ -31,7 +31,7 @@ namespace CarRental.Web
             {
                 routes.MapRoute(
                     name: "DefaultApi",
-                    template: "api/{controller}/{action}");
+                    template: "{controller}/{action}");
                 routes.MapSpaFallbackRoute("spa-fallback", new { controller = "Home", action = "Index" });
             });
         }

@@ -2,34 +2,28 @@ import React from 'react';
 
 export default class EntitySelect extends React.Component {
     constructor(props) {
+        super();
         this.getOptions = this.getOptions.bind(this);
-        this.getEntities = this.getEntities.bind(this);
+        this.options = [];
     }
 
-    getEntities() {
-        return (dispatch) => {
-            fetch(`api/${this.props.route}`)
-                .then(response => {
-                    let info = response.json();
-                    console.log(info);
-                    return info;
-                })
-                .then(dispatch('OK'));
-        }
+    componentWillMount() {
+        this.getOptions();
     }
 
     getOptions() {
-        let entities = this.getEntities();
-        return entities.map(element => 
-                <option value={element.id}>{element.name}</option>
-            );
+        return fetch(this.props.controller)
+            .then(resolve => resolve.json())
+            .then(entities => entities.map(element => 
+                <option value={element.value}>{element.text}</option>))
+            .then(option => this.options.push(option));
     }
 
     render() {
         return <select>
-            {getOptions()}
-        </select>
+            {this.options}
+        </select>;
     }
 }
 
-EntitySelect.defaultProps = {route: 'countries'};
+EntitySelect.defaultProps = {controller: 'GetCountries'};

@@ -13,7 +13,6 @@ export default class App extends React.Component {
                     <main>
                         <Switch>
                             <Route path="/selects" component={Selects} />
-                            <Route path="/" component={Selects} />
                         </Switch>
                     </main>
                 </div>

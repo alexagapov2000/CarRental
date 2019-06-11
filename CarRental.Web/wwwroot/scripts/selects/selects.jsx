@@ -1,26 +1,35 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import EntitySelect from '../selects/selects.jsx';
+import EntitySelect from './entitySelect.jsx';
 
-class Selects extends React.Component {
+export default class Selects extends React.Component {
 
-    componentDidMount() {
-        this.props.getPosts(0);
+    constructor(props) {
+        this.countryID = 0;
+    }
+
+    changeCountryID() {
+        this.countryID = document.getElementById('country').props.currentID;
     }
 
     render() {
-        return (
-            <div>
-                <table>
+        return <table>
                     <tr>
-                        <td><EntitySelect route='countries'/></td>
+                        <td>Countries</td>
+                        <td><EntitySelect
+                            id="country"
+                            controller='/home/GetCountries'
+                            onChange='changeCountryID()'/></td>
                     </tr>
-                </table>
-            </div>
-        );
+                    <tr>
+                        <td>Cities</td>
+                        <td><EntitySelect controller={`/home/GetCities/${this.countryID}`}/></td>
+                    </tr>
+                </table>;
     }
 };
 
+/*
 let mapProps = (state) => {
     return {
         posts: state.data,
@@ -33,5 +42,6 @@ let mapDispatch = (dispatch) => {
         getPosts: (index, tags) => dispatch(getPosts(index, tags))
     }
 }
+*/
 
-export default connect(mapProps, mapDispatch)(Selects)
+//export default connect(mapProps, mapDispatch)(Selects)
