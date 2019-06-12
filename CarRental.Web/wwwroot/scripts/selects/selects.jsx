@@ -5,6 +5,7 @@ import EntitySelect from './entitySelect.jsx';
 export default class Selects extends React.Component {
 
     constructor(props) {
+        super();
         this.countryID = 0;
     }
 

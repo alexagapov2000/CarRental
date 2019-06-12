@@ -31955,13 +31955,192 @@ exports.default = Header;
 
 /***/ }),
 /* 104 */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-throw new Error("Module build failed: SyntaxError: C:/W/CarRental.Web/wwwroot/scripts/selects/selects.jsx: 'this' is not allowed before super()\n\n   6 | \n   7 |     constructor(props) {\n>  8 |         this.countryID = 0;\n     |         ^\n   9 |     }\n  10 | \n  11 |     changeCountryID() {\n");
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(1);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactRedux = __webpack_require__(24);
+
+var _entitySelect = __webpack_require__(105);
+
+var _entitySelect2 = _interopRequireDefault(_entitySelect);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Selects = function (_React$Component) {
+    _inherits(Selects, _React$Component);
+
+    function Selects(props) {
+        _classCallCheck(this, Selects);
+
+        var _this = _possibleConstructorReturn(this, (Selects.__proto__ || Object.getPrototypeOf(Selects)).call(this));
+
+        _this.countryID = 0;
+        return _this;
+    }
+
+    _createClass(Selects, [{
+        key: 'changeCountryID',
+        value: function changeCountryID() {
+            this.countryID = document.getElementById('country').props.currentID;
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+            return _react2.default.createElement(
+                'table',
+                null,
+                _react2.default.createElement(
+                    'tr',
+                    null,
+                    _react2.default.createElement(
+                        'td',
+                        null,
+                        'Countries'
+                    ),
+                    _react2.default.createElement(
+                        'td',
+                        null,
+                        _react2.default.createElement(_entitySelect2.default, {
+                            id: 'country',
+                            controller: '/home/GetCountries',
+                            onChange: 'changeCountryID()' })
+                    )
+                ),
+                _react2.default.createElement(
+                    'tr',
+                    null,
+                    _react2.default.createElement(
+                        'td',
+                        null,
+                        'Cities'
+                    ),
+                    _react2.default.createElement(
+                        'td',
+                        null,
+                        _react2.default.createElement(_entitySelect2.default, { controller: '/home/GetCities/' + this.countryID })
+                    )
+                )
+            );
+        }
+    }]);
+
+    return Selects;
+}(_react2.default.Component);
+
+exports.default = Selects;
+;
+
+/*
+let mapProps = (state) => {
+    return {
+        posts: state.data,
+        error: state.error
+    }
+}
+
+let mapDispatch = (dispatch) => {
+    return {
+        getPosts: (index, tags) => dispatch(getPosts(index, tags))
+    }
+}
+*/
+
+//export default connect(mapProps, mapDispatch)(Selects)
 
 /***/ }),
-/* 105 */,
+/* 105 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(1);
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var EntitySelect = function (_React$Component) {
+    _inherits(EntitySelect, _React$Component);
+
+    function EntitySelect(props) {
+        _classCallCheck(this, EntitySelect);
+
+        var _this = _possibleConstructorReturn(this, (EntitySelect.__proto__ || Object.getPrototypeOf(EntitySelect)).call(this));
+
+        _this.options = [];
+        return _this;
+    }
+
+    _createClass(EntitySelect, [{
+        key: 'componentWillMount',
+        value: function componentWillMount() {
+            var _this2 = this;
+
+            fetch(this.props.controller).then(function (resolve) {
+                return resolve.json();
+            }).then(function (entities) {
+                return entities.map(function (element) {
+                    return _react2.default.createElement(
+                        'option',
+                        { value: element.value },
+                        element.text
+                    );
+                });
+            }).then(function (option) {
+                return _this2.options.push(option);
+            });
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+            return _react2.default.createElement(
+                'select',
+                null,
+                this.options
+            );
+        }
+    }]);
+
+    return EntitySelect;
+}(_react2.default.Component);
+
+exports.default = EntitySelect;
+
+
+EntitySelect.defaultProps = { controller: 'GetCountries' };
+
+/***/ }),
 /* 106 */
 /***/ (function(module, exports, __webpack_require__) {
 
