@@ -8,10 +8,10 @@ export default class Header extends React.Component {
                 <menu>
                     <ul>
                         <li>
-                            <Link to="/selects">Selects</Link>
+                            <Link className='link' to="/selects">Selects</Link>
                         </li>
                         <li>
-                            <Link to="/creating">Creating a new location</Link>
+                            <Link className='link' to="/creating">Creating a new location</Link>
                         </li>
                     </ul>
                 </menu>

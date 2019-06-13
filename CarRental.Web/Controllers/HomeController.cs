@@ -79,7 +79,7 @@ namespace EmptyApp.Controllers
             return Json(new SelectList(countryList, "Id", "Name"));
         }
 
-        [HttpGet]
+        [HttpGet("/[controller]/[action]/{id?}")]
         public JsonResult GetCities(int id)
         {
             var cityList = DB.Cities

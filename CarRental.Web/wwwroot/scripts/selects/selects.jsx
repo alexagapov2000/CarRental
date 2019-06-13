@@ -1,34 +1,40 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import EntitySelect from './entitySelect.jsx';
+import { timingSafeEqual } from 'crypto';
 
 export default class Selects extends React.Component {
 
     constructor(props) {
         super();
-        this.countryID = 0;
+        this.getCountryID = this.getCountryID.bind(this);
     }
 
-    changeCountryID() {
-        this.countryID = document.getElementById('country').props.currentID;
+    getCountryID() {
+        return this.refs.country.state.currentID;
+    }
+
+    componentDidMount() {
+        
     }
 
     render() {
-        return <table>
-                    <tr>
-                        <td>Countries</td>
-                        <td><EntitySelect
-                            id="country"
-                            controller='/home/GetCountries'
-                            onChange='changeCountryID()'/></td>
-                    </tr>
-                    <tr>
-                        <td>Cities</td>
-                        <td><EntitySelect controller={`/home/GetCities/${this.countryID}`}/></td>
-                    </tr>
-                </table>;
-    }
-};
+        return <div className='selects'>
+            <div>
+                <span>Country</span>
+                <EntitySelect
+                    ref='country'
+                    controller='/home/GetCountries'/>
+            </div>
+            <div>
+                <span>Cities</span>
+                <EntitySelect
+                    ref='city'
+                    controller={`/home/GetCities/${this.getCountryID}`}/>
+            </div>
+        </div>;
+    };
+}
 
 /*
 let mapProps = (state) => {
