@@ -1,8 +1,8 @@
 ﻿import React from 'react'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Header from './header/header.jsx';
-//import Creating from './creating/creating.jsx'
-import Selects from './selects/selects.jsx';
+import Selects from './chooseLocation/selects.jsx';
+import Creating from './createLocation/creating.jsx';
 
 export default class App extends React.Component {
     render() {
@@ -12,7 +12,9 @@ export default class App extends React.Component {
                     <Header />
                     <main>
                         <Switch>
-                            <Route path="/selects" component={Selects} />
+                            <Route path='/selects' component={Selects} />
+                            <Route path='/creating' component={Creating}/>
+                            {/*<Route path='/show' component={Showing}/>*/}
                         </Switch>
                     </main>
                 </div>
