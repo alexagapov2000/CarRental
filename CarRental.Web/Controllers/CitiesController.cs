@@ -19,7 +19,7 @@ namespace CarRental.Web.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Cities>>> GetCountries()
+        public async Task<ActionResult<IEnumerable<Cities>>> GetCities()
         {
             return await _context.Cities.ToListAsync();
         }
@@ -30,6 +30,31 @@ namespace CarRental.Web.Controllers
             return await _context.Cities
                 .Where(city => city.CountryId == countryID)
                 .ToListAsync();
+        }
+
+        [HttpPost]
+        public async Task<ActionResult<Cities>> PostCities(Cities city)
+        {
+            _context.Cities.Add(city);
+            await _context.SaveChangesAsync();
+
+            return CreatedAtAction("GetCountries", new { id = city.Id }, city);
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult<Cities>> DeleteCities(int id)
+        {
+            var city = await _context.Cities.FindAsync(id);
+
+            if (city == null)
+            {
+                return NotFound();
+            }
+
+            _context.Cities.Remove(city);
+            await _context.SaveChangesAsync();
+
+            return city;
         }
     }
 }

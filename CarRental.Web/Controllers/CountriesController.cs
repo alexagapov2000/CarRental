@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using CarRental.DAL.Models;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
+using CarRental.Web.Controllers;
+using System.Linq;
 
 namespace CarRental.Web.Controllers
 {
@@ -21,6 +23,44 @@ namespace CarRental.Web.Controllers
         public async Task<ActionResult<IEnumerable<Countries>>> GetCountries()
         {
             return await _context.Countries.ToListAsync();
+        }
+
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Countries>> GetCountries(int id)
+        {
+            return await _context.Countries.FirstAsync(x => x.Id == id);
+        }
+
+        [HttpPost]
+        public async Task<ActionResult<Countries>> PostCountries(Countries countries)
+        {
+            _context.Countries.Add(countries);
+            await _context.SaveChangesAsync();
+
+            return CreatedAtAction("GetCountries", new { id = countries.Id }, countries);
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult<Countries>> DeleteCountries(int id)
+        {
+            var country = await _context.Countries.FindAsync(id);
+            
+            foreach(var city in _context.Cities.Where(x => x.CountryId == id))
+            {
+                await new CitiesController(_context).DeleteCities(city.Id);
+                //_context.Cities.Remove(city);
+            }
+            await _context.SaveChangesAsync();
+            
+            if (country == null)
+            {
+                return NotFound();
+            }
+
+            _context.Countries.Remove(country);
+            await _context.SaveChangesAsync();
+
+            return country;
         }
     }
 }

@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Header from './header/header.jsx';
 import Selects from './chooseLocation/selects.jsx';
 import Creating from './createLocation/creating.jsx';
+import LocationTable from './showLocations/locationTable.jsx';
 
 export default class App extends React.Component {
     render() {
@@ -14,7 +15,7 @@ export default class App extends React.Component {
                         <Switch>
                             <Route path='/selects' component={Selects} />
                             <Route path='/creating' component={Creating}/>
-                            {/*<Route path='/show' component={Showing}/>*/}
+                            <Route path='/show' component={LocationTable}/>
                         </Switch>
                     </main>
                 </div>

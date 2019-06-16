@@ -12,6 +12,10 @@
 }
 */
 
+* {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
 header {
     background-color: #f0f0f0;
     border: 1px solid black;
@@ -31,13 +35,8 @@ header {
     margin: 10px 20px;
 }
 
-.selects span {
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-}
-
 .selects select {
     width: 50%;
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
 
 ul {
@@ -51,12 +50,12 @@ ul {
 }
 
 ul .link {
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-    text-decoration: none;
+    text-decoration: none; 
     border: 2px solid #ccc;
     border-radius: 8px;
     transition: border 0.15s linear;
     transition: border-radius 0.15s linear;
+    padding: 10px;
 }
 
 ul .link:visited {
@@ -66,4 +65,42 @@ ul .link:visited {
 ul .link:hover {
     border: 2px solid black;
     border-radius: 0%;
+}
+
+fieldset {
+    border-radius: 10px;
+    margin: 10px 20px;
+}
+
+.selectable {
+    user-select: none;
+    margin-right: -1px;
+    margin-bottom: -1px;
+}
+
+.selected {
+    background-color: rgb(255, 200, 200);
+    border: 1px solid black;
+}
+
+.unselected {
+    background-color: white;
+    border: 1px solid black;
+}
+
+.countries-cities {
+    display: flex;
+    flex-direction: row;
+}
+
+.countries-cities > .countries {
+    width: 50%;
+}
+
+.countries-cities > .cities {
+    width: 50%;
+}
+
+fieldset {
+    border: 1px solid black;
 }

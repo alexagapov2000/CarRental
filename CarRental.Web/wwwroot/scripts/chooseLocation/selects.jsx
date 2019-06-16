@@ -19,7 +19,8 @@ export default class Selects extends React.Component {
     }
 
     render() {
-        return <div className='selects'>
+        return <fieldset className='selects'>
+            <legend>Select location</legend>
             <div>
                 <span>Country</span>
                 <CountrySelect
@@ -31,6 +32,6 @@ export default class Selects extends React.Component {
                 <CitySelect
                     controller={`/api/Cities/${this.state.countryID}`}/>;
             </div>
-        </div>;
+        </fieldset>;
     };
 }
