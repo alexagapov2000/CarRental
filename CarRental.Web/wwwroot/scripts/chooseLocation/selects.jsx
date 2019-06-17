@@ -1,7 +1,6 @@
 import React from 'react';
 import CitySelect from './citySelect.jsx';
 import CountrySelect from './countrySelect.jsx';
-import EntitySelect from './entitySelect.jsx';
 
 export default class Selects extends React.Component {
 

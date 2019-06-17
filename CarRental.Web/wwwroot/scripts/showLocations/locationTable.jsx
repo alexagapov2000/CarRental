@@ -64,11 +64,11 @@ export default class LocationTable extends React.Component {
     load(e) {
         if((e !== undefined && e.keyCode == 46) ||
             e === undefined)
-        this.getCountries()
-            .then(this.fillCountriesWithCities)
-            .then(this.mapCitiesToReact)
-            .then(this.mapCountriesToReact)
-            .then(countries => this.setState({countries}));
+            this.getCountries()
+                .then(this.fillCountriesWithCities)
+                .then(this.mapCitiesToReact)
+                .then(this.mapCountriesToReact)
+                .then(countries => this.setState({countries}));
     }
 
     componentDidMount() {
@@ -76,7 +76,8 @@ export default class LocationTable extends React.Component {
     }
 
     render() {
-        return <div onKeyDown={this.onKeyDown}>
+        return <div>
+            <span>Choose locations and press 'Delete' to remove them</span>
             {Object.values(this.state.countries)}
         </div>;
     }

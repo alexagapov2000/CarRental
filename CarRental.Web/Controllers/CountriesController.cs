@@ -44,12 +44,13 @@ namespace CarRental.Web.Controllers
         public async Task<ActionResult<Countries>> DeleteCountries(int id)
         {
             var country = await _context.Countries.FindAsync(id);
-            
+            /*
             foreach(var city in _context.Cities.Where(x => x.CountryId == id))
             {
                 await new CitiesController(_context).DeleteCities(city.Id);
                 //_context.Cities.Remove(city);
             }
+            */
             await _context.SaveChangesAsync();
             
             if (country == null)

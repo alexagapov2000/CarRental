@@ -6,7 +6,9 @@ export default class Creating extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = {countryID: 1};
+        this.state = {
+            countryID: 1,
+        };
         this.setCountryID = this.setCountryID.bind(this);
         this.addCity = this.addCity.bind(this);
         this.addCountry = this.addCountry.bind(this);
