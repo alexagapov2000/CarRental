@@ -16,13 +16,15 @@ export default class SelectableComponent extends React.Component {
 
     delete(e) {
         if(e.keyCode == 46 && this.state.selected) {
-            Axios.delete(`api/${this.props.controller}/${this.props.id}`);
-            this.setState({selected: false});
+            Axios.delete(`api/${this.props.controller}/${this.props.id}`)
+                .then(this.props.incrementDeletedItemsCount());
         }
     }
 
     switchSelectionState(e) {
-        this.setState({selected: !this.state.selected});
+        let newState = !this.state.selected;
+        this.setState({selected: newState});
+        this.props.changeSelectedItemsCount(newState ? 1 : -1);
     }
 
     render() {

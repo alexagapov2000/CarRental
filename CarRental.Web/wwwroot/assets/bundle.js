@@ -30823,7 +30823,7 @@ var CitySelect = function (_EntitySelect) {
 
     _createClass(CitySelect, [{
         key: 'shouldComponentUpdate',
-        value: function shouldComponentUpdate(nextState, nextProps) {
+        value: function shouldComponentUpdate(nextProps, nextState) {
             if (nextProps.controller !== this.props.controller) {
                 this.loadList();
             }
@@ -31769,13 +31769,17 @@ var LocationTable = function (_React$Component) {
         var _this = _possibleConstructorReturn(this, (LocationTable.__proto__ || Object.getPrototypeOf(LocationTable)).call(this, props));
 
         _this.state = {
-            countries: []
+            countries: [],
+            selectedItemsCount: 0,
+            deletedItemsCount: 0
         };
         _this.getCountries = _this.getCountries.bind(_this);
         _this.fillCountriesWithCities = _this.fillCountriesWithCities.bind(_this);
         _this.mapCitiesToReact = _this.mapCitiesToReact.bind(_this);
         _this.mapCountriesToReact = _this.mapCountriesToReact.bind(_this);
         _this.load = _this.load.bind(_this);
+        _this.incrementDeletedItemsCount = _this.incrementDeletedItemsCount.bind(_this);
+        _this.changeSelectedItemsCount = _this.changeSelectedItemsCount.bind(_this);
         document.addEventListener('keydown', _this.load);
         return _this;
     }
@@ -31809,9 +31813,13 @@ var LocationTable = function (_React$Component) {
     }, {
         key: 'mapCitiesToReact',
         value: function mapCitiesToReact(countries) {
+            var _this2 = this;
+
             Object.values(countries).forEach(function (country) {
                 country.cities = country.cities.map(function (c) {
                     return _react2.default.createElement(_selectableComponent2.default, {
+                        incrementDeletedItemsCount: _this2.incrementDeletedItemsCount,
+                        changeSelectedItemsCount: _this2.changeSelectedItemsCount,
                         id: c.id, name: c.name,
                         controller: 'cities' });
                 });
@@ -31821,11 +31829,15 @@ var LocationTable = function (_React$Component) {
     }, {
         key: 'mapCountriesToReact',
         value: function mapCountriesToReact(countries) {
+            var _this3 = this;
+
             Object.keys(countries).forEach(function (key) {
                 countries[key] = _react2.default.createElement(
                     'div',
                     { className: 'countries-cities' },
                     _react2.default.createElement(_selectableComponent2.default, {
+                        incrementDeletedItemsCount: _this3.incrementDeletedItemsCount,
+                        changeSelectedItemsCount: _this3.changeSelectedItemsCount,
                         className: 'countries',
                         id: countries[key].id,
                         name: countries[key].name,
@@ -31842,11 +31854,32 @@ var LocationTable = function (_React$Component) {
     }, {
         key: 'load',
         value: function load(e) {
-            var _this2 = this;
+            var _this4 = this;
 
             if (e !== undefined && e.keyCode == 46 || e === undefined) this.getCountries().then(this.fillCountriesWithCities).then(this.mapCitiesToReact).then(this.mapCountriesToReact).then(function (countries) {
-                return _this2.setState({ countries: countries });
+                return _this4.setState({ countries: countries });
             });
+        }
+    }, {
+        key: 'incrementDeletedItemsCount',
+        value: function incrementDeletedItemsCount() {
+            this.setState({ deletedItemsCount: this.state.deletedItemsCount + 1 });
+        }
+    }, {
+        key: 'changeSelectedItemsCount',
+        value: function changeSelectedItemsCount(difference) {
+            this.setState({ selectedItemsCount: this.state.selectedItemsCount + difference });
+        }
+    }, {
+        key: 'shouldComponentUpdate',
+        value: function shouldComponentUpdate(nextProps, nextState) {
+            console.log('selectedItemsCount: ' + nextState.selectedItemsCount);
+            console.log('deletedItemsCount: ' + nextState.deletedItemsCount);
+            console.log(' ');
+            if (nextState.selectedItemsCount == nextState.deletedItemsCount) {
+                return true;
+            }
+            return false;
         }
     }, {
         key: 'componentDidMount',
@@ -31928,14 +31961,15 @@ var SelectableComponent = function (_React$Component) {
         key: 'delete',
         value: function _delete(e) {
             if (e.keyCode == 46 && this.state.selected) {
-                _axios2.default.delete('api/' + this.props.controller + '/' + this.props.id);
-                this.setState({ selected: false });
+                _axios2.default.delete('api/' + this.props.controller + '/' + this.props.id).then(this.props.incrementDeletedItemsCount());
             }
         }
     }, {
         key: 'switchSelectionState',
         value: function switchSelectionState(e) {
-            this.setState({ selected: !this.state.selected });
+            var newState = !this.state.selected;
+            this.setState({ selected: newState });
+            this.props.changeSelectedItemsCount(newState ? 1 : -1);
         }
     }, {
         key: 'render',

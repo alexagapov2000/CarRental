@@ -7,12 +7,16 @@ export default class LocationTable extends React.Component {
         super(props);
         this.state = {
             countries: [],
+            selectedItemsCount: 0,
+            deletedItemsCount: 0,
         };
         this.getCountries = this.getCountries.bind(this);
         this.fillCountriesWithCities = this.fillCountriesWithCities.bind(this);
         this.mapCitiesToReact = this.mapCitiesToReact.bind(this);
         this.mapCountriesToReact = this.mapCountriesToReact.bind(this);
         this.load = this.load.bind(this);
+        this.incrementDeletedItemsCount = this.incrementDeletedItemsCount.bind(this);
+        this.changeSelectedItemsCount = this.changeSelectedItemsCount.bind(this);
         document.addEventListener('keydown', this.load);
     }
 
@@ -41,6 +45,8 @@ export default class LocationTable extends React.Component {
         Object.values(countries).forEach(country => {
             country.cities = country.cities.map(c => {
                 return <SelectableComponent
+                    incrementDeletedItemsCount={this.incrementDeletedItemsCount}
+                    changeSelectedItemsCount={this.changeSelectedItemsCount}
                     id={c.id} name={c.name}
                     controller='cities'/>
             })});
@@ -51,6 +57,8 @@ export default class LocationTable extends React.Component {
         Object.keys(countries).forEach(key => {
             countries[key] = <div className='countries-cities'>
                 <SelectableComponent
+                    incrementDeletedItemsCount={this.incrementDeletedItemsCount}
+                    changeSelectedItemsCount={this.changeSelectedItemsCount}
                     className='countries'
                     id={countries[key].id}
                     name={countries[key].name}
@@ -69,6 +77,24 @@ export default class LocationTable extends React.Component {
                 .then(this.mapCitiesToReact)
                 .then(this.mapCountriesToReact)
                 .then(countries => this.setState({countries}));
+    }
+
+    incrementDeletedItemsCount() {
+        this.setState({deletedItemsCount: this.state.deletedItemsCount + 1});
+    }
+
+    changeSelectedItemsCount(difference) {
+        this.setState({selectedItemsCount: this.state.selectedItemsCount + difference});
+    }
+
+    shouldComponentUpdate(nextProps, nextState) {
+        console.log('selectedItemsCount: ' + nextState.selectedItemsCount);
+        console.log('deletedItemsCount: ' + nextState.deletedItemsCount);
+        console.log(' ');
+        if(nextState.selectedItemsCount == nextState.deletedItemsCount) {
+            return true;
+        }
+        return false;
     }
 
     componentDidMount() {

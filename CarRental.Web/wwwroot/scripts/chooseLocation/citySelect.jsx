@@ -6,7 +6,7 @@ export default class CitySelect extends EntitySelect{
         super(props);
     }
 
-    shouldComponentUpdate(nextState, nextProps) {
+    shouldComponentUpdate(nextProps, nextState) {
         if(nextProps.controller !== this.props.controller) {
             this.loadList();
         }
