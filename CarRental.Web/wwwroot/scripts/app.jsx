@@ -5,6 +5,7 @@ import Selects from './chooseLocation/selects.jsx';
 import Creating from './createLocation/creating.jsx';
 import LocationTable from './showLocations/locationTable.jsx';
 import { connect } from 'react-redux';
+import CreatingContainer from './_containers/CreatingContainer.jsx';
 
 export default class App extends React.Component {
     render() {
@@ -17,7 +18,7 @@ export default class App extends React.Component {
                             <Route path='/selects' component={Selects} />
                             <Route path='/creating' component={Creating}/>
                             <Route path='/show' component={LocationTable}/>
-                            {/*<Route path='/creatingRedux' component={}/>*/}
+                            <Route path='/creatingRedux' component={CreatingContainer}/>
                         </Switch>
                     </main>
                 </div>
