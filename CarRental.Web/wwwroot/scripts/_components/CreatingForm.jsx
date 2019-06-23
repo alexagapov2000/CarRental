@@ -3,14 +3,22 @@ import PropTypes from 'prop-types';
 
 export default class CreatingForm extends React.Component {
     
-    loadCountries = (controller) => {
-        
+    onKeyDown = (e) => {
+        if(e.keyCode === 13) {
+            this.props.createCountry(e.target.value);
+            this.props.loadCountries();
+            //this.props.mapCountriesToOptions();
+            e.target.value = '';
+        }
     }
 
     renderCountriesCreatingForm = () => {
         return <fieldset>
             <legend>Countries creating form</legend>
-            <input type='text' placeholder='Enter country name'/>
+            <input
+                type='text'
+                placeholder='Enter country name'
+                onKeyDown={this.onKeyDown}/>
         </fieldset>;
     }
 
@@ -23,6 +31,7 @@ export default class CreatingForm extends React.Component {
     }
 
     render() {
+        console.log(this.props.countries);
         return <div>
             {this.renderCountriesCreatingForm()}
             {this.renderCitiesCreatingForm()}
