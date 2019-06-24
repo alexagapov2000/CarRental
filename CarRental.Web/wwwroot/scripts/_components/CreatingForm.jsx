@@ -3,13 +3,19 @@ import PropTypes from 'prop-types';
 
 export default class CreatingForm extends React.Component {
     
-    onKeyDown = (e) => {
+    onKeyDown = async (e) => {
+        e.persist();
         if(e.keyCode === 13) {
-            this.props.createCountry(e.target.value);
+            await this.props.createCountry(e.target.value);
             this.props.loadCountries();
-            //this.props.mapCountriesToOptions();
             e.target.value = '';
         }
+    }
+
+    mapCountriesToOptions = (countries) => {
+        return countries.map(x => {
+            return <option value={x.id} key={x.id}>{x.name}</option>;
+        });
     }
 
     renderCountriesCreatingForm = () => {
@@ -25,13 +31,12 @@ export default class CreatingForm extends React.Component {
     renderCitiesCreatingForm = () => {
         return <fieldset>
             <legend>Cities creating form</legend>
-            <select></select>
+            <select>{this.mapCountriesToOptions(this.props.countries)}</select>
             <input type='text' placeholder='Enter city name'/>
         </fieldset>;
     }
 
     render() {
-        console.log(this.props.countries);
         return <div>
             {this.renderCountriesCreatingForm()}
             {this.renderCitiesCreatingForm()}

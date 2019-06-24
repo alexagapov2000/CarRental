@@ -1,4 +1,5 @@
-﻿'use strict';
+﻿
+'use strict';
 
 const webpack = require('webpack');
 const path = require('path');
@@ -8,7 +9,9 @@ const srcFolder = "./wwwroot/"
 
 module.exports = {
     entry: [
-        srcFolder + "index.jsx"
+        srcFolder + "index.jsx",
+        'babel-polyfill',
+        //'./test.js',
     ],
     devtool: "source-map",
     output: {
@@ -19,15 +22,37 @@ module.exports = {
     module: {
         rules: [
             {
-                test: /\.jsx$/,
+                //test: /\.jsx$/,
                 exclude: /(node_modules)/,
                 loader: "babel-loader",
                 query: {
                     presets: ["es2015", "stage-0", "react"]
                 }
             }
+        ],
+        loaders: [
+            {
+                //test: /\.jsx?$/,
+                loader: 'babel',
+            }
         ]
     },
     plugins: [
     ]
 };
+
+/*
+module.exports = {
+    entry: ['babel-polyfill', './test.js'],
+  
+    output: {
+      filename: 'bundle.js'       
+    },
+  
+    module: {
+      loaders: [
+        { test: /\.jsx?$/, loader: 'babel', }
+      ]
+    }
+  };
+  */

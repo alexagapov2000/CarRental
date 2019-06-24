@@ -18,10 +18,12 @@ export function createCountry(name) {
         dispatch({
             type: CREATE_COUNTRY,
         });
-        Axios.post('api/countries', {name});
-        dispatch({
-            type: CREATE_COUNTRY_SUCCESS,
-        });
+        Axios.post('api/countries', {name})
+            .then(x => {
+                dispatch({
+                    type: CREATE_COUNTRY_SUCCESS,
+                });
+            });
     }
 }
 
@@ -30,11 +32,11 @@ export function loadCountries() {
         dispatch({
             type: LOAD_COUNTRIES,
         });
-        let countries = getCountries()
+        getCountries()
             .then(x => {
                 dispatch({
                     type: LOAD_COUNTRIES_SUCCESS,
-                    payload: countries,
+                    payload: x,
                 });
             });
         /*
