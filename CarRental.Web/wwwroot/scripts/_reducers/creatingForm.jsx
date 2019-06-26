@@ -15,15 +15,15 @@ export default function creatingFormReducer(state = initialState, action) {
             return {...state, isFetching: false};
 
         case types.CREATE_CITY:
-            return {...state, cities: action.payload, isFetching: true};
+            return {...state, isFetching: true};
+
+        case types.CREATE_CITY_SUCCESS:
+            return {...state, isFetching: false};
 
         case types.LOAD_COUNTRIES:
             return {...state, isFetching: true};
 
         case types.LOAD_COUNTRIES_SUCCESS:
-            return {...state, countries: action.payload, isFetching: false};
-
-        case types.MAP_COUNTRIES_TO_OPTIONS:
             return {...state, countries: action.payload, isFetching: false};
 
         default:

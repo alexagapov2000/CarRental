@@ -38,18 +38,12 @@ export function loadCities() {
     };
 }
 
-//kal
 export function filterCities(event) {
     return dispatch => {
-        let countries = store.getState().selects.countries;
         let cities = store.getState().selects.cities;
-        let countryId = countries.find(x => {
-            console.log(x.name.length);
-            console.log(event.target.value.length)
-            return x.name == event.target.value;
-        });
-        console.log(countryId);
-        let filteredCities = cities.filter(x => x.countryId == countryId);
+        let countries = store.getState().selects.countries;
+        let choosenCountry = countries[event.target.selectedIndex];
+        let filteredCities = cities.filter(x => x.countryId == choosenCountry.id);
         dispatch({
             type: FILTER_CITIES,
             payload: filteredCities,

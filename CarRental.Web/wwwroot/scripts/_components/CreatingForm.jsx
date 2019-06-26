@@ -2,11 +2,22 @@ import React from 'react';
 
 export default class CreatingForm extends React.Component {
     
-    onKeyDown = async (e) => {
+    createCountry = async (e) => {
         e.persist();
         if(e.keyCode === 13) {
             await this.props.createCountry(e.target.value);
             this.props.loadCountries();
+            e.target.value = '';
+        }
+    }
+
+    createCity = async (e) => {
+        e.persist();
+        if(e.keyCode === 13) {
+            console.log(this.props.countries)
+            console.log(e.)//kal достать значение из селекта (не e.target.value)
+            let countryId = this.props.countries[e.target.selectedIndex].id;
+            await this.props.createCity(e.target.value, countryId);
             e.target.value = '';
         }
     }
@@ -23,7 +34,7 @@ export default class CreatingForm extends React.Component {
             <input
                 type='text'
                 placeholder='Enter country name'
-                onKeyDown={this.onKeyDown}/>
+                onKeyDown={this.createCountry}/>
         </fieldset>;
     }
 
@@ -31,7 +42,10 @@ export default class CreatingForm extends React.Component {
         return <fieldset>
             <legend>Cities creating form</legend>
             <select>{this.mapCountriesToOptions(this.props.countries)}</select>
-            <input type='text' placeholder='Enter city name'/>
+            <input
+                type='text'
+                placeholder='Enter city name'
+                onKeyDown={this.createCity}/>
         </fieldset>;
     }
 

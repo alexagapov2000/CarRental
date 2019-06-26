@@ -8501,7 +8501,7 @@ function verifyPlainObject(value, displayName, methodName) {
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.MAP_COUNTRIES_TO_OPTIONS = exports.LOAD_COUNTRIES_SUCCESS = exports.LOAD_COUNTRIES = exports.CREATE_CITY = exports.CREATE_COUNTRY_SUCCESS = exports.CREATE_COUNTRY = undefined;
+exports.LOAD_COUNTRIES_SUCCESS = exports.LOAD_COUNTRIES = exports.CREATE_CITY_SUCCESS = exports.CREATE_CITY = exports.CREATE_COUNTRY_SUCCESS = exports.CREATE_COUNTRY = undefined;
 
 var _regenerator = __webpack_require__(125);
 
@@ -8513,6 +8513,7 @@ var _asyncToGenerator3 = _interopRequireDefault(_asyncToGenerator2);
 
 exports.loadCountries = loadCountries;
 exports.createCountry = createCountry;
+exports.createCity = createCity;
 
 var _axios = __webpack_require__(121);
 
@@ -8523,31 +8524,11 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var CREATE_COUNTRY = exports.CREATE_COUNTRY = 'CREATE_COUNTRY';
 var CREATE_COUNTRY_SUCCESS = exports.CREATE_COUNTRY_SUCCESS = 'CREATE_COUNTRY_SUCCESS';
 var CREATE_CITY = exports.CREATE_CITY = 'CREATE_CITY';
+var CREATE_CITY_SUCCESS = exports.CREATE_CITY_SUCCESS = 'CREATE_CITY_SUCCESS';
 var LOAD_COUNTRIES = exports.LOAD_COUNTRIES = 'LOAD_COUNTRIES';
 var LOAD_COUNTRIES_SUCCESS = exports.LOAD_COUNTRIES_SUCCESS = 'LOAD_COUNTRIES_SUCCESS';
-var MAP_COUNTRIES_TO_OPTIONS = exports.MAP_COUNTRIES_TO_OPTIONS = 'MAP_COUNTRIES_TO_OPTIONS';
-
-function getCountries() {
-    return fetch('api/countries').then(function (x) {
-        return x.json();
-    });
-}
 
 function loadCountries() {
-    return function (dispatch) {
-        dispatch({
-            type: LOAD_COUNTRIES
-        });
-        getCountries().then(function (countries) {
-            dispatch({
-                type: LOAD_COUNTRIES_SUCCESS,
-                payload: countries
-            });
-        });
-    };
-}
-
-function createCountry(name) {
     var _this = this;
 
     return function () {
@@ -8557,12 +8538,15 @@ function createCountry(name) {
                     switch (_context.prev = _context.next) {
                         case 0:
                             dispatch({
-                                type: CREATE_COUNTRY
+                                type: LOAD_COUNTRIES
                             });
                             _context.next = 3;
-                            return _axios2.default.post('api/countries', { name: name }).then(function (x) {
+                            return fetch('api/countries').then(function (x) {
+                                return x.json();
+                            }).then(function (countries) {
                                 dispatch({
-                                    type: CREATE_COUNTRY_SUCCESS
+                                    type: LOAD_COUNTRIES_SUCCESS,
+                                    payload: countries
                                 });
                             });
 
@@ -8576,6 +8560,72 @@ function createCountry(name) {
 
         return function (_x) {
             return _ref.apply(this, arguments);
+        };
+    }();
+}
+
+function createCountry(name) {
+    var _this2 = this;
+
+    return function () {
+        var _ref2 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee2(dispatch) {
+            return _regenerator2.default.wrap(function _callee2$(_context2) {
+                while (1) {
+                    switch (_context2.prev = _context2.next) {
+                        case 0:
+                            dispatch({
+                                type: CREATE_COUNTRY
+                            });
+                            _context2.next = 3;
+                            return _axios2.default.post('api/countries', { name: name }).then(function (x) {
+                                dispatch({
+                                    type: CREATE_COUNTRY_SUCCESS
+                                });
+                            });
+
+                        case 3:
+                        case 'end':
+                            return _context2.stop();
+                    }
+                }
+            }, _callee2, _this2);
+        }));
+
+        return function (_x2) {
+            return _ref2.apply(this, arguments);
+        };
+    }();
+}
+
+function createCity(name, countryId) {
+    var _this3 = this;
+
+    return function () {
+        var _ref3 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee3(dispatch) {
+            return _regenerator2.default.wrap(function _callee3$(_context3) {
+                while (1) {
+                    switch (_context3.prev = _context3.next) {
+                        case 0:
+                            dispatch({
+                                type: CREATE_CITY
+                            });
+                            _context3.next = 3;
+                            return _axios2.default.post('api/cities', { name: name, countryId: countryId }).then(function (x) {
+                                dispatch({
+                                    type: CREATE_CITY_SUCCESS
+                                });
+                            });
+
+                        case 3:
+                        case 'end':
+                            return _context3.stop();
+                    }
+                }
+            }, _callee3, _this3);
+        }));
+
+        return function (_x3) {
+            return _ref3.apply(this, arguments);
         };
     }();
 }
@@ -8851,19 +8901,13 @@ function loadCities() {
     }();
 }
 
-//kal
 function filterCities(event) {
     return function (dispatch) {
-        var countries = _configureStore.store.getState().selects.countries;
         var cities = _configureStore.store.getState().selects.cities;
-        var countryId = countries.find(function (x) {
-            console.log(x.name.length);
-            console.log(event.target.value.length);
-            return x.name == event.target.value;
-        });
-        console.log(countryId);
+        var countries = _configureStore.store.getState().selects.countries;
+        var choosenCountry = countries[event.target.selectedIndex];
         var filteredCities = cities.filter(function (x) {
-            return x.countryId == countryId;
+            return x.countryId == choosenCountry.id;
         });
         dispatch({
             type: FILTER_CITIES,
@@ -40297,6 +40341,7 @@ var CreatingContainer = function (_React$Component) {
                 countries: this.props.creatingForm.countries,
                 loadCountries: this.props.loadCountries,
                 createCountry: this.props.createCountry,
+                createCity: this.props.createCity,
                 isFetching: this.props.isFetching });
         }
     }]);
@@ -40306,7 +40351,8 @@ var CreatingContainer = function (_React$Component) {
 var mapStateToProps = function mapStateToProps(store) {
     return {
         loadCountries: store.loadCountries,
-        mapCountriesToOptions: store.mapCountriesToOptions,
+        createCountry: store.createCountry,
+        createCity: store.createCity,
 
         creatingForm: store.creatingForm
     };
@@ -40320,8 +40366,8 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
         createCountry: function createCountry(name) {
             return dispatch(actions.createCountry(name));
         },
-        mapCountriesToOptions: function mapCountriesToOptions(countries) {
-            return dispatch(actions.mapCountriesToOptions(countries));
+        createCity: function createCity(name, countryId) {
+            return dispatch(action.createCity(name, countryId));
         }
     };
 };
@@ -41719,152 +41765,10 @@ $export($export.S, 'Promise', { 'try': function (callbackfn) {
 
 /***/ }),
 /* 377 */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(module, exports) {
 
 "use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _regenerator = __webpack_require__(125);
-
-var _regenerator2 = _interopRequireDefault(_regenerator);
-
-var _asyncToGenerator2 = __webpack_require__(126);
-
-var _asyncToGenerator3 = _interopRequireDefault(_asyncToGenerator2);
-
-var _classCallCheck2 = __webpack_require__(15);
-
-var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
-
-var _createClass2 = __webpack_require__(24);
-
-var _createClass3 = _interopRequireDefault(_createClass2);
-
-var _possibleConstructorReturn2 = __webpack_require__(17);
-
-var _possibleConstructorReturn3 = _interopRequireDefault(_possibleConstructorReturn2);
-
-var _inherits2 = __webpack_require__(19);
-
-var _inherits3 = _interopRequireDefault(_inherits2);
-
-var _react = __webpack_require__(4);
-
-var _react2 = _interopRequireDefault(_react);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var CreatingForm = function (_React$Component) {
-    (0, _inherits3.default)(CreatingForm, _React$Component);
-
-    function CreatingForm() {
-        var _ref,
-            _this2 = this;
-
-        var _temp, _this, _ret;
-
-        (0, _classCallCheck3.default)(this, CreatingForm);
-
-        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-            args[_key] = arguments[_key];
-        }
-
-        return _ret = (_temp = (_this = (0, _possibleConstructorReturn3.default)(this, (_ref = CreatingForm.__proto__ || Object.getPrototypeOf(CreatingForm)).call.apply(_ref, [this].concat(args))), _this), _this.onKeyDown = function () {
-            var _ref2 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee(e) {
-                return _regenerator2.default.wrap(function _callee$(_context) {
-                    while (1) {
-                        switch (_context.prev = _context.next) {
-                            case 0:
-                                e.persist();
-
-                                if (!(e.keyCode === 13)) {
-                                    _context.next = 6;
-                                    break;
-                                }
-
-                                _context.next = 4;
-                                return _this.props.createCountry(e.target.value);
-
-                            case 4:
-                                _this.props.loadCountries();
-                                e.target.value = '';
-
-                            case 6:
-                            case 'end':
-                                return _context.stop();
-                        }
-                    }
-                }, _callee, _this2);
-            }));
-
-            return function (_x) {
-                return _ref2.apply(this, arguments);
-            };
-        }(), _this.mapCountriesToOptions = function (countries) {
-            return countries.map(function (x) {
-                return _react2.default.createElement(
-                    'option',
-                    { value: x.id, key: x.id },
-                    x.name
-                );
-            });
-        }, _this.renderCountriesCreatingForm = function () {
-            return _react2.default.createElement(
-                'fieldset',
-                null,
-                _react2.default.createElement(
-                    'legend',
-                    null,
-                    'Countries creating form'
-                ),
-                _react2.default.createElement('input', {
-                    type: 'text',
-                    placeholder: 'Enter country name',
-                    onKeyDown: _this.onKeyDown })
-            );
-        }, _this.renderCitiesCreatingForm = function () {
-            return _react2.default.createElement(
-                'fieldset',
-                null,
-                _react2.default.createElement(
-                    'legend',
-                    null,
-                    'Cities creating form'
-                ),
-                _react2.default.createElement(
-                    'select',
-                    null,
-                    _this.mapCountriesToOptions(_this.props.countries)
-                ),
-                _react2.default.createElement('input', { type: 'text', placeholder: 'Enter city name' })
-            );
-        }, _temp), (0, _possibleConstructorReturn3.default)(_this, _ret);
-    }
-
-    (0, _createClass3.default)(CreatingForm, [{
-        key: 'componentDidMount',
-        value: function componentDidMount() {
-            this.props.loadCountries();
-        }
-    }, {
-        key: 'render',
-        value: function render() {
-            return _react2.default.createElement(
-                'div',
-                null,
-                this.renderCountriesCreatingForm(),
-                this.renderCitiesCreatingForm()
-            );
-        }
-    }]);
-    return CreatingForm;
-}(_react2.default.Component);
-
-exports.default = CreatingForm;
+throw new Error("Module build failed: SyntaxError: C:\\Users\\Алексей\\source\\CarRental\\CarRental.Web\\wwwroot\\scripts\\_components\\CreatingForm.jsx: Unexpected token (18:26)\n\n  16 |         if(e.keyCode === 13) {\n  17 |             console.log(this.props.countries)\n> 18 |             console.log(e.)//kal достать значение из селекта (не e.target.value)\n     |                           ^\n  19 |             let countryId = this.props.countries[e.target.selectedIndex].id;\n  20 |             await this.props.createCity(e.target.value, countryId);\n  21 |             e.target.value = '';\n");
 
 /***/ }),
 /* 378 */
@@ -41925,6 +41829,7 @@ var SelectsContainer = function (_React$Component) {
             return _react2.default.createElement(_Selects2.default, {
                 countries: this.props.selects.countries,
                 cities: this.props.selects.cities,
+                filteredCities: this.props.selects.filteredCities,
                 loadCountries: this.props.loadCountries,
                 loadCities: this.props.loadCities,
                 filterCities: this.props.filterCities,
@@ -42032,15 +41937,15 @@ function creatingFormReducer() {
             return (0, _extends3.default)({}, state, { isFetching: false });
 
         case types.CREATE_CITY:
-            return (0, _extends3.default)({}, state, { cities: action.payload, isFetching: true });
+            return (0, _extends3.default)({}, state, { isFetching: true });
+
+        case types.CREATE_CITY_SUCCESS:
+            return (0, _extends3.default)({}, state, { isFetching: false });
 
         case types.LOAD_COUNTRIES:
             return (0, _extends3.default)({}, state, { isFetching: true });
 
         case types.LOAD_COUNTRIES_SUCCESS:
-            return (0, _extends3.default)({}, state, { countries: action.payload, isFetching: false });
-
-        case types.MAP_COUNTRIES_TO_OPTIONS:
             return (0, _extends3.default)({}, state, { countries: action.payload, isFetching: false });
 
         default:
@@ -42257,7 +42162,7 @@ var Selects = function (_React$Component) {
         }
 
         return _ret = (_temp = (_this = (0, _possibleConstructorReturn3.default)(this, (_ref = Selects.__proto__ || Object.getPrototypeOf(Selects)).call.apply(_ref, [this].concat(args))), _this), _this.mapCountriesToOptions = function (countries) {
-            return (countries || []).map(function (x) {
+            return countries.map(function (x) {
                 return _react2.default.createElement(
                     'option',
                     { key: x.id },

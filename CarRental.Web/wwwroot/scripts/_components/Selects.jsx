@@ -3,7 +3,7 @@ import React from 'react';
 export default class Selects extends React.Component {
 
     mapCountriesToOptions = countries => {
-        return (countries || []).map(x => {
+        return countries.map(x => {
             return <option key={x.id}>{x.name}</option>;
         });
     }

@@ -9,6 +9,7 @@ class SelectsContainer extends React.Component {
         return <Selects
             countries={this.props.selects.countries}
             cities={this.props.selects.cities}
+            filteredCities={this.props.selects.filteredCities}
             loadCountries={this.props.loadCountries}
             loadCities={this.props.loadCities}
             filterCities={this.props.filterCities}
