@@ -17,7 +17,10 @@ export default class Header extends React.Component {
                             <Link className='link' to='/show'>Show locations</Link>
                         </li>
                         <li>
-                            <Link className='link' to='creatingRedux'>Creating redux</Link>
+                            <Link className='link' to='/creatingRedux'>Creating redux</Link>
+                        </li>
+                        <li>
+                            <Link className='link' to='/selectsRedux'>Selects redux</Link>
                         </li>
                     </ul>
                 </menu>

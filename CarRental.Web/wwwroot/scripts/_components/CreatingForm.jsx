@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
 export default class CreatingForm extends React.Component {
     
@@ -36,6 +35,10 @@ export default class CreatingForm extends React.Component {
         </fieldset>;
     }
 
+    componentDidMount() {
+        this.props.loadCountries();
+    }
+
     render() {
         return <div>
             {this.renderCountriesCreatingForm()}
@@ -43,8 +46,3 @@ export default class CreatingForm extends React.Component {
         </div>;
     }
 }
-
-CreatingForm.propTypes = {
-    countriesController: PropTypes.string.isRequired,
-    citiesController: PropTypes.string.isRequired,
-};

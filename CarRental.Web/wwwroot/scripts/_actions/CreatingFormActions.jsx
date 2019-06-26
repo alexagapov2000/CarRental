@@ -1,4 +1,3 @@
-import React from 'react';
 import Axios from 'axios';
 
 export const CREATE_COUNTRY = 'CREATE_COUNTRY';
@@ -13,57 +12,31 @@ function getCountries() {
         .then(x => x.json());
 }
 
-export function createCountry(name) {
-    return dispatch => {
-        dispatch({
-            type: CREATE_COUNTRY,
-        });
-        Axios.post('api/countries', {name})
-            .then(x => {
-                dispatch({
-                    type: CREATE_COUNTRY_SUCCESS,
-                });
-            });
-    }
-}
-
 export function loadCountries() {
     return dispatch => {
         dispatch({
             type: LOAD_COUNTRIES,
         });
         getCountries()
-            .then(x => {
+            .then(countries => {
                 dispatch({
                     type: LOAD_COUNTRIES_SUCCESS,
-                    payload: x,
+                    payload: countries,
                 });
             });
-        /*
-        console.log(countries.length);
-        countries = countries.map(x => {
-            let tmp = <option key={x.id}>{x.name}</option>;
-            console.log(tmp);
-            return tmp;
-        });
-        dispatch({
-            type: MAP_COUNTRIES_TO_OPTIONS,
-            payload: countries,
-        });
-        console.log(countries);
-        */
     }
 }
 
-export function mapCountriesToOptions(countriesAsObjs) {
-    return dispatch => {
-        let countriesAsOptions =
-            countriesAsObjs.map(x => {
-                return <option key={x.id}>{x.name}</option>;
-        });
+export function createCountry(name) {
+    return async dispatch => {
         dispatch({
-            type: MAP_COUNTRIES_TO_OPTIONS,
-            payload: countriesAsOptions,
+            type: CREATE_COUNTRY,
         });
+        await Axios.post('api/countries', {name})
+            .then(x => {
+                dispatch({
+                    type: CREATE_COUNTRY_SUCCESS,
+                });
+            });
     }
 }

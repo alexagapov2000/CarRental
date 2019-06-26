@@ -7,12 +7,9 @@ class CreatingContainer extends React.Component {
     
     render() {
         return <CreatingForm
-            countriesController='countries'
-            citiesController='cities'
             countries={this.props.creatingForm.countries}
             loadCountries={this.props.loadCountries}
             createCountry={this.props.createCountry}
-            mapCountriesToOptions={this.props.mapCountriesToOptions}
             isFetching={this.props.isFetching}/>;
     }
 }
@@ -20,10 +17,11 @@ class CreatingContainer extends React.Component {
 const mapStateToProps = store => {
     return {
         loadCountries: store.loadCountries,
-        creatingForm: store.creatingForm,
         mapCountriesToOptions: store.mapCountriesToOptions,
+        
+        creatingForm: store.creatingForm,
     };
-}
+};
 
 const mapDispatchToProps = dispatch => {
     return {
