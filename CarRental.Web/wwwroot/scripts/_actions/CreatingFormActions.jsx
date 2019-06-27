@@ -6,6 +6,7 @@ export const CREATE_CITY = 'CREATE_CITY';
 export const CREATE_CITY_SUCCESS = 'CREATE_CITY_SUCCESS';
 export const LOAD_COUNTRIES = 'LOAD_COUNTRIES';
 export const LOAD_COUNTRIES_SUCCESS = 'LOAD_COUNTRIES_SUCCESS';
+export const CHANGE_COUNTRY = 'CHANGE_COUNTRY';
 
 export function loadCountries() {
     return async dispatch => {
@@ -48,5 +49,14 @@ export function createCity(name, countryId) {
                     type: CREATE_CITY_SUCCESS,
                 });
             });
+    };
+}
+
+export function changeCountry(newCountry) {
+    return dispatch => {
+        dispatch({
+            type: CHANGE_COUNTRY,
+            payload: newCountry,
+        });
     };
 }

@@ -7,6 +7,7 @@ import LocationTable from './showLocations/locationTable.jsx';
 import { connect } from 'react-redux';
 import CreatingContainer from './_containers/CreatingContainer.jsx';
 import SelectsContainer from './_containers/SelectsContainer.jsx';
+import LocationsTableContainer from './_containers/LocationsTableContainer.jsx';
 
 export default class App extends React.Component {
     render() {
@@ -21,6 +22,7 @@ export default class App extends React.Component {
                             <Route path='/show' component={LocationTable} />
                             <Route path='/selectsRedux' component={SelectsContainer} />
                             <Route path='/creatingRedux' component={CreatingContainer} />
+                            <Route path='/locationsTable' component={LocationsTableContainer} />
                         </Switch>
                     </main>
                 </div>

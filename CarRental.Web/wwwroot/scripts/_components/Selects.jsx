@@ -20,13 +20,14 @@ export default class Selects extends React.Component {
     }
     
     render() {
-        return <div>
+        return <fieldset>
+            <legend>Select location</legend>
             <select onChange={this.props.filterCities}>
                 {this.mapCountriesToOptions(this.props.countries)}
             </select>
             <select>
                 {this.mapCitiesToOptions(this.props.filteredCities)}
             </select>
-        </div>;
+        </fieldset>;
     }
 }

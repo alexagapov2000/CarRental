@@ -3,6 +3,7 @@ import * as types from '../_actions/CreatingFormActions.jsx';
 const initialState = {
     countries: [],
     cities: [],
+    currentCountry: null,
     isFetching: false,
 };
 
@@ -25,6 +26,9 @@ export default function creatingFormReducer(state = initialState, action) {
 
         case types.LOAD_COUNTRIES_SUCCESS:
             return {...state, countries: action.payload, isFetching: false};
+
+        case types.CHANGE_COUNTRY:
+            return {...state, currentCountry: action.payload, isFetching: false};
 
         default:
             return state;

@@ -93,12 +93,14 @@ fieldset {
     flex-direction: row;
 }
 
-.countries-cities > .countries {
+.countries-cities .countries {
     width: 50%;
+    border: 1px solid black;
 }
 
-.countries-cities > .cities {
+.countries-cities .cities {
     width: 50%;
+    border: 1px solid black;
 }
 
 fieldset {

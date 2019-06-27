@@ -14,10 +14,9 @@ export default class CreatingForm extends React.Component {
     createCity = async (e) => {
         e.persist();
         if(e.keyCode === 13) {
-            console.log(this.props.countries)
-            console.log(e.)//kal достать значение из селекта (не e.target.value)
-            let countryId = this.props.countries[e.target.selectedIndex].id;
-            await this.props.createCity(e.target.value, countryId);
+            let cityName = e.target.value;
+            let countryId = this.props.currentCountry.id;
+            await this.props.createCity(cityName, countryId);
             e.target.value = '';
         }
     }
@@ -38,10 +37,18 @@ export default class CreatingForm extends React.Component {
         </fieldset>;
     }
 
+    changeCountry = e => {
+        let newCountryIndex = e.target.selectedIndex;
+        let newCountry = this.props.countries[newCountryIndex];
+        this.props.changeCountry(newCountry);
+    }
+
     renderCitiesCreatingForm = () => {
         return <fieldset>
             <legend>Cities creating form</legend>
-            <select>{this.mapCountriesToOptions(this.props.countries)}</select>
+            <select onChange={this.changeCountry}>
+                {this.mapCountriesToOptions(this.props.countries)}
+            </select>
             <input
                 type='text'
                 placeholder='Enter city name'
