@@ -50,7 +50,7 @@ ul {
 }
 
 ul .link {
-    text-decoration: none; 
+    text-decoration: none;
     border: 2px solid #ccc;
     border-radius: 8px;
     transition: border 0.15s linear;
@@ -76,6 +76,7 @@ fieldset {
     user-select: none;
     margin-right: -1px;
     margin-bottom: -1px;
+    border: 1px solid black;
 }
 
 .selected {
@@ -88,19 +89,25 @@ fieldset {
     border: 1px solid black;
 }
 
+.unselected:hover {
+    background-color: #f8f8f8;
+}
+
 .countries-cities {
     display: flex;
     flex-direction: row;
 }
 
-.countries-cities .countries {
+.countries-cities > .countries {
     width: 50%;
     border: 1px solid black;
 }
 
-.countries-cities .cities {
+.countries-cities > .cities {
     width: 50%;
     border: 1px solid black;
+    margin-bottom: -1px;
+    margin-right: -1px;
 }
 
 fieldset {

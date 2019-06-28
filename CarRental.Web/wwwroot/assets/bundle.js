@@ -42787,36 +42787,19 @@ var _react = __webpack_require__(3);
 
 var _react2 = _interopRequireDefault(_react);
 
+var _SelectableDiv = __webpack_require__(596);
+
+var _SelectableDiv2 = _interopRequireDefault(_SelectableDiv);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var SelectableDiv = function (_React$Component) {
-    (0, _inherits3.default)(SelectableDiv, _React$Component);
-
-    function SelectableDiv() {
-        (0, _classCallCheck3.default)(this, SelectableDiv);
-        return (0, _possibleConstructorReturn3.default)(this, (SelectableDiv.__proto__ || Object.getPrototypeOf(SelectableDiv)).apply(this, arguments));
-    }
-
-    (0, _createClass3.default)(SelectableDiv, [{
-        key: 'render',
-        value: function render() {
-            return _react2.default.createElement(
-                'div',
-                { className: this.props.className },
-                this.props.source.name
-            );
-        }
-    }]);
-    return SelectableDiv;
-}(_react2.default.Component);
-
-var LocationsTable = function (_React$Component2) {
-    (0, _inherits3.default)(LocationsTable, _React$Component2);
+var LocationsTable = function (_React$Component) {
+    (0, _inherits3.default)(LocationsTable, _React$Component);
 
     function LocationsTable() {
         var _ref;
 
-        var _temp, _this2, _ret;
+        var _temp, _this, _ret;
 
         (0, _classCallCheck3.default)(this, LocationsTable);
 
@@ -42824,34 +42807,33 @@ var LocationsTable = function (_React$Component2) {
             args[_key] = arguments[_key];
         }
 
-        return _ret = (_temp = (_this2 = (0, _possibleConstructorReturn3.default)(this, (_ref = LocationsTable.__proto__ || Object.getPrototypeOf(LocationsTable)).call.apply(_ref, [this].concat(args))), _this2), _this2.renderCountriesComponents = function () {
-            return _this2.props.countries.map(function (country) {
+        return _ret = (_temp = (_this = (0, _possibleConstructorReturn3.default)(this, (_ref = LocationsTable.__proto__ || Object.getPrototypeOf(LocationsTable)).call.apply(_ref, [this].concat(args))), _this), _this.renderCountriesComponents = function () {
+            return _this.props.countries.map(function (country) {
                 return _react2.default.createElement(
-                    SelectableDiv,
+                    _SelectableDiv2.default,
                     { source: country, className: 'countries' },
                     country.name
                 );
             });
-        }, _this2.renderCitiesComponents = function () {
-            var citiesComponents = _this2.props.cities.map(function (city) {
+        }, _this.renderCitiesComponents = function () {
+            var citiesComponents = _this.props.cities.map(function (city) {
                 return _react2.default.createElement(
-                    SelectableDiv,
-                    { source: city, className: 'cities' },
+                    _SelectableDiv2.default,
+                    { source: city },
                     city.name
                 );
             });
             var groupedCities = {};
             citiesComponents.forEach(function (cityComponent) {
-                var id = cityComponent.props.source.id;
-                if (groupedCities[id] === undefined) groupedCities[id] = [];
-                groupedCities[id].push(cityComponent);
-                console.log(cityComponent.props.source);
+                var countryId = cityComponent.props.source.countryId;
+                if (groupedCities[countryId] === undefined) groupedCities[countryId] = [];
+                groupedCities[countryId].push(cityComponent);
             });
             return groupedCities;
-        }, _this2.renderCountriesWithCities = function () {
+        }, _this.renderCountriesWithCities = function () {
             var container = {};
-            var countriesComponents = _this2.renderCountriesComponents();
-            var citiesComponents = _this2.renderCitiesComponents();
+            var countriesComponents = _this.renderCountriesComponents();
+            var citiesComponents = _this.renderCitiesComponents();
             countriesComponents.forEach(function (countryComponent) {
                 var countryId = countryComponent.props.source.id;
                 container[countryId] = _react2.default.createElement(
@@ -42860,16 +42842,22 @@ var LocationsTable = function (_React$Component2) {
                     countryComponent,
                     _react2.default.createElement(
                         'div',
-                        null,
+                        { className: 'cities' },
                         citiesComponents[countryId]
                     )
                 );
             });
             return container;
-        }, _temp), (0, _possibleConstructorReturn3.default)(_this2, _ret);
+        }, _temp), (0, _possibleConstructorReturn3.default)(_this, _ret);
     }
 
     (0, _createClass3.default)(LocationsTable, [{
+        key: 'componentDidMount',
+        value: function componentDidMount() {
+            this.props.loadCountries();
+            this.props.loadCities();
+        }
+    }, {
         key: 'render',
         value: function render() {
             var countriesWithCities = this.renderCountriesWithCities();
@@ -48443,6 +48431,64 @@ module.exports = function (regExp, replace) {
   };
 };
 
+
+/***/ }),
+/* 595 */,
+/* 596 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _classCallCheck2 = __webpack_require__(12);
+
+var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
+
+var _createClass2 = __webpack_require__(16);
+
+var _createClass3 = _interopRequireDefault(_createClass2);
+
+var _possibleConstructorReturn2 = __webpack_require__(13);
+
+var _possibleConstructorReturn3 = _interopRequireDefault(_possibleConstructorReturn2);
+
+var _inherits2 = __webpack_require__(14);
+
+var _inherits3 = _interopRequireDefault(_inherits2);
+
+var _react = __webpack_require__(3);
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var SelectableDiv = function (_React$Component) {
+    (0, _inherits3.default)(SelectableDiv, _React$Component);
+
+    function SelectableDiv() {
+        (0, _classCallCheck3.default)(this, SelectableDiv);
+        return (0, _possibleConstructorReturn3.default)(this, (SelectableDiv.__proto__ || Object.getPrototypeOf(SelectableDiv)).apply(this, arguments));
+    }
+
+    (0, _createClass3.default)(SelectableDiv, [{
+        key: 'render',
+        value: function render() {
+            var className = 'selectable ' + this.props.className;
+            return _react2.default.createElement(
+                'div',
+                { className: className },
+                this.props.source.name
+            );
+        }
+    }]);
+    return SelectableDiv;
+}(_react2.default.Component);
+
+exports.default = SelectableDiv;
 
 /***/ })
 /******/ ]);

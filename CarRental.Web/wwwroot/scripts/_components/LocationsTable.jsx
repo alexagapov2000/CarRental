@@ -1,12 +1,5 @@
 import React from 'react';
-
-class SelectableDiv extends React.Component {
-    render() {
-        return <div className={this.props.className}>
-            {this.props.source.name}
-        </div>;
-    }
-}
+import SelectableDiv from './SelectableDiv.jsx'
 
 export default class LocationsTable extends React.Component {
 
@@ -20,17 +13,16 @@ export default class LocationsTable extends React.Component {
 
     renderCitiesComponents = () => {
         let citiesComponents = this.props.cities.map(city => {
-            return <SelectableDiv source={city} className='cities'>
+            return <SelectableDiv source={city}>
                 {city.name}
             </SelectableDiv>;
         });
         let groupedCities = {};
         citiesComponents.forEach(cityComponent => {
-            let id = cityComponent.props.source.id;
-            if(groupedCities[id] === undefined)
-                groupedCities[id] = [];
-            groupedCities[id].push(cityComponent);
-            console.log(cityComponent.props.source);
+            let countryId = cityComponent.props.source.countryId;
+            if(groupedCities[countryId] === undefined)
+                groupedCities[countryId] = [];
+            groupedCities[countryId].push(cityComponent);
         });
         return groupedCities;
     }
@@ -43,12 +35,17 @@ export default class LocationsTable extends React.Component {
             let countryId = countryComponent.props.source.id;
             container[countryId] = <div className='countries-cities'>
                 {countryComponent}
-                <div>
+                <div className='cities'>
                     {citiesComponents[countryId]}
                 </div>
             </div>;
         });
         return container;
+    }
+
+    componentDidMount() {
+        this.props.loadCountries();
+        this.props.loadCities();
     }
 
     render() {
