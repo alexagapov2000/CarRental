@@ -1,4 +1,5 @@
 ﻿using CarRental.DAL.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
@@ -24,6 +25,7 @@ namespace CarRental.Web.Controllers
             return await _context.Cities.ToListAsync();
         }
 
+        [Authorize]
         [HttpGet("{countryID}")]
         public async Task<ActionResult<IEnumerable<Cities>>> GetCities(int countryID)
         {
