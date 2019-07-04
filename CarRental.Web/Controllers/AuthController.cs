@@ -27,9 +27,16 @@ namespace CarRental.Web.Controllers
             var token = new JwtSecurityToken(
                 issuer: "smesk.in",
                 audience: "readers",
-                expires: DateTime.Now.AddMinutes(15),
+                expires: DateTime.Now.AddHours(1),
                 signingCredentials: signingCredentials);
             return Ok(new JwtSecurityTokenHandler().WriteToken(token));
+            //return Ok(new Object[]{symmetricSecurityKey, signingCredentials, token});
+        }
+
+        [HttpPost("kal")]
+        public ActionResult GetKal()
+        {
+            return Ok("kaliw");
         }
     }
 }

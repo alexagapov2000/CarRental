@@ -25,7 +25,6 @@ namespace CarRental.Web.Controllers
             return await _context.Cities.ToListAsync();
         }
 
-        [Authorize]
         [HttpGet("{countryID}")]
         public async Task<ActionResult<IEnumerable<Cities>>> GetCities(int countryID)
         {

@@ -7,6 +7,9 @@ using Microsoft.AspNetCore.Http;
 using JavaScriptEngineSwitcher.ChakraCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using System.IO;
+using System;
+using Westwind.AspNetCore.LiveReload;
 
 namespace CarRental.Web
 {
@@ -16,7 +19,6 @@ namespace CarRental.Web
         {
             var securityKey = "abracadd_jasfkldjf_klanvfklcvjxdcfkldasf_jkdasflj_woifjdasfjkdsaf_kljvicoczvjlkdasfakjldsafklda_bra_2019";
             var symmetricSecurityKey = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(securityKey));
-
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
                 {
@@ -31,6 +33,7 @@ namespace CarRental.Web
                     };
                 });
 
+            services.AddLiveReload();
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddReact();
             services.AddJsEngineSwitcher(options => options.DefaultEngineName = ChakraCoreJsEngine.EngineName)
@@ -44,6 +47,7 @@ namespace CarRental.Web
         {
             app.UseReact(config => {  });
             app.UseDefaultFiles();
+            app.UseLiveReload();
             app.UseStaticFiles();
             app.UseWebpackDevMiddleware();
             app.UseAuthentication();
