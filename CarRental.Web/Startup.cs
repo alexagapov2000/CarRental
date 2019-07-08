@@ -17,19 +17,22 @@ namespace CarRental.Web
     {
         public void ConfigureServices(IServiceCollection services)
         {
-            var securityKey = "abracadd_jasfkldjf_klanvfklcvjxdcfkldasf_jkdasflj_woifjdasfjkdsaf_kljvicoczvjlkdasfakjldsafklda_bra_2019";
-            var symmetricSecurityKey = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(securityKey));
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
                 {
                     options.TokenValidationParameters = new TokenValidationParameters
                     {
                         ValidateIssuer = true,
+                        ValidIssuer = AuthOptions.ISSUER,
+
                         ValidateAudience = true,
+                        ValidAudience = AuthOptions.AUDIENCE,
+
                         ValidateIssuerSigningKey = true,
-                        ValidIssuer = "smesk.in",
-                        ValidAudience = "readers",
-                        IssuerSigningKey = symmetricSecurityKey,
+                        IssuerSigningKey = AuthOptions.GetSymmetricSecurityKey(),
+
+                        ValidateLifetime = true,
+
                     };
                 });
 

@@ -19,7 +19,7 @@ export function loadCountries() {
                     payload: countries,
                 });
             });
-    }
+    };
 }
 
 export function loadCities() {

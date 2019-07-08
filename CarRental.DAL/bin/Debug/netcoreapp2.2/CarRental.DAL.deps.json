@@ -11,7 +11,8 @@
           "Microsoft.EntityFrameworkCore": "2.2.4",
           "Microsoft.EntityFrameworkCore.Design": "2.2.4",
           "Microsoft.EntityFrameworkCore.SqlServer": "2.2.4",
-          "Microsoft.EntityFrameworkCore.Tools": "2.2.4"
+          "Microsoft.EntityFrameworkCore.Tools": "2.2.4",
+          "Microsoft.IdentityModel.Tokens": "5.3.0.0"
         },
         "runtime": {
           "CarRental.DAL.dll": {}
@@ -520,6 +521,14 @@
         "dependencies": {
           "System.Runtime": "4.1.0"
         }
+      },
+      "Microsoft.IdentityModel.Tokens/5.3.0.0": {
+        "runtime": {
+          "Microsoft.IdentityModel.Tokens.dll": {
+            "assemblyVersion": "5.3.0.0",
+            "fileVersion": "5.3.0.51005"
+          }
+        }
       }
     }
   },
@@ -920,6 +929,11 @@
       "sha512": "sha512-k1S4Gc6IGwtHGT8188RSeGaX86Qw/wnrgNLshJvsdNUOPP9etMmo8S07c+UlOAx4K/xLuN9ivA1bD0LVurtIxQ==",
       "path": "system.threading.tasks/4.0.11",
       "hashPath": "system.threading.tasks.4.0.11.nupkg.sha512"
+    },
+    "Microsoft.IdentityModel.Tokens/5.3.0.0": {
+      "type": "reference",
+      "serviceable": false,
+      "sha512": ""
     }
   }
 }
