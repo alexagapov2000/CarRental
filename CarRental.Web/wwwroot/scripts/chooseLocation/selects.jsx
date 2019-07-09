@@ -1,6 +1,7 @@
 import React from 'react';
 import CitySelect from './citySelect.jsx';
 import CountrySelect from './countrySelect.jsx';
+import queryString from 'query-string';
 
 export default class Selects extends React.Component {
 
@@ -29,7 +30,7 @@ export default class Selects extends React.Component {
             <div>
                 <span>City</span>
                 <CitySelect
-                    controller={`/api/Cities/${this.state.countryID}`}/>;
+                    controller={`/api/Cities?countryId=${this.state.countryID}`}/>;
             </div>
         </fieldset>;
     };

@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.IO;
 using System;
+using CarRental.DAL.Models.Auth;
 using Westwind.AspNetCore.LiveReload;
 
 namespace CarRental.Web

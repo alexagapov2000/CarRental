@@ -19,18 +19,23 @@ namespace CarRental.Web.Controllers
             _context = context;
         }
 
+        [Authorize(Roles = "admin")]
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Cities>>> GetCities()
+        public async Task<ActionResult<IEnumerable<Cities>>> GetCities([FromQuery]int? countryID)
         {
+            if (countryID != null)
+            {
+                return await _context.Cities
+                    .Where(city => city.CountryId == countryID)
+                    .ToListAsync();
+            }
             return await _context.Cities.ToListAsync();
         }
 
-        [HttpGet("{countryID}")]
-        public async Task<ActionResult<IEnumerable<Cities>>> GetCities(int countryID)
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Cities>> GetCities(int id)
         {
-            return await _context.Cities
-                .Where(city => city.CountryId == countryID)
-                .ToListAsync();
+            return await _context.Cities.FirstOrDefaultAsync(x => x.Id == id);
         }
 
         [HttpPost]

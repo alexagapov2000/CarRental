@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace CarRental.DAL.Models
+﻿namespace CarRental.DAL.Models.Auth
 {
     public class Person
     {
-        public string Login { get; set; }
+        public string Username { get; set; }
         public string Password { get; set; }
         public string Role { get; set; }
     }

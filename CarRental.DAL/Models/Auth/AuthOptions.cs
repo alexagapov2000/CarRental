@@ -1,9 +1,7 @@
-﻿using Microsoft.IdentityModel.Tokens;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Text;
+using Microsoft.IdentityModel.Tokens;
 
-namespace CarRental.DAL.Models
+namespace CarRental.DAL.Models.Auth
 {
     public class AuthOptions
     {

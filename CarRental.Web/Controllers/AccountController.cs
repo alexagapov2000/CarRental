@@ -4,7 +4,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using CarRental.DAL.Models;
+using CarRental.DAL.Models.Auth;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
@@ -18,18 +18,14 @@ namespace CarRental.Web.Controllers
     {
         private List<Person> people = new List<Person>()
         {
-            new Person {Login= "alexagapov2000", Password = "12345", Role = "admin"},
-            new Person {Login = "user19340", Password="userPass1234", Role = "user"},
-            new Person {Login = "kalowichok2000", Password = "yhfdahs8u823", Role = "guest"},
+            new Person {Username= "alexagapov2000", Password = "12345", Role = "admin"},
+            new Person {Username = "user19340", Password="userPass1234", Role = "user"},
+            new Person {Username = "kalowichok2000", Password = "yhfdahs8u823", Role = "guest"},
         };
 
-        [HttpPost("token")]
-        public async Task Token()
+        public async Task Token(Person person)
         {
-            var username = Request.Form["username"];
-            var password = Request.Form["password"];
-
-            var identity = GetIdentity(username, password);
+            var identity = GetIdentity(person.Username, person.Password);
             if (identity == null)
             {
                 Response.StatusCode = 400;
@@ -59,22 +55,17 @@ namespace CarRental.Web.Controllers
 
         private ClaimsIdentity GetIdentity(string username, string password)
         {
-            Person person = people.FirstOrDefault(x => x.Login == username && x.Password == password);
-            if (person != null)
+            var person = people.FirstOrDefault(x => x.Username == username && x.Password == password);
+            if (person == null) return null;
+            var claims = new List<Claim>
             {
-                var claims = new List<Claim>
-                {
-                    new Claim(ClaimsIdentity.DefaultNameClaimType, person.Login),
-                    new Claim(ClaimsIdentity.DefaultRoleClaimType, person.Role)
-                };
-                ClaimsIdentity claimsIdentity =
+                new Claim(ClaimsIdentity.DefaultNameClaimType, person.Username),
+                new Claim(ClaimsIdentity.DefaultRoleClaimType, person.Role)
+            };
+            var claimsIdentity =
                 new ClaimsIdentity(claims, "Token", ClaimsIdentity.DefaultNameClaimType,
-                ClaimsIdentity.DefaultRoleClaimType);
-                return claimsIdentity;
-            }
-
-            // если пользователя не найдено
-            return null;
+                    ClaimsIdentity.DefaultRoleClaimType);
+            return claimsIdentity;
         }
     }
 }
