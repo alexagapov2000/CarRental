@@ -1,4 +1,5 @@
 import React from 'react';
+import LocationsTableContainer from '../_containers/LocationsTableContainer.jsx'
 
 export default class AuthForm extends React.Component {
 
@@ -18,6 +19,7 @@ export default class AuthForm extends React.Component {
             {usernameInput}
             {passwordInput}
             <button onClick={() => this.signIn(usernameInput, passwordInput)}>Login</button>
+            <LocationsTableContainer />
         </fieldset>;
     }
 }

@@ -23,6 +23,7 @@ namespace CarRental.Web.Controllers
             new Person {Username = "kalowichok2000", Password = "yhfdahs8u823", Role = "guest"},
         };
 
+        [HttpPost("token")]
         public async Task Token(Person person)
         {
             var identity = GetIdentity(person.Username, person.Password);
@@ -45,7 +46,7 @@ namespace CarRental.Web.Controllers
 
             var response = new
             {
-                accesss_token = encodedJwt,
+                JWTkey = encodedJwt,
                 username = identity.Name,
             };
 
