@@ -18,9 +18,9 @@ namespace CarRental.Web.Controllers
     {
         private List<Person> people = new List<Person>()
         {
-            new Person {Username= "alexagapov2000", Password = "12345", Role = "admin"},
-            new Person {Username = "user19340", Password="userPass1234", Role = "user"},
-            new Person {Username = "kalowichok2000", Password = "yhfdahs8u823", Role = "guest"},
+            new Person {Username= "admin", Password = "admin", Role = "admin"},
+            new Person {Username = "user", Password="user", Role = "user"},
+            new Person {Username = "guest", Password = "guest", Role = "guest"},
         };
 
         [HttpPost("token")]
@@ -40,7 +40,7 @@ namespace CarRental.Web.Controllers
                     audience: AuthOptions.AUDIENCE,
                     notBefore: now,
                     claims: identity.Claims,
-                    expires: now.Add(TimeSpan.FromMinutes(AuthOptions.LIFETIME)),
+                    expires: now.Add(TimeSpan.FromHours(AuthOptions.LIFETIME)),
                     signingCredentials: new SigningCredentials(AuthOptions.GetSymmetricSecurityKey(), SecurityAlgorithms.HmacSha256));
             var encodedJwt = new JwtSecurityTokenHandler().WriteToken(jwt);
 

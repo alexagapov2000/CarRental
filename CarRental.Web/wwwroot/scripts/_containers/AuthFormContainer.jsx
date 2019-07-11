@@ -10,7 +10,7 @@ class AuthFormContainer extends React.Component {
             username={this.props.authForm.username}
             password={this.props.authForm.password}
             authUser={this.props.authUser}
-            isFetching={this.props.isFetching}/>;
+            isFetching={this.props.isFetching} />;
     }
 }
 

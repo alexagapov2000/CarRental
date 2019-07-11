@@ -1,4 +1,5 @@
 import Axios from 'axios';
+import { store } from '../_store/configureStore.jsx';
 
 export const LOAD_COUNTRIES = 'LOAD_COUNTRIES';
 export const LOAD_COUNTRIES_SUCCESS = 'LOAD_COUNTRIES_SUCCESS';
@@ -30,7 +31,9 @@ export function loadCities() {
         dispatch({
             type: LOAD_CITIES,
         });
-        await fetch(`api/cities`)
+        let token = store.getState().authForm.token;
+        console.log(token);
+        await fetch(`api/cities`, {headers: {Authorization: `bearer ${token}`}})
             .then(x => x.json())
             .then(cities => {
                 dispatch({

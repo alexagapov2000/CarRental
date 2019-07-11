@@ -13,13 +13,12 @@ export default class AuthForm extends React.Component {
 
     render() {
         let usernameInput = <input id='usernameInput' type="text"/>;
-        let passwordInput = <input id='passwordInput' type="text"/>;
+        let passwordInput = <input id='passwordInput' type="password"/>;
         return <fieldset>
             <legend>Sign in</legend>
             {usernameInput}
             {passwordInput}
             <button onClick={() => this.signIn(usernameInput, passwordInput)}>Login</button>
-            <LocationsTableContainer />
         </fieldset>;
     }
 }

@@ -1,5 +1,5 @@
 import React from 'react';
-import SelectableDiv from './SelectableDiv.jsx'
+import SelectableDiv from '../_components/SelectableDiv.jsx';
 
 export default class LocationsTable extends React.Component {
 
@@ -13,7 +13,7 @@ export default class LocationsTable extends React.Component {
 
     renderCitiesComponents = () => {
         let citiesComponents = this.props.cities.map(city => {
-            return <SelectableDiv source={city}>
+            return <SelectableDiv source={city} className='cities'>
                 {city.name}
             </SelectableDiv>;
         });

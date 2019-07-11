@@ -45,6 +45,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\CarRental.BL\CarRental.BL.csproj" />
     <ProjectReference Include="..\CarRental.DAL\CarRental.DAL.csproj" />
   </ItemGroup>
 

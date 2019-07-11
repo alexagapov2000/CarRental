@@ -3,6 +3,7 @@ import * as types from '../_actions/AuthFormActions.jsx';
 const initialState = {
     username: '',
     password: '',
+    token: '',
 }
 
 export default function authFormReducer(state = initialState, action) {
@@ -12,6 +13,7 @@ export default function authFormReducer(state = initialState, action) {
                 ...state,
                 username: action.payload.username,
                 password: action.payload.password,
+                token: action.payload.token,
                 isFetching: true,
             }
         default:

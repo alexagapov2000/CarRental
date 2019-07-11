@@ -8,16 +8,11 @@ export function authUser(username, password) {
             username: username,
             password: password,
         };
-        await Axios.post("api/account/token", accountData);
+        let authData = await Axios.post("api/account/token", accountData);
+        accountData.token = authData.data.JWTkey;
         dispatch({
             type: AUTHORIZE_USER,
             payload: accountData,
         });
-    };
-}
-
-export function getToken() {
-    return async dispatch => {
-        
     };
 }
