@@ -7,3 +7,12 @@ C:\W\CarRental.BL\obj\Debug\netcoreapp2.2\CarRental.BL.AssemblyInfoInputs.cache
 C:\W\CarRental.BL\obj\Debug\netcoreapp2.2\CarRental.BL.AssemblyInfo.cs
 C:\W\CarRental.BL\obj\Debug\netcoreapp2.2\CarRental.BL.dll
 C:\W\CarRental.BL\obj\Debug\netcoreapp2.2\CarRental.BL.pdb
+C:\Users\Алексей\source\CarRental\CarRental.BL\bin\Debug\netcoreapp2.2\CarRental.BL.deps.json
+C:\Users\Алексей\source\CarRental\CarRental.BL\bin\Debug\netcoreapp2.2\CarRental.BL.dll
+C:\Users\Алексей\source\CarRental\CarRental.BL\bin\Debug\netcoreapp2.2\CarRental.BL.pdb
+C:\Users\Алексей\source\CarRental\CarRental.BL\obj\Debug\netcoreapp2.2\CarRental.BL.csprojAssemblyReference.cache
+C:\Users\Алексей\source\CarRental\CarRental.BL\obj\Debug\netcoreapp2.2\CarRental.BL.csproj.CoreCompileInputs.cache
+C:\Users\Алексей\source\CarRental\CarRental.BL\obj\Debug\netcoreapp2.2\CarRental.BL.AssemblyInfoInputs.cache
+C:\Users\Алексей\source\CarRental\CarRental.BL\obj\Debug\netcoreapp2.2\CarRental.BL.AssemblyInfo.cs
+C:\Users\Алексей\source\CarRental\CarRental.BL\obj\Debug\netcoreapp2.2\CarRental.BL.dll
+C:\Users\Алексей\source\CarRental\CarRental.BL\obj\Debug\netcoreapp2.2\CarRental.BL.pdb
