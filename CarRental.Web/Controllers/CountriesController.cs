@@ -65,13 +65,13 @@ namespace CarRental.Web.Controllers
         }
 
         [HttpDelete("delete")]
-        public async Task<IEnumerable<Countries>> DeleteCountries(int[] IDs)
+        public async Task<IEnumerable<Countries>> DeleteCountries([FromBody] int[] IDs)
         {
             //map input data for intersection
             var pseudoCountries = IDs.Select(id => new Countries{Id = id});
 
             var countries = _context.Countries.Intersect(pseudoCountries, new CountriesEqualityComparer());
-            //_context.Countries.RemoveRange(pseudoCountries);
+            _context.Countries.RemoveRange(pseudoCountries);
             await _context.SaveChangesAsync();
             return pseudoCountries;
         }

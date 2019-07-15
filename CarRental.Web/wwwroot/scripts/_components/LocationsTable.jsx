@@ -5,14 +5,16 @@ export default class LocationsTable extends React.Component {
 
     constructor(props) {
         super(props);
-        document.addEventListener('keyup', this.deleteSeveralObjects);
     }
 
-    deleteSeveralObjects = e => {
+    deleteSeveralObjects = async e => {
         if(e.keyCode == 46) {
             let {cities, countries} = this.props.toDeleteList;
-            this.props.deleteSeveralObjects('cities', Object.keys(cities));
-            this.props.deleteSeveralObjects('countries', Object.keys(countries));
+            console.log(Object.keys(cities));
+            await this.props.deleteSeveralObjects('cities', Object.keys(cities));
+            await this.props.deleteSeveralObjects('countries', Object.keys(countries));
+            await this.props.loadCities();
+            await this.props.loadCountries();
         }
     }
 
@@ -68,11 +70,15 @@ export default class LocationsTable extends React.Component {
     componentDidMount() {
         this.props.loadCountries();
         this.props.loadCities();
+        document.addEventListener('keyup', this.deleteSeveralObjects);
+    }
+
+    componentWillUnmount() {
+        document.removeEventListener('keyup', this.deleteSeveralObjects);
     }
 
     render() {
         let countriesWithCities = this.renderCountriesWithCities();
-        //console.log(countriesWithCities);
         return <div>
             {Object.values(countriesWithCities)}
         </div>;

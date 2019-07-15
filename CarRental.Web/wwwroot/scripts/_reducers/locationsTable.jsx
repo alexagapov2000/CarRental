@@ -10,13 +10,13 @@ const initialState = {
 export default function locationsTableReducer(state = initialState, action) {
     switch (action.type) {
         case types.LOAD_COUNTRIES:
-            return {...state, isFetching: true};
+            return {...state, countries: action.payload, isFetching: true};
 
         case types.LOAD_COUNTRIES_SUCCESS:
             return {...state, countries: action.payload, isFetching: false};
 
         case types.LOAD_CITIES:
-            return {...state, isFetching: true};
+            return {...state, cities: action.payload, isFetching: true};
 
         case types.LOAD_CITIES_SUCCESS:
             return {...state, cities: action.payload, isFetching: false};
@@ -25,7 +25,7 @@ export default function locationsTableReducer(state = initialState, action) {
             return {...state, isFetching: true};
 
         case types.DELETE_SEVERAL_OBJECTS_SUCCESS:
-            return {...state, isFetching: false};
+            return {...state, toDeleteList: action.payload, isFetching: false};
 
         default:
             return state;

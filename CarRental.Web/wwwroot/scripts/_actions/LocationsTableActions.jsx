@@ -12,6 +12,7 @@ export function loadCountries() {
     return async dispatch => {
         dispatch({
             type: LOAD_COUNTRIES,
+            payload: [],
         });
         await fetch('api/countries')
             .then(x => x.json())
@@ -28,6 +29,7 @@ export function loadCities() {
     return async dispatch => {
         dispatch({
             type: LOAD_CITIES,
+            payload: [],
         });
         let token = store.getState().authForm.token;
         await fetch(`api/cities`, {headers: {Authorization: `bearer ${token}`}})
@@ -46,9 +48,10 @@ export function deleteSeveralObjects(controller, IDs) {
         dispatch({
             type: DELETE_SEVERAL_OBJECTS,
         });
-        await Axios.delete(`api/${controller}/delete`, IDs);
+        await Axios.delete(`api/${controller}/delete`, {data: IDs});
         dispatch({
             type: DELETE_SEVERAL_OBJECTS_SUCCESS,
+            payload: {countries: {}, cities: {}},
         });
     };
 }

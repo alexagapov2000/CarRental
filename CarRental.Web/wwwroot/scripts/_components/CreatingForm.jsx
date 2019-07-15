@@ -46,8 +46,9 @@ export default class CreatingForm extends React.Component {
     renderCitiesCreatingForm = () => {
         return <fieldset>
             <legend>Cities creating form</legend>
-            <select onChange={this.changeCountry}>
+            <select defaultValue='-1' onChange={this.changeCountry}>
                 {this.mapCountriesToOptions(this.props.countries)}
+                <option value="-1">Choose country</option>
             </select>
             <input
                 type='text'

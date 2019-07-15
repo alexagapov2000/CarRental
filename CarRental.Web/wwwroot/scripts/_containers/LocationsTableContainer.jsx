@@ -4,7 +4,7 @@ import * as actions from '../_actions/LocationsTableActions.jsx';
 import LocationsTable from '../_components/LocationsTable.jsx';
 
 class LocationsTableContainer extends React.Component {
-    
+
     render() {
         return <LocationsTable
             countries={this.props.locationsTable.countries}

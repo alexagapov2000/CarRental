@@ -22,8 +22,9 @@ export default class Selects extends React.Component {
     render() {
         return <fieldset>
             <legend>Select location</legend>
-            <select onChange={this.props.filterCities}>
+            <select defaultValue='-1' onChange={this.props.filterCities}>
                 {this.mapCountriesToOptions(this.props.countries)}
+                <option value="-1">Choose country</option>
             </select>
             <select>
                 {this.mapCitiesToOptions(this.props.filteredCities)}
