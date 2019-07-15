@@ -20,7 +20,3 @@ C:\Users\Алексей\source\CarRental\CarRental.DAL\obj\Debug\netcoreapp2.2\C
 C:\Users\Алексей\source\CarRental\CarRental.DAL\obj\Debug\netcoreapp2.2\CarRental.DAL.AssemblyInfo.cs
 C:\Users\Алексей\source\CarRental\CarRental.DAL\obj\Debug\netcoreapp2.2\CarRental.DAL.dll
 C:\Users\Алексей\source\CarRental\CarRental.DAL\obj\Debug\netcoreapp2.2\CarRental.DAL.pdb
-C:\W\CarRental.DAL\bin\Debug\netcoreapp2.2\Microsoft.IdentityModel.Tokens.dll
-C:\W\CarRental.DAL\bin\Debug\netcoreapp2.2\Microsoft.IdentityModel.Tokens.pdb
-C:\W\CarRental.DAL\bin\Debug\netcoreapp2.2\Microsoft.IdentityModel.Tokens.xml
-C:\W\CarRental.DAL\obj\Debug\netcoreapp2.2\CarRental.DAL.csproj.CopyComplete

@@ -5,10 +5,8 @@ export const LOAD_COUNTRIES = 'LOAD_COUNTRIES';
 export const LOAD_COUNTRIES_SUCCESS = 'LOAD_COUNTRIES_SUCCESS';
 export const LOAD_CITIES = 'LOAD_CITIES';
 export const LOAD_CITIES_SUCCESS = 'LOAD_CITIES_SUCCESS';
-export const DELETE_COUNTRY = 'DELETE_COUNTRY';
-export const DELETE_COUNTRY_SUCCESS = 'DELETE_COUNTRY_SUCCESS';
-export const DELETE_CITY = 'DELETE_CITY';
-export const DELETE_CITY_SUCCESS = 'DELETE_CITY_SUCCESS';
+export const DELETE_SEVERAL_OBJECTS = 'DELETE_SEVERAL_OBJECTS';
+export const DELETE_SEVERAL_OBJECTS_SUCCESS = 'DELETE_SEVERAL_OBJECTS_SUCCESS';
 
 export function loadCountries() {
     return async dispatch => {
@@ -32,7 +30,6 @@ export function loadCities() {
             type: LOAD_CITIES,
         });
         let token = store.getState().authForm.token;
-        console.log(token);
         await fetch(`api/cities`, {headers: {Authorization: `bearer ${token}`}})
             .then(x => x.json())
             .then(cities => {
@@ -44,24 +41,14 @@ export function loadCities() {
     };
 }
 
-function deleteObject(controller, id, fetchingActionType, readyActionType) {
+export function deleteSeveralObjects(controller, IDs) {
     return async dispatch => {
         dispatch({
-            type: fetchingActionType,
+            type: DELETE_SEVERAL_OBJECTS,
         });
-        await Axios.delete(`api/${controller}/${id}`)
-            .then(x => {
-                dispatch({
-                    type: readyActionType,
-                });
-            });
+        await Axios.delete(`api/${controller}/delete`, IDs);
+        dispatch({
+            type: DELETE_SEVERAL_OBJECTS_SUCCESS,
+        });
     };
-}
-
-export function deleteCountry(id) {
-    return deleteObject('countries', id, DELETE_COUNTRY, DELETE_COUNTRY_SUCCESS);
-}
-
-export function deleteCity(id) {
-    return deleteObject('cities', id, DELETE_CITY, DELETE_CITY_SUCCESS);
 }

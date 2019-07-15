@@ -19,7 +19,6 @@ namespace CarRental.Web.Controllers
             _context = context;
         }
         
-        [Authorize]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Cities>>> GetCities([FromQuery]int? countryID)
         {
@@ -61,6 +60,18 @@ namespace CarRental.Web.Controllers
             await _context.SaveChangesAsync();
 
             return city;
+        }
+
+        [HttpDelete("delete")]
+        public async Task<IEnumerable<Cities>> DeleteCities(int[] IDs)
+        {
+            //map input data for intersection
+            var pseudoCities = IDs.Select(id => new Cities{Id = id});
+
+            var cities = _context.Cities.Intersect(pseudoCities, new CitiesEqualityComparer());
+            //_context.Cities.RemoveRange(pseudoCities, new CitiesEqualityComparer());
+            await _context.SaveChangesAsync();
+            return pseudoCities;
         }
     }
 }

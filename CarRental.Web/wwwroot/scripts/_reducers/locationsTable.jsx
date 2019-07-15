@@ -3,6 +3,7 @@ import * as types from '../_actions/LocationsTableActions.jsx';
 const initialState = {
     countries: [],
     cities: [],
+    toDeleteList: {countries: {}, cities: {}},
     isFetching: false,
 };
 
@@ -20,16 +21,10 @@ export default function locationsTableReducer(state = initialState, action) {
         case types.LOAD_CITIES_SUCCESS:
             return {...state, cities: action.payload, isFetching: false};
 
-        case types.DELETE_COUNTRY:
+        case types.DELETE_SEVERAL_OBJECTS:
             return {...state, isFetching: true};
 
-        case types.DELETE_COUNTRY_SUCCESS:
-            return {...state, isFetching: false};
-
-        case types.DELETE_CITY:
-            return {...state, isFetching: true};
-        
-        case types.DELETE_CITY_SUCCESS:
+        case types.DELETE_SEVERAL_OBJECTS_SUCCESS:
             return {...state, isFetching: false};
 
         default:

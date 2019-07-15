@@ -8994,7 +8994,7 @@ function filterCities(event) {
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.DELETE_CITY_SUCCESS = exports.DELETE_CITY = exports.DELETE_COUNTRY_SUCCESS = exports.DELETE_COUNTRY = exports.LOAD_CITIES_SUCCESS = exports.LOAD_CITIES = exports.LOAD_COUNTRIES_SUCCESS = exports.LOAD_COUNTRIES = undefined;
+exports.DELETE_SEVERAL_OBJECTS_SUCCESS = exports.DELETE_SEVERAL_OBJECTS = exports.LOAD_CITIES_SUCCESS = exports.LOAD_CITIES = exports.LOAD_COUNTRIES_SUCCESS = exports.LOAD_COUNTRIES = undefined;
 
 var _regenerator = __webpack_require__(78);
 
@@ -9006,8 +9006,7 @@ var _asyncToGenerator3 = _interopRequireDefault(_asyncToGenerator2);
 
 exports.loadCountries = loadCountries;
 exports.loadCities = loadCities;
-exports.deleteCountry = deleteCountry;
-exports.deleteCity = deleteCity;
+exports.deleteSeveralObjects = deleteSeveralObjects;
 
 var _axios = __webpack_require__(77);
 
@@ -9021,10 +9020,8 @@ var LOAD_COUNTRIES = exports.LOAD_COUNTRIES = 'LOAD_COUNTRIES';
 var LOAD_COUNTRIES_SUCCESS = exports.LOAD_COUNTRIES_SUCCESS = 'LOAD_COUNTRIES_SUCCESS';
 var LOAD_CITIES = exports.LOAD_CITIES = 'LOAD_CITIES';
 var LOAD_CITIES_SUCCESS = exports.LOAD_CITIES_SUCCESS = 'LOAD_CITIES_SUCCESS';
-var DELETE_COUNTRY = exports.DELETE_COUNTRY = 'DELETE_COUNTRY';
-var DELETE_COUNTRY_SUCCESS = exports.DELETE_COUNTRY_SUCCESS = 'DELETE_COUNTRY_SUCCESS';
-var DELETE_CITY = exports.DELETE_CITY = 'DELETE_CITY';
-var DELETE_CITY_SUCCESS = exports.DELETE_CITY_SUCCESS = 'DELETE_CITY_SUCCESS';
+var DELETE_SEVERAL_OBJECTS = exports.DELETE_SEVERAL_OBJECTS = 'DELETE_SEVERAL_OBJECTS';
+var DELETE_SEVERAL_OBJECTS_SUCCESS = exports.DELETE_SEVERAL_OBJECTS_SUCCESS = 'DELETE_SEVERAL_OBJECTS_SUCCESS';
 
 function loadCountries() {
     var _this = this;
@@ -9076,9 +9073,7 @@ function loadCities() {
                                 type: LOAD_CITIES
                             });
                             token = _configureStore.store.getState().authForm.token;
-
-                            console.log(token);
-                            _context2.next = 5;
+                            _context2.next = 4;
                             return fetch('api/cities', { headers: { Authorization: 'bearer ' + token } }).then(function (x) {
                                 return x.json();
                             }).then(function (cities) {
@@ -9088,7 +9083,7 @@ function loadCities() {
                                 });
                             });
 
-                        case 5:
+                        case 4:
                         case 'end':
                             return _context2.stop();
                     }
@@ -9102,7 +9097,7 @@ function loadCities() {
     }();
 }
 
-function deleteObject(controller, id, fetchingActionType, readyActionType) {
+function deleteSeveralObjects(controller, IDs) {
     var _this3 = this;
 
     return function () {
@@ -9112,16 +9107,17 @@ function deleteObject(controller, id, fetchingActionType, readyActionType) {
                     switch (_context3.prev = _context3.next) {
                         case 0:
                             dispatch({
-                                type: fetchingActionType
+                                type: DELETE_SEVERAL_OBJECTS
                             });
                             _context3.next = 3;
-                            return _axios2.default.delete('api/' + controller + '/' + id).then(function (x) {
-                                dispatch({
-                                    type: readyActionType
-                                });
-                            });
+                            return _axios2.default.delete('api/' + controller + '/delete', IDs);
 
                         case 3:
+                            dispatch({
+                                type: DELETE_SEVERAL_OBJECTS_SUCCESS
+                            });
+
+                        case 4:
                         case 'end':
                             return _context3.stop();
                     }
@@ -9133,14 +9129,6 @@ function deleteObject(controller, id, fetchingActionType, readyActionType) {
             return _ref3.apply(this, arguments);
         };
     }();
-}
-
-function deleteCountry(id) {
-    return deleteObject('countries', id, DELETE_COUNTRY, DELETE_COUNTRY_SUCCESS);
-}
-
-function deleteCity(id) {
-    return deleteObject('cities', id, DELETE_CITY, DELETE_CITY_SUCCESS);
 }
 
 /***/ }),
@@ -9272,10 +9260,10 @@ var LocationsTableContainer = function (_React$Component) {
             return _react2.default.createElement(_LocationsTable2.default, {
                 countries: this.props.locationsTable.countries,
                 cities: this.props.locationsTable.cities,
+                toDeleteList: this.props.locationsTable.toDeleteList,
                 loadCountries: this.props.loadCountries,
                 loadCities: this.props.loadCities,
-                deleteCountry: this.props.deleteCountry,
-                deleteCity: this.props.deleteCity,
+                deleteSeveralObjects: this.props.deleteSeveralObjects,
                 isFetching: this.props.isFetching });
         }
     }]);
@@ -9286,10 +9274,10 @@ var mapStateToProps = function mapStateToProps(store) {
     return {
         loadCountries: store.loadCountries,
         loadCities: store.loadCities,
-        deleteCountry: store.deleteCountry,
-        deleteCity: store.deleteCity,
+        deleteSeveralObjects: store.deleteSeveralObjects,
 
-        locationsTable: store.locationsTable
+        locationsTable: store.locationsTable,
+        toDeleteList: store.toDeleteList
     };
 };
 
@@ -9301,11 +9289,8 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
         loadCities: function loadCities() {
             return dispatch(actions.loadCities());
         },
-        deleteCountry: function deleteCountry(id) {
-            return dispatch(acitons.deleteCountry(id));
-        },
-        deleteCity: function deleteCity(id) {
-            return dispatch(actions.deleteCity(id));
+        deleteSeveralObjects: function deleteSeveralObjects(controller, IDs) {
+            return dispatch(actions.deleteSeveralObjects(controller, IDs));
         }
     };
 };
@@ -42997,6 +42982,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var initialState = {
     countries: [],
     cities: [],
+    toDeleteList: { countries: {}, cities: {} },
     isFetching: false
 };
 
@@ -43017,16 +43003,10 @@ function locationsTableReducer() {
         case types.LOAD_CITIES_SUCCESS:
             return (0, _extends3.default)({}, state, { cities: action.payload, isFetching: false });
 
-        case types.DELETE_COUNTRY:
+        case types.DELETE_SEVERAL_OBJECTS:
             return (0, _extends3.default)({}, state, { isFetching: true });
 
-        case types.DELETE_COUNTRY_SUCCESS:
-            return (0, _extends3.default)({}, state, { isFetching: false });
-
-        case types.DELETE_CITY:
-            return (0, _extends3.default)({}, state, { isFetching: true });
-
-        case types.DELETE_CITY_SUCCESS:
+        case types.DELETE_SEVERAL_OBJECTS_SUCCESS:
             return (0, _extends3.default)({}, state, { isFetching: false });
 
         default:
@@ -43258,30 +43238,46 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var LocationsTable = function (_React$Component) {
     (0, _inherits3.default)(LocationsTable, _React$Component);
 
-    function LocationsTable() {
-        var _ref;
-
-        var _temp, _this, _ret;
-
+    function LocationsTable(props) {
         (0, _classCallCheck3.default)(this, LocationsTable);
 
-        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-            args[_key] = arguments[_key];
-        }
+        var _this = (0, _possibleConstructorReturn3.default)(this, (LocationsTable.__proto__ || Object.getPrototypeOf(LocationsTable)).call(this, props));
 
-        return _ret = (_temp = (_this = (0, _possibleConstructorReturn3.default)(this, (_ref = LocationsTable.__proto__ || Object.getPrototypeOf(LocationsTable)).call.apply(_ref, [this].concat(args))), _this), _this.renderCountriesComponents = function () {
+        _this.deleteSeveralObjects = function (e) {
+            if (e.keyCode == 46) {
+                var _this$props$toDeleteL = _this.props.toDeleteList,
+                    cities = _this$props$toDeleteL.cities,
+                    countries = _this$props$toDeleteL.countries;
+
+                _this.props.deleteSeveralObjects('cities', Object.keys(cities));
+                _this.props.deleteSeveralObjects('countries', Object.keys(countries));
+            }
+        };
+
+        _this.renderCountriesComponents = function () {
             return _this.props.countries.map(function (country) {
                 return _react2.default.createElement(
                     _SelectableDiv2.default,
-                    { source: country, className: 'countries' },
+                    {
+                        toDeleteList: _this.props.toDeleteList,
+                        controller: 'countries',
+                        source: country,
+                        className: 'countries' },
                     country.name
                 );
             });
-        }, _this.renderCitiesComponents = function () {
-            var citiesComponents = _this.props.cities.map(function (city) {
+        };
+
+        _this.renderCitiesComponents = function () {
+            var citiesComponents = _this.props.cities.map(function (city, index) {
                 return _react2.default.createElement(
                     _SelectableDiv2.default,
-                    { source: city, className: 'cities' },
+                    {
+                        toDeleteList: _this.props.toDeleteList,
+                        key: index,
+                        controller: 'cities',
+                        source: city,
+                        className: 'cities' },
                     city.name
                 );
             });
@@ -43292,15 +43288,17 @@ var LocationsTable = function (_React$Component) {
                 groupedCities[countryId].push(cityComponent);
             });
             return groupedCities;
-        }, _this.renderCountriesWithCities = function () {
+        };
+
+        _this.renderCountriesWithCities = function () {
             var container = {};
             var countriesComponents = _this.renderCountriesComponents();
             var citiesComponents = _this.renderCitiesComponents();
-            countriesComponents.forEach(function (countryComponent) {
+            countriesComponents.forEach(function (countryComponent, index) {
                 var countryId = countryComponent.props.source.id;
                 container[countryId] = _react2.default.createElement(
                     'div',
-                    { className: 'countries-cities' },
+                    { key: index, className: 'countries-cities' },
                     countryComponent,
                     _react2.default.createElement(
                         'div',
@@ -43310,7 +43308,10 @@ var LocationsTable = function (_React$Component) {
                 );
             });
             return container;
-        }, _temp), (0, _possibleConstructorReturn3.default)(_this, _ret);
+        };
+
+        document.addEventListener('keyup', _this.deleteSeveralObjects);
+        return _this;
     }
 
     (0, _createClass3.default)(LocationsTable, [{
@@ -43372,28 +43373,40 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var SelectableDiv = function (_React$Component) {
     (0, _inherits3.default)(SelectableDiv, _React$Component);
 
-    function SelectableDiv() {
-        var _ref;
-
-        var _temp, _this, _ret;
-
+    function SelectableDiv(props) {
         (0, _classCallCheck3.default)(this, SelectableDiv);
 
-        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-            args[_key] = arguments[_key];
-        }
+        var _this = (0, _possibleConstructorReturn3.default)(this, (SelectableDiv.__proto__ || Object.getPrototypeOf(SelectableDiv)).call(this, props));
 
-        return _ret = (_temp = (_this = (0, _possibleConstructorReturn3.default)(this, (_ref = SelectableDiv.__proto__ || Object.getPrototypeOf(SelectableDiv)).call.apply(_ref, [this].concat(args))), _this), _this.switchState = function () {}, _temp), (0, _possibleConstructorReturn3.default)(_this, _ret);
+        _this.switchState = function (e) {
+            var isSelectedNow = !_this.state.isSelected;
+            _this.setState({ isSelected: isSelectedNow });
+            var _this$props = _this.props,
+                controller = _this$props.controller,
+                source = _this$props.source,
+                toDeleteList = _this$props.toDeleteList;
+
+            if (isSelectedNow) {
+                toDeleteList[controller][source.id] = { id: source.id };
+            } else {
+                delete toDeleteList[controller][source.id];
+            }
+        };
+
+        _this.state = {
+            isSelected: false
+        };
+        return _this;
     }
 
     (0, _createClass3.default)(SelectableDiv, [{
         key: 'render',
         value: function render() {
-            var selected = this.props.isSelected ? 'selected' : 'unselected';
-            var className = 'selectable ' + selected + ' ' + this.props.className;
+            var selectedStr = this.state.isSelected ? 'selected' : 'unselected';
+            var className = 'selectable ' + selectedStr + ' ' + this.props.className;
             return _react2.default.createElement(
                 'div',
-                { className: className, onClick: this.props.switchState },
+                { className: className, onClick: this.switchState },
                 this.props.source.name
             );
         }

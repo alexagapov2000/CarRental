@@ -6,13 +6,13 @@ import LocationsTable from '../_components/LocationsTable.jsx';
 class LocationsTableContainer extends React.Component {
     
     render() {
-        return <LocationsTable 
+        return <LocationsTable
             countries={this.props.locationsTable.countries}
             cities={this.props.locationsTable.cities}
+            toDeleteList={this.props.locationsTable.toDeleteList}
             loadCountries={this.props.loadCountries}
             loadCities={this.props.loadCities}
-            deleteCountry={this.props.deleteCountry}
-            deleteCity={this.props.deleteCity}
+            deleteSeveralObjects={this.props.deleteSeveralObjects}
             isFetching={this.props.isFetching}/>;
     }
 }
@@ -21,10 +21,10 @@ const mapStateToProps = store => {
     return {
         loadCountries: store.loadCountries,
         loadCities: store.loadCities,
-        deleteCountry: store.deleteCountry,
-        deleteCity: store.deleteCity,
+        deleteSeveralObjects: store.deleteSeveralObjects,
 
         locationsTable: store.locationsTable,
+        toDeleteList: store.toDeleteList,
     };
 };
 
@@ -32,8 +32,7 @@ const mapDispatchToProps = dispatch => {
     return {
         loadCountries: () => dispatch(actions.loadCountries()),
         loadCities: () => dispatch(actions.loadCities()),
-        deleteCountry: id => dispatch(acitons.deleteCountry(id)),
-        deleteCity: id => dispatch(actions.deleteCity(id)),
+        deleteSeveralObjects: (controller, IDs) => dispatch(actions.deleteSeveralObjects(controller, IDs)),
     };
 };
 
