@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using CarRental.Web.Controllers;
 using System.Linq;
+using Microsoft.AspNetCore.Authorization;
+using CarRental.BL;
 
 namespace CarRental.Web.Controllers
 {
@@ -12,68 +14,39 @@ namespace CarRental.Web.Controllers
     [ApiController]
     public class CountriesController : ControllerBase
     {
-        private readonly CarRentalContext _context;
-
-        public CountriesController(CarRentalContext context)
-        {
-            _context = context;
-        }
-
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Countries>>> GetCountries()
         {
-            return await _context.Countries.ToListAsync();
+            var countries = await new CountriesService().GetCountries();
+            return countries;
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Countries>> GetCountries(int id)
+        public async Task<ActionResult<Countries>> GetCountry(int id)
         {
-            return await _context.Countries.FirstAsync(x => x.Id == id);
-        }
-
-        [HttpPost]
-        public async Task<ActionResult<Countries>> PostCountries(Countries countries)
-        {
-            _context.Countries.Add(countries);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetCountries", new { id = countries.Id }, countries);
-        }
-
-        [HttpDelete("{id}")]
-        public async Task<ActionResult<Countries>> DeleteCountries(int id)
-        {
-            var country = await _context.Countries.FindAsync(id);
-            /*
-            foreach(var city in _context.Cities.Where(x => x.CountryId == id))
-            {
-                await new CitiesController(_context).DeleteCities(city.Id);
-                //_context.Cities.Remove(city);
-            }
-            */
-            await _context.SaveChangesAsync();
-            
-            if (country == null)
-            {
-                return NotFound();
-            }
-
-            _context.Countries.Remove(country);
-            await _context.SaveChangesAsync();
-
+            var country = await new CountriesService().GetCountry(id);
             return country;
         }
 
-        [HttpDelete("delete")]
+        [HttpPost]
+        public async Task<ActionResult<Countries>> AddCountry(Countries country)
+        {
+            await new CountriesService().AddCountry(country, this);
+            return country;
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult<Countries>> DeleteCountry(int id)
+        {
+            var country = await new CountriesService().DeleteCountry(id, this);
+            return country;
+        }
+
+        [HttpDelete]
         public async Task<IEnumerable<Countries>> DeleteCountries([FromBody] int[] IDs)
         {
-            //map input data for intersection
-            var pseudoCountries = IDs.Select(id => new Countries{Id = id});
-
-            var countries = _context.Countries.Intersect(pseudoCountries, new CountriesEqualityComparer());
-            _context.Countries.RemoveRange(pseudoCountries);
-            await _context.SaveChangesAsync();
-            return pseudoCountries;
+            var countries = await new CountriesService().DeleteCountries(IDs);
+            return countries;
         }
     }
 }

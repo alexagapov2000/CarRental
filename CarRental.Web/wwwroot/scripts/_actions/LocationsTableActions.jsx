@@ -48,7 +48,7 @@ export function deleteSeveralObjects(controller, IDs) {
         dispatch({
             type: DELETE_SEVERAL_OBJECTS,
         });
-        await Axios.delete(`api/${controller}/delete`, {data: IDs});
+        await Axios.delete(`api/${controller}`, {data: IDs});
         dispatch({
             type: DELETE_SEVERAL_OBJECTS_SUCCESS,
             payload: {countries: {}, cities: {}},

@@ -8907,7 +8907,8 @@ function loadCountries() {
                     switch (_context.prev = _context.next) {
                         case 0:
                             dispatch({
-                                type: LOAD_COUNTRIES
+                                type: LOAD_COUNTRIES,
+                                payload: []
                             });
                             _context.next = 3;
                             return fetch('api/countries').then(function (x) {
@@ -9112,7 +9113,7 @@ function deleteSeveralObjects(controller, IDs) {
                                 type: DELETE_SEVERAL_OBJECTS
                             });
                             _context3.next = 3;
-                            return _axios2.default.delete('api/' + controller + '/delete', { data: IDs });
+                            return _axios2.default.delete('api/' + controller, { data: IDs });
 
                         case 3:
                             dispatch({
@@ -9275,12 +9276,7 @@ var LocationsTableContainer = function (_React$Component) {
 
 var mapStateToProps = function mapStateToProps(store) {
     return {
-        loadCountries: store.loadCountries,
-        loadCities: store.loadCities,
-        deleteSeveralObjects: store.deleteSeveralObjects,
-
-        locationsTable: store.locationsTable,
-        toDeleteList: store.toDeleteList
+        locationsTable: store.locationsTable
     };
 };
 
@@ -43275,29 +43271,27 @@ var LocationsTable = function (_React$Component) {
                         switch (_context.prev = _context.next) {
                             case 0:
                                 if (!(e.keyCode == 46)) {
-                                    _context.next = 11;
+                                    _context.next = 10;
                                     break;
                                 }
 
                                 _this$props$toDeleteL = _this.props.toDeleteList, cities = _this$props$toDeleteL.cities, countries = _this$props$toDeleteL.countries;
-
-                                console.log(Object.keys(cities));
-                                _context.next = 5;
+                                _context.next = 4;
                                 return _this.props.deleteSeveralObjects('cities', Object.keys(cities));
 
-                            case 5:
-                                _context.next = 7;
+                            case 4:
+                                _context.next = 6;
                                 return _this.props.deleteSeveralObjects('countries', Object.keys(countries));
 
-                            case 7:
-                                _context.next = 9;
+                            case 6:
+                                _context.next = 8;
                                 return _this.props.loadCities();
 
-                            case 9:
-                                _context.next = 11;
+                            case 8:
+                                _context.next = 10;
                                 return _this.props.loadCountries();
 
-                            case 11:
+                            case 10:
                             case 'end':
                                 return _context.stop();
                         }

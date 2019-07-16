@@ -16,3 +16,8 @@ C:\Users\Алексей\source\CarRental\CarRental.BL\obj\Debug\netcoreapp2.2\Ca
 C:\Users\Алексей\source\CarRental\CarRental.BL\obj\Debug\netcoreapp2.2\CarRental.BL.AssemblyInfo.cs
 C:\Users\Алексей\source\CarRental\CarRental.BL\obj\Debug\netcoreapp2.2\CarRental.BL.dll
 C:\Users\Алексей\source\CarRental\CarRental.BL\obj\Debug\netcoreapp2.2\CarRental.BL.pdb
+C:\W\CarRental.BL\bin\Debug\netcoreapp2.2\CarRental.DAL.dll
+C:\W\CarRental.BL\bin\Debug\netcoreapp2.2\CarRental.DAL.pdb
+C:\W\CarRental.BL\obj\Debug\netcoreapp2.2\CarRental.BL.csproj.CopyComplete
+C:\W\CarRental.BL\bin\Debug\netcoreapp2.2\Microsoft.AspNetCore.Mvc.Core.dll
+C:\W\CarRental.BL\bin\Debug\netcoreapp2.2\Microsoft.AspNetCore.Mvc.Core.xml

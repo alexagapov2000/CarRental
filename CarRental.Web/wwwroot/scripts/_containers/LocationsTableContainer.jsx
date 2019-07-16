@@ -19,12 +19,7 @@ class LocationsTableContainer extends React.Component {
 
 const mapStateToProps = store => {
     return {
-        loadCountries: store.loadCountries,
-        loadCities: store.loadCities,
-        deleteSeveralObjects: store.deleteSeveralObjects,
-
         locationsTable: store.locationsTable,
-        toDeleteList: store.toDeleteList,
     };
 };
 

@@ -10,7 +10,6 @@ export default class LocationsTable extends React.Component {
     deleteSeveralObjects = async e => {
         if(e.keyCode == 46) {
             let {cities, countries} = this.props.toDeleteList;
-            console.log(Object.keys(cities));
             await this.props.deleteSeveralObjects('cities', Object.keys(cities));
             await this.props.deleteSeveralObjects('countries', Object.keys(countries));
             await this.props.loadCities();

@@ -11,6 +11,8 @@ using System.IO;
 using System;
 using CarRental.DAL.Models.Auth;
 using Westwind.AspNetCore.LiveReload;
+using System.Linq;
+using CarRental.BL;
 
 namespace CarRental.Web
 {
@@ -18,6 +20,7 @@ namespace CarRental.Web
     {
         public void ConfigureServices(IServiceCollection services)
         {
+            var kal = services.ToList();
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
                 {
@@ -33,7 +36,6 @@ namespace CarRental.Web
                         IssuerSigningKey = AuthOptions.GetSymmetricSecurityKey(),
 
                         ValidateLifetime = true,
-
                     };
                 });
 
@@ -45,6 +47,7 @@ namespace CarRental.Web
             services.AddMvc();
             services.AddSpaStaticFiles();
             services.AddDbContext<CarRentalContext>();
+            services.AddBusiness();
         }
 
         public void Configure(IApplicationBuilder app)

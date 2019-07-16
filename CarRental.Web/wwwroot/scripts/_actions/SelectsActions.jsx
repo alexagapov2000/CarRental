@@ -10,6 +10,7 @@ export function loadCountries() {
     return async dispatch => {
         dispatch({
             type: LOAD_COUNTRIES,
+            payload: [],
         });
         await fetch('api/countries')
             .then(x => x.json())
