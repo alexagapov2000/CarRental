@@ -18,9 +18,6 @@ const mapStateToProps = store => {
     return {
         username: store.username,
         password: store.password,
-
-        authUser: store.authUser,
-
         authForm: store.authForm,
     };
 };

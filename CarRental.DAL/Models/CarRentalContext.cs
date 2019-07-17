@@ -1,4 +1,5 @@
 ﻿using System;
+using CarRental.DAL.Models.Auth;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 
@@ -22,6 +23,8 @@ namespace CarRental.DAL.Models
         public virtual DbSet<RentCompanies> RentCompanies { get; set; }
         public virtual DbSet<RentCompanyServices> RentCompanyServices { get; set; }
         public virtual DbSet<Services> Services { get; set; }
+        public virtual DbSet<Person> Persons { get; set; }
+
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -104,6 +107,19 @@ namespace CarRental.DAL.Models
                 entity.Property(e => e.Name)
                     .IsRequired()
                     .HasMaxLength(500);
+            });
+
+            modelBuilder.Entity<Person>(entity =>
+            {
+                entity.Property(e => e.Username)
+                    .IsRequired()
+                    .HasMaxLength(500);
+                entity.Property(e => e.Password)
+                    .IsRequired()
+                    .HasMaxLength(500);
+                entity.Property(e => e.Role)
+                    .IsRequired()
+                    .HasMaxLength(50);
             });
         }
     }

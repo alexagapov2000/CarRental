@@ -2,6 +2,7 @@
 {
     public class Person
     {
+        public int Id { get; set; }
         public string Username { get; set; }
         //hash it
         public string Password { get; set; }

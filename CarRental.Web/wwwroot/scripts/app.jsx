@@ -1,9 +1,6 @@
 ﻿import React from 'react'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Header from './header/header.jsx';
-import Selects from './chooseLocation/selects.jsx';
-import Creating from './createLocation/creating.jsx';
-import LocationTable from './showLocations/locationTable.jsx';
 import { connect } from 'react-redux';
 import CreatingContainer from './_containers/CreatingContainer.jsx';
 import SelectsContainer from './_containers/SelectsContainer.jsx';

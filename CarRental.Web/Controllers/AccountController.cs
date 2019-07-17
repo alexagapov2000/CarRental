@@ -4,6 +4,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using CarRental.BL;
 using CarRental.DAL.Models.Auth;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -16,57 +17,10 @@ namespace CarRental.Web.Controllers
     [ApiController]
     public class AccountController : ControllerBase
     {
-        private List<Person> people = new List<Person>()
-        {
-            new Person {Username= "admin", Password = "admin", Role = "admin"},
-            new Person {Username = "user", Password="user", Role = "user"},
-            new Person {Username = "guest", Password = "guest", Role = "guest"},
-        };
-
         [HttpPost("token")]
         public async Task Token(Person person)
         {
-            var identity = GetIdentity(person.Username, person.Password);
-            if (identity == null)
-            {
-                Response.StatusCode = 400;
-                await Response.WriteAsync("Invalid username or password.");
-                return;
-            }
-
-            var now = DateTime.UtcNow;
-            var jwt = new JwtSecurityToken(
-                    issuer: AuthOptions.ISSUER,
-                    audience: AuthOptions.AUDIENCE,
-                    notBefore: now,
-                    claims: identity.Claims,
-                    expires: now.Add(TimeSpan.FromHours(AuthOptions.LIFETIME)),
-                    signingCredentials: new SigningCredentials(AuthOptions.GetSymmetricSecurityKey(), SecurityAlgorithms.HmacSha256));
-            var encodedJwt = new JwtSecurityTokenHandler().WriteToken(jwt);
-
-            var response = new
-            {
-                JWTkey = encodedJwt,
-                username = identity.Name,
-            };
-
-            Response.ContentType = "application/json";
-            await Response.WriteAsync(JsonConvert.SerializeObject(response, new JsonSerializerSettings { Formatting = Formatting.Indented }));
-        }
-
-        private ClaimsIdentity GetIdentity(string username, string password)
-        {
-            var person = people.FirstOrDefault(x => x.Username == username && x.Password == password);
-            if (person == null) return null;
-            var claims = new List<Claim>
-            {
-                new Claim(ClaimsIdentity.DefaultNameClaimType, person.Username),
-                new Claim(ClaimsIdentity.DefaultRoleClaimType, person.Role)
-            };
-            var claimsIdentity =
-                new ClaimsIdentity(claims, "Token", ClaimsIdentity.DefaultNameClaimType,
-                    ClaimsIdentity.DefaultRoleClaimType);
-            return claimsIdentity;
+            await new AccountService().Token(person, this);
         }
     }
 }

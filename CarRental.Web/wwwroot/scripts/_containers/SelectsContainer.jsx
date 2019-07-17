@@ -19,10 +19,6 @@ class SelectsContainer extends React.Component {
 
 const mapStateToProps = store => {
     return {
-        loadCountries: store.loadCountries,
-        loadCities: store.loadCities,
-        filterCities: store.filterCities,
-        
         selects: store.selects,
     };
 };

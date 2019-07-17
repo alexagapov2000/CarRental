@@ -21,11 +21,6 @@ class CreatingContainer extends React.Component {
 
 const mapStateToProps = store => {
     return {
-        loadCountries: store.loadCountries,
-        createCountry: store.createCountry,
-        createCity: store.createCity,
-        changeCountry: store.changeCountry,
-        
         creatingForm: store.creatingForm,
     };
 };

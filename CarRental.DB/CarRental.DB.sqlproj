@@ -65,6 +65,7 @@
     <Build Include="RentCompanyServices.sql" />
     <Build Include="Countries.sql" />
     <Build Include="Cities.sql" />
+    <Build Include="Persons.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="CarRental.DB.refactorlog" />

@@ -12,7 +12,7 @@ namespace CarRental.Web.Controllers
     [Route("api/[controller]")]
     [ApiController]
     public class CitiesController : ControllerBase
-    {   
+    {
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Cities>>> GetCities([FromQuery]int? countryID)
         {

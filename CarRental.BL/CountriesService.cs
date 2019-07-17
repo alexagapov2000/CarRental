@@ -56,16 +56,18 @@ namespace CarRental.BL
             return country;
         }
 
-        public async Task<IEnumerable<Countries>> DeleteCountries(int[] IDs)
+        public async Task<IEnumerable<Countries>> DeleteCountries(int[] IDs, ControllerBase controller)
         {
-            //map input data for intersection
-            var pseudoCountries = IDs.Select(id => new Countries { Id = id });
+            var countries = new List<Countries>();
 
-            var countries = _context.Countries.Intersect(pseudoCountries, new CountriesEqualityComparer());
-            _context.Countries.RemoveRange(pseudoCountries);
+            foreach (var id in IDs)
+            {
+                var smth = await DeleteCountry(id, controller);
+                countries.Add(smth.Value);
+            }
 
             await _context.SaveChangesAsync();
-            return pseudoCountries;
+            return countries;
         }
     }
 }

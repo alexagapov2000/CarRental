@@ -21,3 +21,6 @@ C:\W\CarRental.BL\bin\Debug\netcoreapp2.2\CarRental.DAL.pdb
 C:\W\CarRental.BL\obj\Debug\netcoreapp2.2\CarRental.BL.csproj.CopyComplete
 C:\W\CarRental.BL\bin\Debug\netcoreapp2.2\Microsoft.AspNetCore.Mvc.Core.dll
 C:\W\CarRental.BL\bin\Debug\netcoreapp2.2\Microsoft.AspNetCore.Mvc.Core.xml
+C:\W\CarRental.BL\bin\Debug\netcoreapp2.2\System.IdentityModel.Tokens.Jwt.dll
+C:\W\CarRental.BL\bin\Debug\netcoreapp2.2\System.IdentityModel.Tokens.Jwt.pdb
+C:\W\CarRental.BL\bin\Debug\netcoreapp2.2\System.IdentityModel.Tokens.Jwt.xml

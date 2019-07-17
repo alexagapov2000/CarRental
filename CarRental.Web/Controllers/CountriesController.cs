@@ -45,7 +45,7 @@ namespace CarRental.Web.Controllers
         [HttpDelete]
         public async Task<IEnumerable<Countries>> DeleteCountries([FromBody] int[] IDs)
         {
-            var countries = await new CountriesService().DeleteCountries(IDs);
+            var countries = await new CountriesService().DeleteCountries(IDs, this);
             return countries;
         }
     }
