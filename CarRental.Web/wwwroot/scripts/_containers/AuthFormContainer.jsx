@@ -1,31 +1,32 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import * as actions from '../_actions/AuthFormActions.jsx';
+import * as commonActions from '../_actions/IndexActions.jsx';
 import AuthForm from '../_components/AuthForm.jsx';
 
 class AuthFormContainer extends React.Component {
     
     render() {
         return <AuthForm
-            username={this.props.authForm.username}
-            password={this.props.authForm.password}
+            username={this.props.username}
+            password={this.props.password}
             authUser={this.props.authUser}
+            reAuthUser={this.props.reAuthUser}
+            saveUser={this.props.saveUser}
             isFetching={this.props.isFetching} />;
     }
 }
 
 const mapStateToProps = store => {
     return {
-        username: store.username,
-        password: store.password,
-        authForm: store.authForm,
+        username: store.common.username,
+        password: store.common.password,
     };
 };
 
 const mapDispatchToProps = dispatch => {
     return {
-        authUser: (username, password) =>
-            dispatch(actions.authUser(username, password)),
+        authUser: (username, password) => dispatch(commonActions.authUser(username, password)),
+        saveUser: () => dispatch(commonActions.saveUser()),
     };
 };
 

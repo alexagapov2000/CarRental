@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace CarRental.Web.Controllers
 {
@@ -21,6 +22,13 @@ namespace CarRental.Web.Controllers
         public async Task Token(Person person)
         {
             await new AccountService().Token(person, this);
+        }
+
+        [HttpPost("decode")]
+        public async Task<object> DecodeToken([FromHeader] string jwt)
+        {
+            var person = await new AccountService().DecodeToken(jwt);
+            return person;
         }
     }
 }

@@ -1,5 +1,3 @@
-import Axios from 'axios';
-
 export const SWITCH_STATE = 'SWITCH_STATE';
 
 export function switchState(isSelected) {

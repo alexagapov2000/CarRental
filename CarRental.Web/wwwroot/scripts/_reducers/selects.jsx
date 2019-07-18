@@ -1,8 +1,6 @@
 import * as types from '../_actions/SelectsActions.jsx';
 
 const initialState = {
-    countries: [],
-    cities: [],
     filteredCities: [],
     isFetching: false,
 };

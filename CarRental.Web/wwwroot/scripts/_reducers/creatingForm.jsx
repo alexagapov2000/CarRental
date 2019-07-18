@@ -1,8 +1,6 @@
 import * as types from '../_actions/CreatingFormActions.jsx';
 
 const initialState = {
-    countries: [],
-    cities: [],
     currentCountry: null,
     isFetching: false,
 };

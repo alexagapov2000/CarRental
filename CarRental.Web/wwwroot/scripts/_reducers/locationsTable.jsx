@@ -1,8 +1,6 @@
 import * as types from '../_actions/LocationsTableActions.jsx';
 
 const initialState = {
-    countries: [],
-    cities: [],
     toDeleteList: {countries: {}, cities: {}},
     isFetching: false,
 };

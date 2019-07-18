@@ -13,6 +13,7 @@ namespace CarRental.Web.Controllers
     [ApiController]
     public class CitiesController : ControllerBase
     {
+        [Authorize(Roles = "admin")]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Cities>>> GetCities([FromQuery]int? countryID)
         {

@@ -1,14 +1,18 @@
 import React from 'react';
-import LocationsTableContainer from '../_containers/LocationsTableContainer.jsx'
 
 export default class AuthForm extends React.Component {
 
-    signIn = (usernameInput, passwordInput) => {
+    signIn = async (usernameInput, passwordInput) => {
         let usernameInputId = usernameInput.props.id;
         let passwordInputId = passwordInput.props.id;
         let username = document.getElementById(usernameInputId).value;
         let password = document.getElementById(passwordInputId).value;
-        this.props.authUser(username, password);
+        await this.props.authUser(username, password);
+    }
+
+    authAndSaveUser = async (username, password) => {
+        await this.signIn(username, password);
+        this.props.saveUser();
     }
 
     render() {
@@ -18,7 +22,7 @@ export default class AuthForm extends React.Component {
             <legend>Sign in</legend>
             {usernameInput}
             {passwordInput}
-            <button onClick={() => this.signIn(usernameInput, passwordInput)}>Login</button>
+            <button onClick={() => this.authAndSaveUser(usernameInput, passwordInput)}>Login</button>
         </fieldset>;
     }
 }

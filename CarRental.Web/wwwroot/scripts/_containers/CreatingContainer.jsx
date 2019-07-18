@@ -1,14 +1,14 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import * as actions from '../_actions/CreatingFormActions.jsx';
+import * as commonActions from '../_actions/IndexActions.jsx';
 import CreatingForm from '../_components/CreatingForm.jsx';
 
 class CreatingContainer extends React.Component {
     
     render() {
-        console.log();
         return <CreatingForm
-            countries={this.props.creatingForm.countries}
+            countries={this.props.countries}
             currentCountry={this.props.creatingForm.currentCountry}
 
             loadCountries={this.props.loadCountries}
@@ -22,12 +22,13 @@ class CreatingContainer extends React.Component {
 const mapStateToProps = store => {
     return {
         creatingForm: store.creatingForm,
+        countries: store.common.countries,
     };
 };
 
 const mapDispatchToProps = dispatch => {
     return {
-        loadCountries: () => dispatch(actions.loadCountries()),
+        loadCountries: () => dispatch(commonActions.loadCountries()),
         createCountry: name => dispatch(actions.createCountry(name)),
         createCity: (name, countryId) => dispatch(actions.createCity(name, countryId)),
         changeCountry: (newCountry) => dispatch(actions.changeCountry(newCountry)),

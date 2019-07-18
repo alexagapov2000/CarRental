@@ -6,8 +6,14 @@ import CreatingContainer from './_containers/CreatingContainer.jsx';
 import SelectsContainer from './_containers/SelectsContainer.jsx';
 import LocationsTableContainer from './_containers/LocationsTableContainer.jsx';
 import AuthFormContainer from './_containers/AuthFormContainer.jsx';
+import * as commonActions from './_actions/IndexActions.jsx';
 
-export default class App extends React.Component {
+class App extends React.Component {
+
+    componentDidMount() {
+        this.props.reAuthUser();
+    }
+
     render() {
         return (
             <Router>
@@ -26,13 +32,17 @@ export default class App extends React.Component {
         );
     }
 };
-/*
-const mapStateToProps = store => {
-    console.log(store);
-    return {
-        countries: store.countries,
-    };
-}
 
-connect(mapStateToProps)(App);
-*/
+const mapStateToProps = store => {
+    return {
+        
+    };
+};
+
+const mapDispatchToProps = dispatch => {
+    return {
+        reAuthUser: () => dispatch(commonActions.reAuthUser()),
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
