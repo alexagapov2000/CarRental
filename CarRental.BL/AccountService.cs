@@ -77,37 +77,34 @@ namespace CarRental.BL
             return claimsIdentity;
         }
 
-        public async Task<object> DecodeToken(string token)
+        public async Task<ActionResult> DecodeToken(string jwt, ControllerBase controller)
         {
             var validationParameters = new TokenValidationParameters()
             {
-                ValidIssuer = _configuration["JwtIssuer"],
-                ValidAudience = _configuration["JwtIssuer"],
+                ValidIssuer = AuthOptions.ISSUER,
+                ValidAudience = AuthOptions.AUDIENCE,
                 ClockSkew = System.TimeSpan.Zero,
-                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JwtKey"]))
+                IssuerSigningKey = AuthOptions.GetSymmetricSecurityKey(),
             };
-
+            var handler = new JwtSecurityTokenHandler();
             SecurityToken validatedToken;
-            var username = "";
-            var password = "";
-
             IEnumerable<string> roles = new List<string>();
             try
             {
-                ClaimsPrincipal claims = new JwtSecurityTokenHandler().ValidateToken(token, validationParameters, out validatedToken);
-
-                username = claims.Claims.Where(c => c.Type == ClaimTypes.NameIdentifier)
-                       .Select(c => c.Value).SingleOrDefault();
-                password = claims.Claims.Where(c => c.Type == ClaimTypes.Email)
-                                   .Select(c => c.Value).SingleOrDefault();
-                roles = claims.Claims.Where(c => c.Type == ClaimTypes.Role)
-                                   .Select(c => c.Value);
-                return new { username, password, roles };
+                ClaimsPrincipal claims = handler.ValidateToken(jwt, validationParameters, out validatedToken);
+                return controller.Ok();
             }
             catch
             {
-                return new { };
+                return controller.ValidationProblem();
             }
+        }
+
+        public async Task<Person> RegisterUser(Person person)
+        {
+            await _context.Persons.AddAsync(person);
+            await _context.SaveChangesAsync();
+            return person;
         }
     }
 }

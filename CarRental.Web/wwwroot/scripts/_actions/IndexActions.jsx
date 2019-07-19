@@ -70,13 +70,18 @@ export function saveUser() {
 }
 
 export function reAuthUser() {
-    return async dispatch => {
+    return dispatch => {
         let token = localStorage.getItem('token');
-        let person = await Axios.post('api/account/decode', null, { headers: { jwt: token } });
-        console.log(person);
-
-        dispatch({
-            type: REAUTHORIZE_USER,
-        });
+        Axios.post('api/account/decode', null, { headers: { jwt: token } })
+            .then(
+                dispatch({
+                    type: REAUTHORIZE_USER,
+                    payload: {
+                        username: '',
+                        password: '',
+                        token,
+                    },
+                })
+            );
     };
 }

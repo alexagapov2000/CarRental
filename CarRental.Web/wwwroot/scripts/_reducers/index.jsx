@@ -35,7 +35,7 @@ export function commonReducer(state = initialState, action) {
 			return { ...state, isFetching: true };
 
 		case types.REAUTHORIZE_USER:
-			return { ...state, account: action.payload };
+			return { ...state, account: action.payload, isFetching: true };
 
 		default:
 			return state;

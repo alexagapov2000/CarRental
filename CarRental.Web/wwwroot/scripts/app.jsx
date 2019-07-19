@@ -10,11 +10,8 @@ import * as commonActions from './_actions/IndexActions.jsx';
 
 class App extends React.Component {
 
-    componentDidMount() {
-        this.props.reAuthUser();
-    }
-
     render() {
+        this.props.reAuthUser();
         return (
             <Router>
                 <div>
@@ -33,16 +30,10 @@ class App extends React.Component {
     }
 };
 
-const mapStateToProps = store => {
-    return {
-        
-    };
-};
-
 const mapDispatchToProps = dispatch => {
     return {
         reAuthUser: () => dispatch(commonActions.reAuthUser()),
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default connect(null, mapDispatchToProps)(App);

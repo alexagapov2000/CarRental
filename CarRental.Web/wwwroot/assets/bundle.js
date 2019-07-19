@@ -3555,40 +3555,17 @@ function saveUser() {
 }
 
 function reAuthUser() {
-    var _this4 = this;
-
-    return function () {
-        var _ref4 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee4(dispatch) {
-            var token, person;
-            return _regenerator2.default.wrap(function _callee4$(_context4) {
-                while (1) {
-                    switch (_context4.prev = _context4.next) {
-                        case 0:
-                            token = localStorage.getItem('token');
-                            _context4.next = 3;
-                            return _axios2.default.post('api/account/decode', null, { headers: { jwt: token } });
-
-                        case 3:
-                            person = _context4.sent;
-
-                            console.log(person);
-
-                            dispatch({
-                                type: REAUTHORIZE_USER
-                            });
-
-                        case 6:
-                        case 'end':
-                            return _context4.stop();
-                    }
-                }
-            }, _callee4, _this4);
+    return function (dispatch) {
+        var token = localStorage.getItem('token');
+        _axios2.default.post('api/account/decode', null, { headers: { jwt: token } }).then(dispatch({
+            type: REAUTHORIZE_USER,
+            payload: {
+                username: '',
+                password: '',
+                token: token
+            }
         }));
-
-        return function (_x4) {
-            return _ref4.apply(this, arguments);
-        };
-    }();
+    };
 }
 
 /***/ }),
@@ -8873,7 +8850,6 @@ function filterCities(event) {
     return function (dispatch) {
         var cities = _configureStore.store.getState().common.cities;
         var countries = _configureStore.store.getState().common.countries;
-        console.log(countries);
         var choosenCountry = countries[event.target.selectedIndex];
         var filteredCities = cities.filter(function (x) {
             return x.countryId == choosenCountry.id;
@@ -34780,13 +34756,9 @@ var App = function (_React$Component) {
     }
 
     (0, _createClass3.default)(App, [{
-        key: 'componentDidMount',
-        value: function componentDidMount() {
-            this.props.reAuthUser();
-        }
-    }, {
         key: 'render',
         value: function render() {
+            this.props.reAuthUser();
             return _react2.default.createElement(
                 _reactRouterDom.BrowserRouter,
                 null,
@@ -34815,10 +34787,6 @@ var App = function (_React$Component) {
 
 ;
 
-var mapStateToProps = function mapStateToProps(store) {
-    return {};
-};
-
 var mapDispatchToProps = function mapDispatchToProps(dispatch) {
     return {
         reAuthUser: function reAuthUser() {
@@ -34827,7 +34795,7 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
     };
 };
 
-exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(App);
+exports.default = (0, _reactRedux.connect)(null, mapDispatchToProps)(App);
 
 /***/ }),
 /* 253 */
@@ -41311,7 +41279,7 @@ function commonReducer() {
 			return (0, _extends3.default)({}, state, { isFetching: true });
 
 		case types.REAUTHORIZE_USER:
-			return (0, _extends3.default)({}, state, { account: action.payload });
+			return (0, _extends3.default)({}, state, { account: action.payload, isFetching: true });
 
 		default:
 			return state;
@@ -42488,6 +42456,8 @@ var _react = __webpack_require__(5);
 
 var _react2 = _interopRequireDefault(_react);
 
+var _configureStore = __webpack_require__(130);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var AuthForm = function (_React$Component) {
@@ -42506,7 +42476,7 @@ var AuthForm = function (_React$Component) {
         }
 
         return _ret = (_temp = (_this = (0, _possibleConstructorReturn3.default)(this, (_ref = AuthForm.__proto__ || Object.getPrototypeOf(AuthForm)).call.apply(_ref, [this].concat(args))), _this), _this.signIn = function () {
-            var _ref2 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee(usernameInput, passwordInput) {
+            var _ref2 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee(usernameInput, passwordInput, isSaveSession) {
                 var usernameInputId, passwordInputId, username, password;
                 return _regenerator2.default.wrap(function _callee$(_context) {
                     while (1) {
@@ -42520,6 +42490,9 @@ var AuthForm = function (_React$Component) {
                                 return _this.props.authUser(username, password);
 
                             case 6:
+                                if (isSaveSession) _this.props.saveUser();else localStorage.removeItem('token');
+
+                            case 7:
                             case 'end':
                                 return _context.stop();
                         }
@@ -42527,31 +42500,8 @@ var AuthForm = function (_React$Component) {
                 }, _callee, _this2);
             }));
 
-            return function (_x, _x2) {
+            return function (_x, _x2, _x3) {
                 return _ref2.apply(this, arguments);
-            };
-        }(), _this.authAndSaveUser = function () {
-            var _ref3 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee2(username, password) {
-                return _regenerator2.default.wrap(function _callee2$(_context2) {
-                    while (1) {
-                        switch (_context2.prev = _context2.next) {
-                            case 0:
-                                _context2.next = 2;
-                                return _this.signIn(username, password);
-
-                            case 2:
-                                _this.props.saveUser();
-
-                            case 3:
-                            case 'end':
-                                return _context2.stop();
-                        }
-                    }
-                }, _callee2, _this2);
-            }));
-
-            return function (_x3, _x4) {
-                return _ref3.apply(this, arguments);
             };
         }(), _temp), (0, _possibleConstructorReturn3.default)(_this, _ret);
     }
@@ -42561,24 +42511,77 @@ var AuthForm = function (_React$Component) {
         value: function render() {
             var _this3 = this;
 
-            var usernameInput = _react2.default.createElement('input', { id: 'usernameInput', type: 'text' });
-            var passwordInput = _react2.default.createElement('input', { id: 'passwordInput', type: 'password' });
+            var usernameInputSignIn = _react2.default.createElement('input', { placeholder: 'Username', id: 'usernameInputSignIn', type: 'text' });
+            var passwordInputSignIn = _react2.default.createElement('input', { placeholder: 'Password', id: 'passwordInputSignIn', type: 'password' });
+            var isSaveSession = false;
+            var saveSession = _react2.default.createElement('input', { onClick: function onClick(e) {
+                    return isSaveSession = e.target.checked;
+                }, id: 'saveSessionCheckbox', type: 'checkbox' });
+
+            var usernameInputSignUp = _react2.default.createElement('input', { placeholder: 'Username', id: 'usernameInputSignUp', type: 'text' });
+            var passwordInputSignUp = _react2.default.createElement('input', { placeholder: 'Password', id: 'passwordInputSignUp', type: 'password' });
             return _react2.default.createElement(
-                'fieldset',
+                'div',
                 null,
                 _react2.default.createElement(
-                    'legend',
+                    'fieldset',
                     null,
-                    'Sign in'
+                    _react2.default.createElement(
+                        'legend',
+                        null,
+                        'Sign in'
+                    ),
+                    _react2.default.createElement(
+                        'p',
+                        null,
+                        usernameInputSignIn
+                    ),
+                    _react2.default.createElement(
+                        'p',
+                        null,
+                        passwordInputSignIn
+                    ),
+                    _react2.default.createElement(
+                        'p',
+                        null,
+                        _react2.default.createElement(
+                            'label',
+                            { htmlFor: saveSession.props.id },
+                            saveSession,
+                            'Load account after returning'
+                        )
+                    ),
+                    _react2.default.createElement(
+                        'p',
+                        null,
+                        _react2.default.createElement(
+                            'button',
+                            { onClick: function onClick(e) {
+                                    return _this3.signIn(usernameInputSignIn, passwordInputSignIn, isSaveSession);
+                                } },
+                            'Login'
+                        ),
+                        _react2.default.createElement('span', null)
+                    )
                 ),
-                usernameInput,
-                passwordInput,
                 _react2.default.createElement(
-                    'button',
-                    { onClick: function onClick() {
-                            return _this3.authAndSaveUser(usernameInput, passwordInput);
-                        } },
-                    'Login'
+                    'fieldset',
+                    null,
+                    _react2.default.createElement(
+                        'legend',
+                        null,
+                        'Sign up'
+                    ),
+                    _react2.default.createElement(
+                        'p',
+                        null,
+                        usernameInputSignUp
+                    ),
+                    _react2.default.createElement(
+                        'p',
+                        null,
+                        passwordInputSignUp
+                    )
                 )
             );
         }
