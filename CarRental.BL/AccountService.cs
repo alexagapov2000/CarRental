@@ -1,8 +1,10 @@
-﻿using CarRental.DAL;
+﻿using CarRental.BL.ViewModels;
+using CarRental.DAL;
 using CarRental.DAL.Models;
 using CarRental.DAL.Models.Auth;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
@@ -100,8 +102,18 @@ namespace CarRental.BL
             }
         }
 
-        public async Task<Person> RegisterUser(Person person)
+        public async Task<ActionResult<Person>> RegisterUser(RegisterViewModel registerViewModel, ControllerBase controller)
         {
+            if (registerViewModel.Password1 != registerViewModel.Password2)
+                return controller.BadRequest();
+            if (_context.Persons.Any(p => p.Username == registerViewModel.Username))
+                return controller.StatusCode(409);
+            var person = new Person
+            {
+                Username = registerViewModel.Username,
+                Password = registerViewModel.Password1,
+                Role = "user",
+            };
             await _context.Persons.AddAsync(person);
             await _context.SaveChangesAsync();
             return person;

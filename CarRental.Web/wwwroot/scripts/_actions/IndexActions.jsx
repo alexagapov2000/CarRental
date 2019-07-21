@@ -3,11 +3,19 @@ import Axios from 'axios';
 
 export const LOAD_COUNTRIES = 'LOAD_COUNTRIES';
 export const LOAD_COUNTRIES_SUCCESS = 'LOAD_COUNTRIES_SUCCESS';
+
 export const LOAD_CITIES = 'LOAD_CITIES';
 export const LOAD_CITIES_SUCCESS = 'LOAD_CITIES_SUCCESS';
+
 export const AUTHORIZE_USER = 'AUTHORIZE_USER';
+export const AUTHORIZE_USER_SUCCESS = 'AUTHORIZE_USER_SUCCESS';
+export const AUTHORIZE_USER_FAILED = 'AUTHORIZE_USER_FAILED';
+
 export const SAVE_USER = 'SAVE_USER';
 export const REAUTHORIZE_USER = 'REAUTHORIZE_USER';
+
+export const SIGN_UP_USER = 'SIGN_UP_USER';
+export const SIGN_UP_USER_SUCCESS = 'SIGN_UP_USER_SUCCESS';
 
 export function loadCountries() {
     return async dispatch => {
@@ -46,16 +54,24 @@ export function loadCities() {
 
 export function authUser(username, password) {
     return async dispatch => {
+        dispatch({
+            type: AUTHORIZE_USER,
+        });
+        let dispatchSuccess = accountData => dispatch({
+            type: AUTHORIZE_USER_SUCCESS,
+            payload: accountData,
+        });
+        let dispatchFailed = () => dispatch({
+            type: AUTHORIZE_USER_FAILED,
+        });
         let accountData = {
             username: username,
             password: password,
         };
-        let authData = await Axios.post("api/account/token", accountData);
-        accountData.token = authData.data.JWTkey;
-        dispatch({
-            type: AUTHORIZE_USER,
-            payload: accountData,
-        });
+        await Axios.post("api/account/token", accountData)
+            .then(response => accountData.token = response.data.JWTkey)
+            .then(() => dispatchSuccess(accountData))
+            .catch(dispatchFailed);
     };
 }
 
@@ -83,5 +99,20 @@ export function reAuthUser() {
                     },
                 })
             );
+    };
+}
+
+export function signUpUser(username, password1, password2) {
+    return async dispatch => {
+        dispatch({
+            type: SIGN_UP_USER,
+        });
+        let response = await Axios.post('api/account/register', { username, password1, password2 });
+        if (response.status == 200) {
+            dispatch({
+                type: SIGN_UP_USER_SUCCESS,
+                payload: response.data,
+            });
+        }
     };
 }

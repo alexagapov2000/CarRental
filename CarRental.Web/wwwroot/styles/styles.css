@@ -1,5 +1,8 @@
 * {
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
 }
 
 header {
@@ -13,7 +16,7 @@ header {
     width: 30%;
 }
 
-.selects > div {
+.selects>div {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -28,11 +31,12 @@ header {
 ul {
     list-style-type: none;
     color: black;
-
     display: flex;
     flex-direction: row;
     justify-content: space-around;
     align-self: auto;
+    align-items: center;
+    height: 10vh;
 }
 
 ul .link {
@@ -43,7 +47,6 @@ ul .link {
     transition: border-radius 0.15s linear;
     padding: 10px;
 }
-
 
 ul .link:visited {
     color: black;
@@ -85,12 +88,12 @@ fieldset {
     flex-direction: row;
 }
 
-.countries-cities > .countries {
+.countries-cities>.countries {
     width: 50%;
     border: 1px solid black;
 }
 
-.countries-cities > .cities {
+.countries-cities>.cities {
     width: 50%;
     border: 1px solid black;
     margin-bottom: -1px;
@@ -99,4 +102,40 @@ fieldset {
 
 fieldset {
     border: 1px solid black;
+}
+
+fieldset > * {
+    margin-left: 15px;
+}
+
+fieldset form:last-child {
+    margin-bottom: 10px;
+}
+
+input {
+    border: 2px soild transparent;
+    outline: none;
+    transition: all 0.25s linear;
+}
+
+input:invalid {
+    border: 2px solid red;
+}
+
+input:not(:invalid):focus {
+    border: 2px solid black;
+}
+
+form>* {
+    margin-top: 8px;
+}
+
+.invalidTips {
+    opacity: 0;
+    margin-left: 20px;
+    transition: opacity 0.25s linear;
+}
+
+input:invalid + span {
+    opacity: 1;
 }

@@ -1,0 +1,15 @@
+.loadingScreen {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border-top: 4px solid grey;
+    animation: loading .5s linear infinite;
+}
+
+@keyframes loading {
+    0% { transform: translate(-50%, -50%) rotate(0deg); }
+    100% { transform: translate(-50%, -50%) rotate(360deg); }
+}

@@ -2,6 +2,7 @@ import { combineReducers } from 'redux';
 import creatingFormReducer from './creatingForm.jsx';
 import selectsReducer from './selects.jsx';
 import locationsTableReducer from './locationsTable.jsx';
+//import authFormReducer from './authForm.jsx';
 import * as types from '../_actions/IndexActions.jsx';
 
 const initialState = {
@@ -12,6 +13,7 @@ const initialState = {
 		password: '',
 		token: '',
 	},
+	isFetching: false,
 };
 
 export function commonReducer(state = initialState, action) {
@@ -29,13 +31,20 @@ export function commonReducer(state = initialState, action) {
 			return { ...state, cities: action.payload, isFetching: false };
 
 		case types.AUTHORIZE_USER:
-			return { ...state, account: action.payload, isFetching: true };
+			return { ...state, isFetching: true };
+		case types.AUTHORIZE_USER_SUCCESS:
+			return { ...state, account: action.payload, isFetching: false };
+		case types.AUTHORIZE_USER_FAILED:
+			return { ...state, isFetching: false };
 
 		case types.SAVE_USER:
-			return { ...state, isFetching: true };
+			return { ...state, isFetching: false };
 
 		case types.REAUTHORIZE_USER:
-			return { ...state, account: action.payload, isFetching: true };
+			return { ...state, account: action.payload, isFetching: false };
+
+		case types.SIGN_UP_USER:
+			return { ...state, account: action.payload, isFetching: false };
 
 		default:
 			return state;

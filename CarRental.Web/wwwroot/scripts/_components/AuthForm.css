@@ -1,0 +1,10 @@
+.fetching {
+    opacity: 0.5;
+    position: relative;
+}
+
+.fetching * :not(.loading) {
+    visibility: hidden;
+    /*display: none;*/
+}
+

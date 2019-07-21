@@ -5359,7 +5359,7 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Aliaksei.Ahapau\\.nuget\\packages\\": {},
+    "C:\\Users\\Алексей\\.nuget\\packages\\": {},
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
@@ -5368,14 +5368,14 @@
       "projectUniqueName": "C:\\W\\CarRental.BL\\CarRental.BL.csproj",
       "projectName": "CarRental.BL",
       "projectPath": "C:\\W\\CarRental.BL\\CarRental.BL.csproj",
-      "packagesPath": "C:\\Users\\Aliaksei.Ahapau\\.nuget\\packages\\",
+      "packagesPath": "C:\\Users\\Алексей\\.nuget\\packages\\",
       "outputPath": "C:\\W\\CarRental.BL\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "C:\\Users\\Aliaksei.Ahapau\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Алексей\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [

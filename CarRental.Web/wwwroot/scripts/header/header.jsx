@@ -5,7 +5,7 @@ export default class Header extends React.Component {
     render() {
         return (
             <header>
-                <menu>
+                <nav>
                     <ul>
                         <li>
                             <Link className='link' to='/creatingRedux'>Creating a new country</Link>
@@ -19,8 +19,11 @@ export default class Header extends React.Component {
                         <li>
                             <Link className='link' to='/auth'>auth</Link>
                         </li>
+                        <li>
+                            <Link className='link' to='/signup'>Sign up</Link>
+                        </li>
                     </ul>
-                </menu>
+                </nav>
             </header>
         );
     }

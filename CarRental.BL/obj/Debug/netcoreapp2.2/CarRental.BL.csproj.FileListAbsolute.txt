@@ -24,3 +24,5 @@ C:\W\CarRental.BL\bin\Debug\netcoreapp2.2\Microsoft.AspNetCore.Mvc.Core.xml
 C:\W\CarRental.BL\bin\Debug\netcoreapp2.2\System.IdentityModel.Tokens.Jwt.dll
 C:\W\CarRental.BL\bin\Debug\netcoreapp2.2\System.IdentityModel.Tokens.Jwt.pdb
 C:\W\CarRental.BL\bin\Debug\netcoreapp2.2\System.IdentityModel.Tokens.Jwt.xml
+C:\W\CarRental.BL\bin\Debug\netcoreapp2.2\Microsoft.AspNetCore.Mvc.Abstractions.dll
+C:\W\CarRental.BL\bin\Debug\netcoreapp2.2\Microsoft.AspNetCore.Mvc.Abstractions.xml

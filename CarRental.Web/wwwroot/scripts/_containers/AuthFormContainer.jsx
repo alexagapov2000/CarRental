@@ -20,6 +20,7 @@ const mapStateToProps = store => {
     return {
         username: store.common.username,
         password: store.common.password,
+        isFetching: store.common.isFetching,
     };
 };
 

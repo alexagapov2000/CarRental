@@ -5,6 +5,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using CarRental.BL;
+using CarRental.BL.ViewModels;
 using CarRental.DAL.Models.Auth;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -32,10 +33,10 @@ namespace CarRental.Web.Controllers
         }
 
         [HttpPost("register")]
-        public async Task<Person> RegisterUser(Person newPerson)
+        public async Task<ActionResult<Person>> RegisterUser(RegisterViewModel registerViewModel)
         {
-            await new AccountService().RegisterUser(newPerson);
-            return newPerson;
+            var person = await new AccountService().RegisterUser(registerViewModel, this);
+            return person;
         }
     }
 }

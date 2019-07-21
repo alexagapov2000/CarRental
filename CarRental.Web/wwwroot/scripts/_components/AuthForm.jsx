@@ -1,5 +1,6 @@
 import React from 'react';
-import { store } from '../_store/configureStore.jsx';
+import LoadingScreen from '../customComponents/loadingScreen/loadingScreen.jsx';
+import './AuthForm.css';
 
 export default class AuthForm extends React.Component {
 
@@ -15,29 +16,32 @@ export default class AuthForm extends React.Component {
             localStorage.removeItem('token');
     }
 
+    componentDidMount() {
+        //const fieldset = document.querySelector('#authFormFieldset');
+        //const button = fieldset.querySelector('button');
+        //button.addEventListener('click', () => fieldset.style.opacity = 0.2);
+    }
+
     render() {
-        let usernameInputSignIn = <input placeholder='Username' id='usernameInputSignIn' type='text' />;
-        let passwordInputSignIn = <input placeholder='Password' id='passwordInputSignIn' type='password' />;
+        let usernameInput = <input pattern='[a-zA-Z][a-zA-Z0-9]{3,50}' placeholder='Username' id='usernameInput' type='text' />;
+        let passwordInput = <input pattern='[a-zA-Z0-9]{4,50}' placeholder='Password' id='passwordInput' type='password' />;
         let isSaveSession = false;
         let saveSession = <input onClick={e => isSaveSession = e.target.checked} id='saveSessionCheckbox' type='checkbox' />
 
-        let usernameInputSignUp = <input placeholder='Username' id='usernameInputSignUp' type='text' />;
-        let passwordInputSignUp = <input placeholder='Password' id='passwordInputSignUp' type='password' />;
+        let fieldsetClass = this.props.isFetching ? 'fetching' : '';
         return <div>
-            <fieldset>
+            <fieldset className={fieldsetClass} id='authFormFieldset'>
                 <legend>Sign in</legend>
-                <p>{usernameInputSignIn}</p>
-                <p>{passwordInputSignIn}</p>
-                <p><label htmlFor={saveSession.props.id}>{saveSession}Load account after returning</label></p>
-                <p>
-                    <button onClick={e => this.signIn(usernameInputSignIn, passwordInputSignIn, isSaveSession)}>Login</button>
-                    <span></span>
-                </p>
-            </fieldset>
-            <fieldset>
-                <legend>Sign up</legend>
-                <p>{usernameInputSignUp}</p>
-                <p>{passwordInputSignUp}</p>
+                <LoadingScreen isFetching={this.props.isFetching} />
+                <form onSubmit={e => {
+                    e.preventDefault();
+                    this.signIn(usernameInput, passwordInput, isSaveSession)
+                }}>
+                    <div>{usernameInput}<span className='invalidTips'>Otsosi</span></div>
+                    <div>{passwordInput}</div>
+                    <div><label htmlFor={saveSession.props.id}>{saveSession}Load account after returning</label></div>
+                    <div><button type='submit'>Login</button></div>
+                </form>
             </fieldset>
         </div>;
     }

@@ -10,10 +10,10 @@ export default class SelectableDiv extends React.Component {
     }
 
     switchState = (e) => {
-        let isSelectedNow = !this.state.isSelected;
-        this.setState({isSelected: isSelectedNow});
+        let isSelectedNew = !this.state.isSelected;
+        this.setState({isSelected: isSelectedNew});
         let {controller, source, toDeleteList} = this.props;
-        if(isSelectedNow) {
+        if(isSelectedNew) {
             toDeleteList[controller][source.id] = {id: source.id};
         }
         else {

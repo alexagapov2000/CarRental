@@ -10,14 +10,14 @@
         "projectUniqueName": "C:\\W\\CarRental.BL\\CarRental.BL.csproj",
         "projectName": "CarRental.BL",
         "projectPath": "C:\\W\\CarRental.BL\\CarRental.BL.csproj",
-        "packagesPath": "C:\\Users\\Aliaksei.Ahapau\\.nuget\\packages\\",
+        "packagesPath": "C:\\Users\\Алексей\\.nuget\\packages\\",
         "outputPath": "C:\\W\\CarRental.BL\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "C:\\Users\\Aliaksei.Ahapau\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Алексей\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -70,14 +70,14 @@
         "projectUniqueName": "C:\\W\\CarRental.DAL\\CarRental.DAL.csproj",
         "projectName": "CarRental.DAL",
         "projectPath": "C:\\W\\CarRental.DAL\\CarRental.DAL.csproj",
-        "packagesPath": "C:\\Users\\Aliaksei.Ahapau\\.nuget\\packages\\",
+        "packagesPath": "C:\\Users\\Алексей\\.nuget\\packages\\",
         "outputPath": "C:\\W\\CarRental.DAL\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "C:\\Users\\Aliaksei.Ahapau\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Алексей\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [

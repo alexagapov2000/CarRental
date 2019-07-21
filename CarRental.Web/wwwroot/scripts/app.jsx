@@ -7,6 +7,7 @@ import SelectsContainer from './_containers/SelectsContainer.jsx';
 import LocationsTableContainer from './_containers/LocationsTableContainer.jsx';
 import AuthFormContainer from './_containers/AuthFormContainer.jsx';
 import * as commonActions from './_actions/IndexActions.jsx';
+import SignUpContainer from './_containers/SignUpContainer.jsx';
 
 class App extends React.Component {
 
@@ -22,6 +23,7 @@ class App extends React.Component {
                             <Route path='/creatingRedux' component={CreatingContainer} />
                             <Route path='/locationsTable' component={LocationsTableContainer} />
                             <Route path='/auth' component={AuthFormContainer} />
+                            <Route path='/signup' component={SignUpContainer} />
                         </Switch>
                     </main>
                 </div>
