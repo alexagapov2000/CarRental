@@ -23,8 +23,8 @@ export default class AuthForm extends React.Component {
     }
 
     render() {
-        let usernameInput = <input pattern='[a-zA-Z][a-zA-Z0-9]{3,50}' placeholder='Username' id='usernameInput' type='text' />;
-        let passwordInput = <input pattern='[a-zA-Z0-9]{4,50}' placeholder='Password' id='passwordInput' type='password' />;
+        let usernameInput = <input pattern='[a-zA-Z][a-zA-Z0-9]*' minLength='4' placeholder='Username' id='usernameInput' type='text' />;
+        let passwordInput = <input pattern='[a-zA-Z0-9]*' minLength='4' placeholder='Password' id='passwordInput' type='password' />;
         let isSaveSession = false;
         let saveSession = <input onClick={e => isSaveSession = e.target.checked} id='saveSessionCheckbox' type='checkbox' />
 
@@ -37,7 +37,10 @@ export default class AuthForm extends React.Component {
                     e.preventDefault();
                     this.signIn(usernameInput, passwordInput, isSaveSession)
                 }}>
-                    <div>{usernameInput}<span className='invalidTips'>Otsosi</span></div>
+                    <div>
+                        {usernameInput}
+                        <span className='invalidTips'>Only latin symbols and digits! Length must be bigger than 3 symbols!</span>
+                    </div>
                     <div>{passwordInput}</div>
                     <div><label htmlFor={saveSession.props.id}>{saveSession}Load account after returning</label></div>
                     <div><button type='submit'>Login</button></div>

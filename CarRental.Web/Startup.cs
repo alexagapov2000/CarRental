@@ -13,6 +13,7 @@ using CarRental.DAL.Models.Auth;
 using Westwind.AspNetCore.LiveReload;
 using System.Linq;
 using CarRental.BL;
+using Microsoft.Extensions.Logging;
 
 namespace CarRental.Web
 {
@@ -20,7 +21,6 @@ namespace CarRental.Web
     {
         public void ConfigureServices(IServiceCollection services)
         {
-            var kal = services.ToList();
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
                 {
@@ -44,7 +44,10 @@ namespace CarRental.Web
             services.AddReact();
             services.AddJsEngineSwitcher(options => options.DefaultEngineName = ChakraCoreJsEngine.EngineName)
                 .AddChakraCore();
-            services.AddMvc();
+            services.AddMvc(options =>
+            {
+                options.Filters.Add(new ErrorHandlingFilter());
+            });
             services.AddSpaStaticFiles();
             services.AddDbContext<CarRentalContext>();
             services.AddBusiness();
@@ -52,6 +55,7 @@ namespace CarRental.Web
 
         public void Configure(IApplicationBuilder app)
         {
+            //app.UseDeveloperExceptionPage();
             app.UseReact(config => {  });
             app.UseDefaultFiles();
             app.UseLiveReload();
