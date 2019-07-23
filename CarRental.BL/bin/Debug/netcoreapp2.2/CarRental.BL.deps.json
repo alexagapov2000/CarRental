@@ -8,6 +8,7 @@
     ".NETCoreApp,Version=v2.2": {
       "CarRental.BL/1.0.0": {
         "dependencies": {
+          "CarRental.CustomExceptions": "1.0.0",
           "CarRental.DAL": "1.0.0",
           "Microsoft.AspNetCore.Http.Abstractions": "2.2.0",
           "Microsoft.AspNetCore.Mvc.Abstractions": "2.2.0.0",
@@ -825,6 +826,11 @@
           "System.Xml.ReaderWriter": "4.3.0"
         }
       },
+      "CarRental.CustomExceptions/1.0.0": {
+        "runtime": {
+          "CarRental.CustomExceptions.dll": {}
+        }
+      },
       "CarRental.DAL/1.0.0": {
         "dependencies": {
           "Microsoft.EntityFrameworkCore": "2.2.4",
@@ -1448,6 +1454,11 @@
       "sha512": "sha512-lJ8AxvkX7GQxpC6GFCeBj8ThYVyQczx2+f/cWHJU8tjS7YfI6Cv6bon70jVEgs2CiFbmmM8b9j1oZVx0dSI2Ww==",
       "path": "system.xml.xmldocument/4.3.0",
       "hashPath": "system.xml.xmldocument.4.3.0.nupkg.sha512"
+    },
+    "CarRental.CustomExceptions/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
     },
     "CarRental.DAL/1.0.0": {
       "type": "project",

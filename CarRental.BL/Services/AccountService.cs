@@ -12,8 +12,10 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Security.Authentication;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
@@ -24,22 +26,17 @@ namespace CarRental.BL
     public class AccountService
     {
         public CarRentalContext _context { get; private set; }
-        private readonly IConfiguration _configuration;
 
         public AccountService()
         {
             _context = new CarRentalContext();
         }
 
-        public async Task Token(Person person, ControllerBase controller)
+        public object Token(Person person)
         {
             var identity = GetIdentity(person.Username, person.Password);
             if (identity == null)
-            {
-                controller.Response.StatusCode = 400;
-                await controller.Response.WriteAsync("Invalid username or password.");
-                return;
-            }
+                throw new ValidationException("Invalid username or password.");
 
             var now = DateTime.UtcNow;
             var jwt = new JwtSecurityToken(
@@ -53,12 +50,11 @@ namespace CarRental.BL
 
             var response = new
             {
-                JWTkey = encodedJwt,
+                jwtKey = encodedJwt,
                 username = identity.Name,
             };
 
-            controller.Response.ContentType = "application/json";
-            await controller.Response.WriteAsync(JsonConvert.SerializeObject(response, new JsonSerializerSettings { Formatting = Formatting.Indented }));
+            return response;
         }
 
         private ClaimsIdentity GetIdentity(string username, string password)
@@ -79,36 +75,27 @@ namespace CarRental.BL
             return claimsIdentity;
         }
 
-        public async Task<ActionResult> DecodeToken(string jwt, ControllerBase controller)
+        public void DecodeToken(string jwt)
         {
             var validationParameters = new TokenValidationParameters()
             {
                 ValidIssuer = AuthOptions.ISSUER,
                 ValidAudience = AuthOptions.AUDIENCE,
-                ClockSkew = System.TimeSpan.Zero,
+                ClockSkew = TimeSpan.Zero,
                 IssuerSigningKey = AuthOptions.GetSymmetricSecurityKey(),
             };
             var handler = new JwtSecurityTokenHandler();
-            SecurityToken validatedToken;
-            IEnumerable<string> roles = new List<string>();
-            try
-            {
-                ClaimsPrincipal claims = handler.ValidateToken(jwt, validationParameters, out validatedToken);
-                return controller.Ok();
-            }
-            catch
-            {
-                return controller.ValidationProblem();
-            }
+            var roles = new List<string>();
+            handler.ValidateToken(jwt, validationParameters, out _);
         }
 
-        public async Task<ActionResult<Person>> RegisterUser(RegisterViewModel registerViewModel, ControllerBase controller)
+        public async Task<Person> RegisterUser(RegisterViewModel registerViewModel)
         {
             //front
             if (registerViewModel.Password1 != registerViewModel.Password2)
-                return controller.BadRequest();
+                throw new ValidationException("Passwords is not match!");
             if (_context.Persons.Any(p => p.Username == registerViewModel.Username))
-                return controller.StatusCode(409);
+                throw new ValidationException("This username is busy!");
             var person = new Person
             {
                 Username = registerViewModel.Username,

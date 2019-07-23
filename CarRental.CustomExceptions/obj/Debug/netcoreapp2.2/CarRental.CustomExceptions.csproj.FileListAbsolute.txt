@@ -1,0 +1,9 @@
+C:\W\CarRental.CustomExceptions\bin\Debug\netcoreapp2.2\CarRental.CustomExceptions.deps.json
+C:\W\CarRental.CustomExceptions\bin\Debug\netcoreapp2.2\CarRental.CustomExceptions.dll
+C:\W\CarRental.CustomExceptions\bin\Debug\netcoreapp2.2\CarRental.CustomExceptions.pdb
+C:\W\CarRental.CustomExceptions\obj\Debug\netcoreapp2.2\CarRental.CustomExceptions.csprojAssemblyReference.cache
+C:\W\CarRental.CustomExceptions\obj\Debug\netcoreapp2.2\CarRental.CustomExceptions.csproj.CoreCompileInputs.cache
+C:\W\CarRental.CustomExceptions\obj\Debug\netcoreapp2.2\CarRental.CustomExceptions.AssemblyInfoInputs.cache
+C:\W\CarRental.CustomExceptions\obj\Debug\netcoreapp2.2\CarRental.CustomExceptions.AssemblyInfo.cs
+C:\W\CarRental.CustomExceptions\obj\Debug\netcoreapp2.2\CarRental.CustomExceptions.dll
+C:\W\CarRental.CustomExceptions\obj\Debug\netcoreapp2.2\CarRental.CustomExceptions.pdb

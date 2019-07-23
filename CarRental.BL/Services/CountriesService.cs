@@ -1,11 +1,10 @@
 ﻿using CarRental.DAL.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
+using CarRental.Web.Middleware.CustomExceptions;
 
 namespace CarRental.BL
 {
@@ -28,15 +27,15 @@ namespace CarRental.BL
             return await _context.Countries.FirstAsync(x => x.Id == id);
         }
 
-        public async Task<ActionResult<Countries>> AddCountry(Countries countries, ControllerBase controller)
+        public async Task<ActionResult<Countries>> AddCountry(Countries country)
         {
-            _context.Countries.Add(countries);
+            _context.Countries.Add(country);
             await _context.SaveChangesAsync();
 
-            return controller.CreatedAtAction("GetCountries", new { id = countries.Id }, countries);
+            return country;
         }
 
-        public async Task<ActionResult<Countries>> DeleteCountry(int id, ControllerBase controller)
+        public async Task<ActionResult<Countries>> DeleteCountry(int id)
         {
             var country = await _context.Countries.FindAsync(id);
 
@@ -46,9 +45,7 @@ namespace CarRental.BL
             await _context.SaveChangesAsync();
 
             if (country == null)
-            {
-                return controller.NotFound();
-            }
+                throw new NotFoundException($"There is no country with id {id}");
 
             _context.Countries.Remove(country);
             await _context.SaveChangesAsync();
@@ -56,13 +53,13 @@ namespace CarRental.BL
             return country;
         }
 
-        public async Task<IEnumerable<Countries>> DeleteCountries(int[] IDs, ControllerBase controller)
+        public async Task<IEnumerable<Countries>> DeleteCountries(int[] IDs)
         {
             var countries = new List<Countries>();
 
             foreach (var id in IDs)
             {
-                var smth = await DeleteCountry(id, controller);
+                var smth = await DeleteCountry(id);
                 countries.Add(smth.Value);
             }
 

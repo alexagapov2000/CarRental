@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Security.Authentication;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using CarRental.BL;
@@ -20,22 +21,22 @@ namespace CarRental.Web.Controllers
     public class AccountController : ControllerBase
     {
         [HttpPost("token")]
-        public async Task Token(Person person)
+        public async Task<object> Token(Person person)
         {
-            await new AccountService().Token(person, this);
+            var token = new AccountService().Token(person);
+            return token;
         }
 
         [HttpPost("decode")]
-        public async Task<ActionResult> DecodeToken([FromHeader] string jwt)
+        public async Task DecodeToken([FromHeader] string jwt)
         {
-            var person = await new AccountService().DecodeToken(jwt, this);
-            return person;
+            new AccountService().DecodeToken(jwt);
         }
 
         [HttpPost("register")]
-        public async Task<ActionResult<Person>> RegisterUser(RegisterViewModel registerViewModel)
+        public async Task<Person> RegisterUser(RegisterViewModel registerViewModel)
         {
-            var person = await new AccountService().RegisterUser(registerViewModel, this);
+            var person = await new AccountService().RegisterUser(registerViewModel);
             return person;
         }
     }

@@ -1393,6 +1393,16 @@
           "lib/netstandard1.3/System.Xml.XmlDocument.dll": {}
         }
       },
+      "CarRental.CustomExceptions/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v2.2",
+        "compile": {
+          "bin/placeholder/CarRental.CustomExceptions.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/CarRental.CustomExceptions.dll": {}
+        }
+      },
       "CarRental.DAL/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v2.2",
@@ -5345,6 +5355,11 @@
         "system.xml.xmldocument.nuspec"
       ]
     },
+    "CarRental.CustomExceptions/1.0.0": {
+      "type": "project",
+      "path": "../CarRental.CustomExceptions/CarRental.CustomExceptions.csproj",
+      "msbuildProject": "../CarRental.CustomExceptions/CarRental.CustomExceptions.csproj"
+    },
     "CarRental.DAL/1.0.0": {
       "type": "project",
       "path": "../CarRental.DAL/CarRental.DAL.csproj",
@@ -5353,6 +5368,7 @@
   },
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v2.2": [
+      "CarRental.CustomExceptions >= 1.0.0",
       "CarRental.DAL >= 1.0.0",
       "Microsoft.AspNetCore.Http.Abstractions >= 2.2.0",
       "Microsoft.NETCore.App >= 2.2.0"
@@ -5388,6 +5404,9 @@
       "frameworks": {
         "netcoreapp2.2": {
           "projectReferences": {
+            "C:\\W\\CarRental.CustomExceptions\\CarRental.CustomExceptions.csproj": {
+              "projectPath": "C:\\W\\CarRental.CustomExceptions\\CarRental.CustomExceptions.csproj"
+            },
             "C:\\W\\CarRental.DAL\\CarRental.DAL.csproj": {
               "projectPath": "C:\\W\\CarRental.DAL\\CarRental.DAL.csproj"
             }

@@ -69,7 +69,7 @@ export function authUser(username, password) {
             password: password,
         };
         await Axios.post("api/account/token", accountData)
-            .then(response => accountData.token = response.data.JWTkey)
+            .then(response => accountData.token = response.data.jwtKey)
             .then(() => dispatchSuccess(accountData))
             .catch(dispatchFailed);
     };
@@ -88,17 +88,17 @@ export function saveUser() {
 export function reAuthUser() {
     return dispatch => {
         let token = localStorage.getItem('token');
+        if(!token) return;
+        let actionCreator = () => dispatch({
+            type: REAUTHORIZE_USER,
+            payload: {
+                username: '',
+                password: '',
+                token,
+            },
+        });
         Axios.post('api/account/decode', null, { headers: { jwt: token } })
-            .then(
-                dispatch({
-                    type: REAUTHORIZE_USER,
-                    payload: {
-                        username: '',
-                        password: '',
-                        token,
-                    },
-                })
-            );
+            .then(actionCreator());
     };
 }
 

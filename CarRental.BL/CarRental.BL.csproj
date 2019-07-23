@@ -9,6 +9,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\CarRental.CustomExceptions\CarRental.CustomExceptions.csproj" />
     <ProjectReference Include="..\CarRental.DAL\CarRental.DAL.csproj" />
   </ItemGroup>
 

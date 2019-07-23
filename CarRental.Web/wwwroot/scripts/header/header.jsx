@@ -17,10 +17,13 @@ export default class Header extends React.Component {
                             <Link className='link' to='/locationsTable'>Locations table</Link>
                         </li>
                         <li>
-                            <Link className='link' to='/auth'>auth</Link>
+                            <Link className='link' to='/signin'>Sign in</Link>
                         </li>
                         <li>
                             <Link className='link' to='/signup'>Sign up</Link>
+                        </li>
+                        <li>
+                            <Link className='link' to='/test'>Test tab</Link>
                         </li>
                     </ul>
                 </nav>

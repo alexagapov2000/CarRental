@@ -31,21 +31,21 @@ namespace CarRental.Web.Controllers
         [HttpPost]
         public async Task<ActionResult<Countries>> AddCountry(Countries country)
         {
-            await new CountriesService().AddCountry(country, this);
+            await new CountriesService().AddCountry(country);
             return country;
         }
 
         [HttpDelete("{id}")]
         public async Task<ActionResult<Countries>> DeleteCountry(int id)
         {
-            var country = await new CountriesService().DeleteCountry(id, this);
+            var country = await new CountriesService().DeleteCountry(id);
             return country;
         }
 
         [HttpDelete]
         public async Task<IEnumerable<Countries>> DeleteCountries([FromBody] int[] IDs)
         {
-            var countries = await new CountriesService().DeleteCountries(IDs, this);
+            var countries = await new CountriesService().DeleteCountries(IDs);
             return countries;
         }
     }

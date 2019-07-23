@@ -46,6 +46,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\CarRental.BL\CarRental.BL.csproj" />
+    <ProjectReference Include="..\CarRental.CustomExceptions\CarRental.CustomExceptions.csproj" />
     <ProjectReference Include="..\CarRental.DAL\CarRental.DAL.csproj" />
   </ItemGroup>
 

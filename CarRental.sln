@@ -9,7 +9,9 @@ Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "CarRental.DB", "CarRental.D
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarRental.DAL", "CarRental.DAL\CarRental.DAL.csproj", "{3B2CCA77-F538-4D56-ADDB-8371DB04ED4C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarRental.BL", "CarRental.BL\CarRental.BL.csproj", "{BA59F346-ADDB-4ABC-819B-2170C4CF8898}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarRental.BL", "CarRental.BL\CarRental.BL.csproj", "{BA59F346-ADDB-4ABC-819B-2170C4CF8898}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarRental.CustomExceptions", "CarRental.CustomExceptions\CarRental.CustomExceptions.csproj", "{D364C6E5-4CDB-4D3E-9CF1-1A920C56FD7E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,6 +37,10 @@ Global
 		{BA59F346-ADDB-4ABC-819B-2170C4CF8898}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BA59F346-ADDB-4ABC-819B-2170C4CF8898}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BA59F346-ADDB-4ABC-819B-2170C4CF8898}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D364C6E5-4CDB-4D3E-9CF1-1A920C56FD7E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D364C6E5-4CDB-4D3E-9CF1-1A920C56FD7E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D364C6E5-4CDB-4D3E-9CF1-1A920C56FD7E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D364C6E5-4CDB-4D3E-9CF1-1A920C56FD7E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

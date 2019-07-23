@@ -7,13 +7,9 @@ using Microsoft.AspNetCore.Http;
 using JavaScriptEngineSwitcher.ChakraCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
-using System.IO;
-using System;
 using CarRental.DAL.Models.Auth;
 using Westwind.AspNetCore.LiveReload;
-using System.Linq;
 using CarRental.BL;
-using Microsoft.Extensions.Logging;
 
 namespace CarRental.Web
 {
@@ -44,10 +40,7 @@ namespace CarRental.Web
             services.AddReact();
             services.AddJsEngineSwitcher(options => options.DefaultEngineName = ChakraCoreJsEngine.EngineName)
                 .AddChakraCore();
-            services.AddMvc(options =>
-            {
-                options.Filters.Add(new ErrorHandlingFilter());
-            });
+            services.AddMvc();
             services.AddSpaStaticFiles();
             services.AddDbContext<CarRentalContext>();
             services.AddBusiness();
@@ -55,13 +48,15 @@ namespace CarRental.Web
 
         public void Configure(IApplicationBuilder app)
         {
-            //app.UseDeveloperExceptionPage();
-            app.UseReact(config => {  });
+            app.UseDeveloperExceptionPage();
+
+            app.UseReact(config => { });
             app.UseDefaultFiles();
             app.UseLiveReload();
             app.UseStaticFiles();
             app.UseWebpackDevMiddleware();
             app.UseAuthentication();
+            app.ConfigureExceptionHandler();
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
