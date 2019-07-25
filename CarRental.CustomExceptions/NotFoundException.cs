@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace CarRental.Web.Middleware.CustomExceptions
+namespace CarRental.CustomExceptions
 {
     public class NotFoundException : Exception
     {

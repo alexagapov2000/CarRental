@@ -1,4 +1,4 @@
-﻿using CarRental.Web.Middleware.CustomExceptions;
+﻿using CarRental.CustomExceptions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Http;
@@ -38,10 +38,20 @@ namespace CarRental.Web
                     return HttpStatusCode.BadRequest;
                 case AuthenticationException _:
                     return HttpStatusCode.Forbidden;
+                    
+                    //deprecated
                 case NotImplementedException _:
                     return HttpStatusCode.NotImplemented;
+                    //deprecated
+
                 case NotFoundException _:
                     return HttpStatusCode.NotFound;
+
+                    //deprecated
+                case SameDataException _:
+                    return HttpStatusCode.Conflict;
+                    //deprecated
+
                 default:
                     return HttpStatusCode.InternalServerError;
             }

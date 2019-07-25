@@ -1,6 +1,7 @@
 import React from 'react';
 import LoadingScreen from '../customComponents/loadingScreen/loadingScreen.jsx';
-import './AuthForm.css';
+import { Modal, Button, Form } from "react-bootstrap";
+//import './AuthForm.css';
 
 export default class AuthForm extends React.Component {
 
@@ -23,16 +24,21 @@ export default class AuthForm extends React.Component {
     }
 
     render() {
-        let usernameInput = <input pattern='[a-zA-Z][a-zA-Z0-9]*' minLength='4' placeholder='Username' id='usernameInput' type='text' />;
-        let passwordInput = <input pattern='[a-zA-Z0-9]*' minLength='4' placeholder='Password' id='passwordInput' type='password' />;
+        let usernameInput = <Form.Control pattern='[a-zA-Z0-9_-]{4,}' placeholder='Username' />;
+        let passwordInput = <Form.Control pattern='[a-zA-Z0-9]*' minLength='4' placeholder='Password' id='passwordInput' type='password' />;
         let isSaveSession = false;
-        let saveSession = <input onClick={e => isSaveSession = e.target.checked} id='saveSessionCheckbox' type='checkbox' />
+        let saveSession = <Form.Check onClick={e => isSaveSession = e.target.checked} id='saveSessionCheckbox' type='checkbox' />
 
         let fieldsetClass = this.props.isFetching ? 'fetching' : '';
-        return <div>
-            <fieldset className={fieldsetClass} id='authFormFieldset'>
-                <legend>Sign in</legend>
-                <LoadingScreen isFetching={this.props.isFetching} />
+        return <Modal.Dialog>
+            <LoadingScreen isFetching={this.props.isFetching} />
+
+            <Modal.Header>
+                <Modal.Title>Sign in</Modal.Title>
+            </Modal.Header>
+
+            <Modal.Body>
+                {/*
                 <form onSubmit={e => {
                     e.preventDefault();
                     this.signIn(usernameInput, passwordInput, isSaveSession)
@@ -43,9 +49,24 @@ export default class AuthForm extends React.Component {
                     </div>
                     <div>{passwordInput}</div>
                     <div><label htmlFor={saveSession.props.id}>{saveSession}Load account after returning</label></div>
-                    <div><button type='submit'>Login</button></div>
+                    <div><Button type='submit'>Login</Button></div>
                 </form>
-            </fieldset>
-        </div>;
+                */}
+                <Form onSubmit={e => {
+                    e.preventDefault();
+                    this.signIn(usernameInput, passwordInput, isSaveSession) }}>
+                    {/*
+                        <Form.Control placeholder="Username" pattern='[a-zA-Z0-9_.-]{4,}' />
+                        <Form.Control placeholder="Password" pattern='[a-zA-Z0-9_.-]{4,}' type='password' />
+                        <Form.Check type="checkbox" label="Remember me" />
+                        <Button variant="primary" type="submit">Submit</Button>
+                    */}
+                    {usernameInput}
+                    {passwordInput}
+                    {saveSession}
+                    <Button variant="primary" type="submit">Submit</Button>
+                </Form>
+            </Modal.Body>
+        </Modal.Dialog>;
     }
 }

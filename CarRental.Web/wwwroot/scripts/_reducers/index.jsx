@@ -44,7 +44,11 @@ export function commonReducer(state = initialState, action) {
 			return { ...state, account: action.payload, isFetching: false };
 
 		case types.SIGN_UP_USER:
+			return { ...state, isFetching: true };
+		case types.SIGN_UP_USER_SUCCESS:
 			return { ...state, account: action.payload, isFetching: false };
+		case types.SIGN_UP_USER_FAILED:
+			return { ...state, isFetching: false };
 
 		default:
 			return state;

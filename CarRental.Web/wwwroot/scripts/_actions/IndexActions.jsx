@@ -16,6 +16,7 @@ export const REAUTHORIZE_USER = 'REAUTHORIZE_USER';
 
 export const SIGN_UP_USER = 'SIGN_UP_USER';
 export const SIGN_UP_USER_SUCCESS = 'SIGN_UP_USER_SUCCESS';
+export const SIGN_UP_USER_FAILED = 'SIGN_UP_USER_FAILED';
 
 export function loadCountries() {
     return async dispatch => {
@@ -88,7 +89,7 @@ export function saveUser() {
 export function reAuthUser() {
     return dispatch => {
         let token = localStorage.getItem('token');
-        if(!token) return;
+        if (!token) return;
         let actionCreator = () => dispatch({
             type: REAUTHORIZE_USER,
             payload: {
@@ -107,12 +108,19 @@ export function signUpUser(username, password1, password2) {
         dispatch({
             type: SIGN_UP_USER,
         });
-        let response = await Axios.post('api/account/register', { username, password1, password2 });
-        if (response.status == 200) {
-            dispatch({
-                type: SIGN_UP_USER_SUCCESS,
-                payload: response.data,
-            });
+        let dispatchSuccess = response => dispatch({
+            type: SIGN_UP_USER_SUCCESS,
+            payload: response.data,
+        });
+        let dispatchFailed = () => dispatch({
+            type: SIGN_UP_USER_FAILED,
+        });
+        if (password1 != password2) {
+            dispatchFailed();
+            return;
         }
+        await Axios.post('api/account/register', { username, password: password1 })
+            .then(dispatchSuccess)
+            .catch(dispatchFailed);
     };
 }

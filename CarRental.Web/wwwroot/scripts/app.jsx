@@ -9,8 +9,6 @@ import AuthFormContainer from './_containers/AuthFormContainer.jsx';
 import * as commonActions from './_actions/IndexActions.jsx';
 import SignUpContainer from './_containers/SignUpContainer.jsx';
 
-import TestTab from './_components/TestTab.jsx';
-
 class App extends React.Component {
 
     render() {
@@ -21,12 +19,11 @@ class App extends React.Component {
                     <Header />
                     <main>
                         <Switch>
-                            <Route path='/selectsRedux' component={SelectsContainer} />
-                            <Route path='/creatingRedux' component={CreatingContainer} />
+                            <Route path='/createLocation' component={CreatingContainer} />
+                            <Route path='/selectLocation' component={SelectsContainer} />
                             <Route path='/locationsTable' component={LocationsTableContainer} />
-                            <Route path='/signin' component={AuthFormContainer} />
-                            <Route path='/signup' component={SignUpContainer} />
-                            <Route path='/test' component={TestTab} />
+                            <Route path='/signIn' component={AuthFormContainer} />
+                            <Route path='/signUp' component={SignUpContainer} />
                         </Switch>
                     </main>
                 </div>
