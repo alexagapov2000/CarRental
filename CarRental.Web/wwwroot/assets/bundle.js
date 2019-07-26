@@ -57490,8 +57490,6 @@ var _reactBootstrap = __webpack_require__(228);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-//import './AuthForm.css';
-
 var AuthForm = function (_React$Component) {
     (0, _inherits3.default)(AuthForm, _React$Component);
 
@@ -57508,23 +57506,18 @@ var AuthForm = function (_React$Component) {
         }
 
         return _ret = (_temp = (_this = (0, _possibleConstructorReturn3.default)(this, (_ref = AuthForm.__proto__ || Object.getPrototypeOf(AuthForm)).call.apply(_ref, [this].concat(args))), _this), _this.signIn = function () {
-            var _ref2 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee(usernameInput, passwordInput, isSaveSession) {
-                var usernameInputId, passwordInputId, username, password;
+            var _ref2 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee(username, password, isSaveSession) {
                 return _regenerator2.default.wrap(function _callee$(_context) {
                     while (1) {
                         switch (_context.prev = _context.next) {
                             case 0:
-                                usernameInputId = usernameInput.props.id;
-                                passwordInputId = passwordInput.props.id;
-                                username = document.getElementById(usernameInputId).value;
-                                password = document.getElementById(passwordInputId).value;
-                                _context.next = 6;
+                                _context.next = 2;
                                 return _this.props.authUser(username, password);
 
-                            case 6:
+                            case 2:
                                 if (isSaveSession) _this.props.saveUser();else localStorage.removeItem('token');
 
-                            case 7:
+                            case 3:
                             case 'end':
                                 return _context.stop();
                         }
@@ -57539,29 +57532,48 @@ var AuthForm = function (_React$Component) {
     }
 
     (0, _createClass3.default)(AuthForm, [{
-        key: 'componentDidMount',
-        value: function componentDidMount() {
-            //const fieldset = document.querySelector('#authFormFieldset');
-            //const button = fieldset.querySelector('button');
-            //button.addEventListener('click', () => fieldset.style.opacity = 0.2);
-        }
-    }, {
         key: 'render',
         value: function render() {
             var _this3 = this;
 
-            var usernameInput = _react2.default.createElement(_reactBootstrap.Form.Control, { pattern: '[a-zA-Z0-9_-]{4,}', placeholder: 'Username' });
-            var passwordInput = _react2.default.createElement(_reactBootstrap.Form.Control, { pattern: '[a-zA-Z0-9]*', minLength: '4', placeholder: 'Password', id: 'passwordInput', type: 'password' });
+            var username = '';
+            var usernameInput = _react2.default.createElement(_reactBootstrap.Form.Control, {
+                pattern: '[a-zA-Z0-9_.-]{4,}',
+                placeholder: 'Username',
+                defaultValue: '',
+                disabled: this.props.isFetching,
+                onChange: function onChange(e) {
+                    return username = e.target.value;
+                } });
+            var password = '';
+            var passwordInput = _react2.default.createElement(_reactBootstrap.Form.Control, {
+                pattern: '[a-zA-Z0-9_.-]{4,}',
+                placeholder: 'Password',
+                defaultValue: '',
+                disabled: this.props.isFetching,
+                type: 'password',
+                onChange: function onChange(e) {
+                    return password = e.target.value;
+                } });
             var isSaveSession = false;
-            var saveSession = _react2.default.createElement(_reactBootstrap.Form.Check, { onClick: function onClick(e) {
+            var saveSession = _react2.default.createElement(_reactBootstrap.Form.Check, {
+                label: 'Remember me',
+                disabled: this.props.isFetching,
+                type: 'checkbox',
+                onChange: function onChange(e) {
                     return isSaveSession = e.target.checked;
-                }, id: 'saveSessionCheckbox', type: 'checkbox' });
+                } });
 
-            var fieldsetClass = this.props.isFetching ? 'fetching' : '';
+            var buttonValue = this.props.isFetching ? _react2.default.createElement(
+                _react2.default.Fragment,
+                null,
+                'Loading...',
+                _react2.default.createElement(_reactBootstrap.Spinner, { animation: 'border', size: 'sm' })
+            ) : 'Login';
+
             return _react2.default.createElement(
                 _reactBootstrap.Modal.Dialog,
                 null,
-                _react2.default.createElement(_loadingScreen2.default, { isFetching: this.props.isFetching }),
                 _react2.default.createElement(
                     _reactBootstrap.Modal.Header,
                     null,
@@ -57572,21 +57584,37 @@ var AuthForm = function (_React$Component) {
                     )
                 ),
                 _react2.default.createElement(
-                    _reactBootstrap.Modal.Body,
-                    null,
+                    _reactBootstrap.Form,
+                    { onSubmit: function onSubmit(e) {
+                            e.preventDefault();
+                            _this3.signIn(username, password, isSaveSession);
+                        } },
                     _react2.default.createElement(
-                        _reactBootstrap.Form,
-                        { onSubmit: function onSubmit(e) {
-                                e.preventDefault();
-                                _this3.signIn(usernameInput, passwordInput, isSaveSession);
-                            } },
-                        usernameInput,
-                        passwordInput,
-                        saveSession,
+                        _reactBootstrap.Modal.Body,
+                        null,
+                        _react2.default.createElement(
+                            'p',
+                            null,
+                            usernameInput
+                        ),
+                        _react2.default.createElement(
+                            'p',
+                            null,
+                            passwordInput
+                        ),
+                        _react2.default.createElement(
+                            'p',
+                            null,
+                            saveSession
+                        )
+                    ),
+                    _react2.default.createElement(
+                        _reactBootstrap.Modal.Footer,
+                        null,
                         _react2.default.createElement(
                             _reactBootstrap.Button,
-                            { variant: 'primary', type: 'submit' },
-                            'Submit'
+                            { variant: 'primary', type: 'submit', disabled: this.props.isFetching },
+                            buttonValue
                         )
                     )
                 )
@@ -58379,6 +58407,8 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
+var _reactBootstrap = __webpack_require__(228);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var SignUpForm = function (_React$Component) {
@@ -58397,22 +58427,15 @@ var SignUpForm = function (_React$Component) {
         }
 
         return _ret = (_temp = (_this = (0, _possibleConstructorReturn3.default)(this, (_ref = SignUpForm.__proto__ || Object.getPrototypeOf(SignUpForm)).call.apply(_ref, [this].concat(args))), _this), _this.signUp = function () {
-            var _ref2 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee(usernameInput, password1Input, password2Input) {
-                var usernameInputId, password1InputId, password2InputId, username, password1, password2;
+            var _ref2 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee(username, password1, password2) {
                 return _regenerator2.default.wrap(function _callee$(_context) {
                     while (1) {
                         switch (_context.prev = _context.next) {
                             case 0:
-                                usernameInputId = usernameInput.props.id;
-                                password1InputId = password1Input.props.id;
-                                password2InputId = password2Input.props.id;
-                                username = document.getElementById(usernameInputId).value;
-                                password1 = document.getElementById(password1InputId).value;
-                                password2 = document.getElementById(password2InputId).value;
-                                _context.next = 8;
+                                _context.next = 2;
                                 return _this.props.signUpUser(username, password1, password2);
 
-                            case 8:
+                            case 2:
                             case 'end':
                                 return _context.stop();
                         }
@@ -58431,44 +58454,73 @@ var SignUpForm = function (_React$Component) {
         value: function render() {
             var _this3 = this;
 
-            var usernameInput = _react2.default.createElement('input', { placeholder: 'Username', id: 'usernameInput', type: 'text' });
-            var password1Input = _react2.default.createElement('input', { placeholder: 'Password', id: 'password1Input', type: 'password' });
-            var password2Input = _react2.default.createElement('input', { placeholder: 'Repeat password', id: 'password2Input', type: 'password' });
+            var username = '';
+            var usernameInput = _react2.default.createElement(_reactBootstrap.Form.Control, {
+                pattern: '[a-zA-Z0-9_.-]{4,}',
+                placeholder: 'Username',
+                onChange: function onChange(e) {
+                    return username = e.target.value;
+                } });
+            var password1 = '';
+            var password1Input = _react2.default.createElement(_reactBootstrap.Form.Control, {
+                pattern: '[a-zA-Z0-9_.-]{4,}',
+                placeholder: 'Password',
+                type: 'password',
+                onChange: function onChange(e) {
+                    return password1 = e.target.value;
+                } });
+            var password2 = '';
+            var password2Input = _react2.default.createElement(_reactBootstrap.Form.Control, {
+                pattern: '[a-zA-Z0-9_.-]{4,}',
+                placeholder: 'Password',
+                type: 'password',
+                onChange: function onChange(e) {
+                    return password2 = e.target.value;
+                } });
 
             return _react2.default.createElement(
-                'div',
+                _reactBootstrap.Modal.Dialog,
                 null,
                 _react2.default.createElement(
-                    'fieldset',
+                    _reactBootstrap.Modal.Header,
                     null,
                     _react2.default.createElement(
-                        'legend',
+                        _reactBootstrap.Modal.Title,
                         null,
                         'Sign up'
-                    ),
+                    )
+                ),
+                _react2.default.createElement(
+                    _reactBootstrap.Form,
+                    { onSubmit: function onSubmit(e) {
+                            e.preventDefault();
+                            _this3.signUp(username, password1, password2);
+                        } },
                     _react2.default.createElement(
-                        'p',
-                        null,
-                        usernameInput
-                    ),
-                    _react2.default.createElement(
-                        'p',
-                        null,
-                        password1Input
-                    ),
-                    _react2.default.createElement(
-                        'p',
-                        null,
-                        password2Input
-                    ),
-                    _react2.default.createElement(
-                        'p',
+                        _reactBootstrap.Modal.Body,
                         null,
                         _react2.default.createElement(
-                            'button',
-                            { onClick: function onClick(e) {
-                                    return _this3.signUp(usernameInput, password1Input, password2Input);
-                                } },
+                            'p',
+                            null,
+                            usernameInput
+                        ),
+                        _react2.default.createElement(
+                            'p',
+                            null,
+                            password1Input
+                        ),
+                        _react2.default.createElement(
+                            'p',
+                            null,
+                            password2Input
+                        )
+                    ),
+                    _react2.default.createElement(
+                        _reactBootstrap.Modal.Footer,
+                        null,
+                        _react2.default.createElement(
+                            _reactBootstrap.Button,
+                            { variant: 'primary', type: 'submit', disabled: this.props.isFetching },
                             'Register'
                         )
                     )
