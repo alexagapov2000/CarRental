@@ -11,7 +11,7 @@ export const AUTHORIZE_USER = 'AUTHORIZE_USER';
 export const AUTHORIZE_USER_SUCCESS = 'AUTHORIZE_USER_SUCCESS';
 export const AUTHORIZE_USER_FAILED = 'AUTHORIZE_USER_FAILED';
 
-export const SAVE_USER = 'SAVE_USER';
+export const REMEMBER_USER = 'REMEMBER_USER';
 export const REAUTHORIZE_USER = 'REAUTHORIZE_USER';
 
 export const SIGN_UP_USER = 'SIGN_UP_USER';
@@ -62,8 +62,9 @@ export function authUser(username, password) {
             type: AUTHORIZE_USER_SUCCESS,
             payload: accountData,
         });
-        let dispatchFailed = () => dispatch({
+        let dispatchFailed = response => dispatch({
             type: AUTHORIZE_USER_FAILED,
+            payload: response.response.data.Message,
         });
         let accountData = {
             username: username,
@@ -81,7 +82,7 @@ export function saveUser() {
         let token = store.getState().common.account.token;
         localStorage.setItem('token', token);
         dispatch({
-            type: SAVE_USER,
+            type: REMEMBER_USER,
         });
     }
 }

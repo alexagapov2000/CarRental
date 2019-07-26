@@ -1,7 +1,8 @@
 import React from 'react';
 import { Form, Modal, Button } from 'react-bootstrap';
+import { withRouter } from 'react-router-dom';
 
-export default class SignUpForm extends React.Component {
+class SignUpForm extends React.Component {
 
     signUp = async (username, password1, password2) => {
         await this.props.signUpUser(username, password1, password2);
@@ -22,7 +23,7 @@ export default class SignUpForm extends React.Component {
         let password2 = '';
         let password2Input = <Form.Control
             pattern='[a-zA-Z0-9_.-]{4,}'
-            placeholder='Password'
+            placeholder='Repeat password'
             type='password'
             onChange={e => password2 = e.target.value} />;
 
@@ -30,9 +31,10 @@ export default class SignUpForm extends React.Component {
             <Modal.Header>
                 <Modal.Title>Sign up</Modal.Title>
             </Modal.Header>
-            <Form onSubmit={e => {
+            <Form onSubmit={async e => {
                 e.preventDefault();
-                this.signUp(username, password1, password2)
+                await this.signUp(username, password1, password2);
+                this.props.history.push('/home');
             }}>
                 <Modal.Body>
                     <p>{usernameInput}</p>
@@ -46,3 +48,5 @@ export default class SignUpForm extends React.Component {
         </Modal.Dialog>;
     }
 }
+
+export default withRouter(SignUpForm);

@@ -35,9 +35,9 @@ export function commonReducer(state = initialState, action) {
 		case types.AUTHORIZE_USER_SUCCESS:
 			return { ...state, account: action.payload, isFetching: false };
 		case types.AUTHORIZE_USER_FAILED:
-			return { ...state, isFetching: false };
+			return { ...state, account: undefined, badResponse: action.payload, isFetching: false };
 
-		case types.SAVE_USER:
+		case types.REMEMBER_USER:
 			return { ...state, isFetching: false };
 
 		case types.REAUTHORIZE_USER:
