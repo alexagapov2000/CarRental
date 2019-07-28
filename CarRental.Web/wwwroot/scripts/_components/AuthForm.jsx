@@ -2,8 +2,17 @@ import React from 'react';
 import { Modal, Button, Form, Spinner, ToggleButtonGroup, ToggleButton, Alert } from "react-bootstrap";
 import { withRouter } from 'react-router-dom';
 import { store } from '../_store/configureStore.jsx';
+import { debounce } from 'lodash';
+import './AuthForm.css';
 
 class AuthForm extends React.Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            alertMessage: null,
+        };
+    }
 
     signIn = async (username, password, isSaveSession) => {
         await this.props.authUser(username, password);
@@ -13,27 +22,51 @@ class AuthForm extends React.Component {
             localStorage.removeItem('token');
     }
 
-    render() {
-        let username = '';
-        let usernameInput = <Form.Control
+    submit = async e => {
+        e.preventDefault();
+        let username = e.target.querySelector('#username').value;
+        let password = e.target.querySelector('#password').value;
+        let isRemember = e.target.querySelector('#rememberMe input').checked;
+        await this.signIn(username, password, isRemember);
+        if (store.getState().common.account)
+            this.props.history.push('/home');
+        else
+            this.setState({ alertMessage: store.getState().common.badResponse });
+    }
+
+    renderUsernameInput = () => {
+        return <Form.Control
+            id='username'
             pattern='[a-zA-Z0-9_.-]{4,}'
             placeholder='Username'
-            disabled={this.props.isFetching}
-            onChange={e => username = e.target.value} />;
-        let password = '';
-        let passwordInput = <Form.Control
+            disabled={this.props.isFetching} />;
+    }
+
+    renderPasswordInput = () => {
+        return <Form.Control
+            id='password'
             pattern='[a-zA-Z0-9_.-]{4,}'
             placeholder='Password'
             disabled={this.props.isFetching}
-            type='password'
-            onChange={e => password = e.target.value} />;
-        let isRemember = false;
-        let rememberMeCheckbox = <ToggleButtonGroup
-            type="checkbox"
-            defaultValue={isRemember ? [1] : []}
-            onChange={e => isRemember = e.length > 0}>
-            <ToggleButton disabled={this.props.isFetching} value={1} variant='outline-primary'>Remember me</ToggleButton>
+            type='password' />;
+    }
+
+    renderRememberMeCheckbox = () => {
+        return <ToggleButtonGroup type="checkbox">
+            <ToggleButton
+                id='rememberMe'
+                disabled={this.props.isFetching}
+                value={true}
+                variant='outline-primary'>
+                Remember me
+            </ToggleButton>
         </ToggleButtonGroup>;
+    }
+
+    render() {
+        let usernameInput = this.renderUsernameInput();
+        let passwordInput = this.renderPasswordInput();
+        let rememberMeCheckbox = this.renderRememberMeCheckbox();
 
         let buttonValue = this.props.isFetching ?
             <React.Fragment>Loading...<Spinner animation='border' size='sm' /></React.Fragment> :
@@ -43,22 +76,21 @@ class AuthForm extends React.Component {
             <Modal.Header>
                 <Modal.Title>Sign in</Modal.Title>
             </Modal.Header>
-            <Form onSubmit={async e => {
-                e.preventDefault();
-                await this.signIn(username, password, isRemember);
-                if (store.getState().common.account)
-                    this.props.history.push('/home');
-            }}>
+            <Form onSubmit={this.submit}>
                 <Modal.Body>
-                    <p>{usernameInput}</p>
-                    <p>{passwordInput}</p>
-                    <p>{rememberMeCheckbox}</p>
+                    {usernameInput}
+                    <Alert id='usernameAlert' variant='danger'>Only digits, latin symbols, '_', '-', '.' and minlength >= 4</Alert>
+                    <p></p>
+                    {passwordInput}
+                    <Alert id='passwordAlert' variant='danger'>Only digits, latin symbols, '_', '-', '.' and minlength >= 4</Alert>
+                    <p></p>
+                    {rememberMeCheckbox}
                 </Modal.Body>
                 <Modal.Footer>
                     <Button variant='primary' type='submit' disabled={this.props.isFetching}>{buttonValue}</Button>
                 </Modal.Footer>
             </Form>
-            <Alert variant='danger' hidden={!store.getState().common.badResponse}>{store.getState().common.badResponse}</Alert>
+            <Alert variant='danger' hidden={!this.state.alertMessage}>{this.state.alertMessage}</Alert>
         </Modal.Dialog>;
     }
 }

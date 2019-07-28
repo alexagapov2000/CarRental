@@ -79,8 +79,10 @@ export function authUser(username, password) {
 
 export function saveUser() {
     return dispatch => {
-        let token = store.getState().common.account.token;
-        localStorage.setItem('token', token);
+        let account = store.getState().common.account;
+        if (!account)
+            return;
+        localStorage.setItem('token', account.token);
         dispatch({
             type: REMEMBER_USER,
         });

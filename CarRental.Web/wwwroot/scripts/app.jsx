@@ -8,6 +8,7 @@ import LocationsTableContainer from './_containers/LocationsTableContainer.jsx';
 import AuthFormContainer from './_containers/AuthFormContainer.jsx';
 import * as commonActions from './_actions/IndexActions.jsx';
 import SignUpContainer from './_containers/SignUpContainer.jsx';
+import HomePage from './_components/HomePage.jsx';
 
 class App extends React.Component {
 
@@ -19,6 +20,7 @@ class App extends React.Component {
                     <Header />
                     <main>
                         <Switch>
+                            <Route path='/home' component={HomePage} />
                             <Route path='/createLocation' component={CreatingContainer} />
                             <Route path='/selectLocation' component={SelectsContainer} />
                             <Route path='/locationsTable' component={LocationsTableContainer} />

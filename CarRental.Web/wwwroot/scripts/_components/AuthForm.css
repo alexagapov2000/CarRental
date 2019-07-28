@@ -1,10 +1,15 @@
-.fetching {
-    opacity: 0.5;
-    position: relative;
+#usernameAlert {
+    display: none;
 }
 
-.fetching * :not(.loading) {
-    visibility: hidden;
-    /*display: none;*/
+#username:invalid+#usernameAlert {
+    display: block;
 }
 
+#passwordAlert {
+    display: none;
+}
+
+#password:invalid+#passwordAlert {
+    display: block;
+}

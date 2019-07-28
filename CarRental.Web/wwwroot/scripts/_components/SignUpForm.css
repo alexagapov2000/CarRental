@@ -1,0 +1,23 @@
+#usernameAlertSignUp {
+    display: none;
+}
+
+#usernameSignUp:invalid+#usernameAlertSignUp {
+    display: block;
+}
+
+#password1AlertSignUp {
+    display: none;
+}
+
+#password1SignUp:invalid+#password1AlertSignUp {
+    display: block;
+}
+
+#password2AlertSignUp {
+    display: none;
+}
+
+#password2SignUp:invalid+#password2AlertSignUp {
+    display: block;
+}
