@@ -57,7 +57,7 @@ class AuthForm extends React.Component {
                 id='rememberMe'
                 disabled={this.props.isFetching}
                 value={true}
-                variant='outline-primary'>
+                variant='outline-dark'>
                 Remember me
             </ToggleButton>
         </ToggleButtonGroup>;

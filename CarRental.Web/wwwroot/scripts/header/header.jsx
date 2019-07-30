@@ -1,9 +1,9 @@
 ﻿import React from 'react';
-import { Navbar, Nav } from 'react-bootstrap';
-import { NavLink, Link } from 'react-router-dom';
-import LocationsFinder from '../_components/LocationsFinder.jsx';
+import { Navbar, Nav, Button, ButtonGroup } from 'react-bootstrap';
+import { NavLink, Link, withRouter } from 'react-router-dom';
+import LocationsFinderContainer from '../_containers/LocationsFinderContainer.jsx';
 
-export default class Header extends React.Component {
+class Header extends React.Component {
     render() {
         return (
             <Navbar expand='lg' bg='dark' variant='dark' style={{ borderBottom: '1px solid black' }}>
@@ -12,13 +12,17 @@ export default class Header extends React.Component {
                     <Nav.Link as={NavLink} to='/createLocation'>Create new location</Nav.Link>
                     <Nav.Link as={NavLink} to='/selectLocation'>Selects</Nav.Link>
                     <Nav.Link as={NavLink} to='/locationsTable'>Locations table</Nav.Link>
-                    <LocationsFinder></LocationsFinder>
+                    <LocationsFinderContainer></LocationsFinderContainer>
                 </Nav>
                 <Nav variant='pills'>
-                    <Nav.Link as={NavLink} to='/signIn'>Sign in</Nav.Link>
-                    <Nav.Link as={NavLink} to='/signUp'>Sign up</Nav.Link>
+                    <ButtonGroup size='sm'>
+                        <Button onClick={() => this.props.history.push('/signIn')} variant='outline-light'>Sign in</Button>
+                        <Button onClick={() => this.props.history.push('/signUp')} variant='light'>Sign up</Button>
+                    </ButtonGroup>
                 </Nav>
             </Navbar>
         );
     }
 };
+
+export default withRouter(Header);

@@ -20,24 +20,23 @@ namespace CarRental.DAL.Models
         public virtual DbSet<Cars> Cars { get; set; }
         public virtual DbSet<Cities> Cities { get; set; }
         public virtual DbSet<Countries> Countries { get; set; }
+        public virtual DbSet<Person> Persons { get; set; }
         public virtual DbSet<RentCompanies> RentCompanies { get; set; }
         public virtual DbSet<RentCompanyServices> RentCompanyServices { get; set; }
         public virtual DbSet<Services> Services { get; set; }
-        public virtual DbSet<Person> Persons { get; set; }
-
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                optionsBuilder.UseSqlServer("Data Source=DESKTOP-24VF33H;Initial Catalog=CarRental;Integrated Security=True;");
+                optionsBuilder.UseSqlServer("Data Source=WSC-165-71\\SQLEXPRESS01;Initial Catalog=CarRental;Integrated Security=True;");
             }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.HasAnnotation("ProductVersion", "2.2.4-servicing-10062");
+            modelBuilder.HasAnnotation("ProductVersion", "2.2.6-servicing-10079");
 
             modelBuilder.Entity<CarMarks>(entity =>
             {
@@ -48,9 +47,16 @@ namespace CarRental.DAL.Models
 
             modelBuilder.Entity<Cars>(entity =>
             {
+                entity.Property(e => e.BookedBefore).HasColumnType("date");
+
                 entity.Property(e => e.Name)
                     .IsRequired()
                     .HasMaxLength(500);
+
+                entity.HasOne(d => d.RentCompany)
+                    .WithMany(p => p.Cars)
+                    .HasForeignKey(d => d.RentCompanyId)
+                    .HasConstraintName("FK_Cars_RentCompanies");
             });
 
             modelBuilder.Entity<Cities>(entity =>
@@ -73,6 +79,21 @@ namespace CarRental.DAL.Models
                     .HasMaxLength(500);
             });
 
+            modelBuilder.Entity<Person>(entity =>
+            {
+                entity.Property(e => e.Password)
+                    .IsRequired()
+                    .HasMaxLength(500);
+
+                entity.Property(e => e.Role)
+                    .IsRequired()
+                    .HasMaxLength(50);
+
+                entity.Property(e => e.Username)
+                    .IsRequired()
+                    .HasMaxLength(500);
+            });
+
             modelBuilder.Entity<RentCompanies>(entity =>
             {
                 entity.Property(e => e.Adress)
@@ -82,6 +103,12 @@ namespace CarRental.DAL.Models
                 entity.Property(e => e.Name)
                     .IsRequired()
                     .HasMaxLength(500);
+
+                entity.HasOne(d => d.City)
+                    .WithMany(p => p.RentCompanies)
+                    .HasForeignKey(d => d.CityId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_RentCompanies_Cities");
             });
 
             modelBuilder.Entity<RentCompanyServices>(entity =>
@@ -107,19 +134,6 @@ namespace CarRental.DAL.Models
                 entity.Property(e => e.Name)
                     .IsRequired()
                     .HasMaxLength(500);
-            });
-
-            modelBuilder.Entity<Person>(entity =>
-            {
-                entity.Property(e => e.Username)
-                    .IsRequired()
-                    .HasMaxLength(500);
-                entity.Property(e => e.Password)
-                    .IsRequired()
-                    .HasMaxLength(500);
-                entity.Property(e => e.Role)
-                    .IsRequired()
-                    .HasMaxLength(50);
             });
         }
     }

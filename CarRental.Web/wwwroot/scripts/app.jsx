@@ -9,6 +9,7 @@ import AuthFormContainer from './_containers/AuthFormContainer.jsx';
 import * as commonActions from './_actions/IndexActions.jsx';
 import SignUpContainer from './_containers/SignUpContainer.jsx';
 import HomePage from './_components/HomePage.jsx';
+import RentalsFinder from './_components/RentalsFinder/RentalsFinder.jsx';
 
 class App extends React.Component {
 
@@ -26,6 +27,7 @@ class App extends React.Component {
                             <Route path='/locationsTable' component={LocationsTableContainer} />
                             <Route path='/signIn' component={AuthFormContainer} />
                             <Route path='/signUp' component={SignUpContainer} />
+                            <Route path='/rentalsFinder' component={RentalsFinder}/>
                         </Switch>
                     </main>
                 </div>

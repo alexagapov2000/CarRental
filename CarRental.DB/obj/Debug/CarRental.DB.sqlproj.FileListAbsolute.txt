@@ -3,7 +3,6 @@ C:\W\CarRental.DB\bin\Debug\CarRental.DB.dll
 C:\W\CarRental.DB\bin\Debug\CarRental.DB.pdb
 C:\W\CarRental.DB\obj\Debug\CarRental.DB.dll
 C:\W\CarRental.DB\obj\Debug\CarRental.DB.pdb
-C:\W\CarRental.DB\obj\Debug\CarRental.DB.sqlprojAssemblyReference.cache
 C:\Users\Алексей\source\CarRental\CarRental.DB\bin\Debug\CarRental.DB.dacpac
 C:\Users\Алексей\source\CarRental\CarRental.DB\bin\Debug\CarRental.DB.dll
 C:\Users\Алексей\source\CarRental\CarRental.DB\bin\Debug\CarRental.DB.pdb

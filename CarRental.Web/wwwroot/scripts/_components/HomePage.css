@@ -1,0 +1,16 @@
+h1 {
+    text-align: center;
+    font-weight: 100;
+    letter-spacing: 10px;
+    font-size: 80px;
+    color: #efefef;
+}
+
+h2 {
+    text-align: center;
+    font-weight: 350;
+    letter-spacing: 15px;
+    font-size: 60px;
+    color: #cfcfcf;
+    padding-bottom: 5%;
+}

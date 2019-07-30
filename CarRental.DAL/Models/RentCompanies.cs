@@ -7,6 +7,7 @@ namespace CarRental.DAL.Models
     {
         public RentCompanies()
         {
+            Cars = new HashSet<Cars>();
             RentCompanyServices = new HashSet<RentCompanyServices>();
         }
 
@@ -15,6 +16,8 @@ namespace CarRental.DAL.Models
         public int Id { get; set; }
         public string Adress { get; set; }
 
+        public virtual Cities City { get; set; }
+        public virtual ICollection<Cars> Cars { get; set; }
         public virtual ICollection<RentCompanyServices> RentCompanyServices { get; set; }
     }
 }

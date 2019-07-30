@@ -7,7 +7,9 @@ namespace CarRental.DAL.Models
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public int FuelConsumption { get; set; }
-        public int CarMarkId { get; set; }
+        public int? RentCompanyId { get; set; }
+        public DateTime? BookedBefore { get; set; }
+
+        public virtual RentCompanies RentCompany { get; set; }
     }
 }

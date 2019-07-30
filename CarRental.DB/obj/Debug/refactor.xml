@@ -21,4 +21,39 @@
     <Property Name="ParentElementType" Value="SqlTable" />
     <Property Name="NewName" Value="CarMarkId" />
   </Operation>
+  <Operation Name="Rename Refactor" Key="1f2d71b9-f7ee-4f3c-a3c6-b0740e4673c4" ChangeDateTime="07/29/2019 09:50:56" xmlns="http://schemas.microsoft.com/sqlserver/dac/Serialization/2012/02">
+    <Property Name="ElementName" Value="[dbo].[Cars].[erviceId]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Cars]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="ServiceId" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="57d07228-8f12-414e-8455-1979f50bf4ea" ChangeDateTime="07/29/2019 09:54:56" xmlns="http://schemas.microsoft.com/sqlserver/dac/Serialization/2012/02">
+    <Property Name="ElementName" Value="[dbo].[FK_Cars_Services]" />
+    <Property Name="ElementType" Value="SqlForeignKeyConstraint" />
+    <Property Name="ParentElementName" Value="[dbo].[Cars]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="[FK_Cars_RentCompany]" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="e75924e2-972f-4e6a-85e6-daebdaa56ba1" ChangeDateTime="07/29/2019 09:55:06" xmlns="http://schemas.microsoft.com/sqlserver/dac/Serialization/2012/02">
+    <Property Name="ElementName" Value="[dbo].[FK_Cars_RentCompany]" />
+    <Property Name="ElementType" Value="SqlForeignKeyConstraint" />
+    <Property Name="ParentElementName" Value="[dbo].[Cars]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="[FK_Cars_RentCompanies]" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="b1fdef5c-7c93-484f-996c-eab56da4c6a9" ChangeDateTime="07/29/2019 09:55:28" xmlns="http://schemas.microsoft.com/sqlserver/dac/Serialization/2012/02">
+    <Property Name="ElementName" Value="[dbo].[Cars].[ServiceId]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Cars]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="RentCompanyId" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="7b763d2a-1766-4ef3-8c18-702039817063" ChangeDateTime="07/29/2019 10:59:39" xmlns="http://schemas.microsoft.com/sqlserver/dac/Serialization/2012/02">
+    <Property Name="ElementName" Value="[dbo].[Cars].[BookedBy]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Cars]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="BookedBefore" />
+  </Operation>
 </Operations>

@@ -92,7 +92,6 @@ namespace CarRental.BL
 
         public async Task<Person> RegisterUser(RegisterViewModel registerViewModel)
         {
-            //front
             if (_context.Persons.Any(p => p.Username == registerViewModel.Username))
                 throw new SameDataException("This username is busy!");
             var person = new Person
