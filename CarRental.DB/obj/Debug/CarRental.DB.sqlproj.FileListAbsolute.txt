@@ -13,6 +13,7 @@ C:\Users\Алексей\source\CarRental\CarRental.DB\obj\Debug\postdeploy.sql
 C:\Users\Алексей\source\CarRental\CarRental.DB\obj\Debug\predeploy.sql
 C:\Users\Алексей\source\CarRental\CarRental.DB\obj\Debug\CarRental.DB.dll
 C:\Users\Алексей\source\CarRental\CarRental.DB\obj\Debug\CarRental.DB.pdb
+C:\W\CarRental.DB\obj\Debug\CarRental.DB.sqlprojAssemblyReference.cache
 C:\W\CarRental.DB\obj\Debug\Model.xml
 C:\W\CarRental.DB\obj\Debug\refactor.xml
 C:\W\CarRental.DB\obj\Debug\postdeploy.sql

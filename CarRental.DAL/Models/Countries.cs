@@ -15,16 +15,4 @@ namespace CarRental.DAL.Models
 
         public virtual ICollection<Cities> Cities { get; set; }
     }
-
-    public class CountriesEqualityComparer : IEqualityComparer<Countries>
-    {
-        public int GetHashCode(Countries country)
-        {
-            return country.Id;
-        }
-
-        public bool Equals(Countries c1, Countries c2) {
-            return c1.Id == c2.Id;
-        }
-    }
 }

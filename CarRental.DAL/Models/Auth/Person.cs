@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace CarRental.DAL.Models.Auth
 {
-    public partial class Person
+    public partial class Persons
     {
         public int Id { get; set; }
         public string Username { get; set; }

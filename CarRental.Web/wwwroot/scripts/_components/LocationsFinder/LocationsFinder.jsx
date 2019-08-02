@@ -15,7 +15,13 @@ class LocationsFinder extends React.Component {
 
     renderLocations = () => {
         return this.state.cities
-            .map(city => <Dropdown.Item key={city.id}>{city.name}</Dropdown.Item>);
+            .map(city => {
+                return <Dropdown.Item
+                    key={city.id}
+                    onClick={e => this.props.history.push(`/carsFinder`)}>
+                    {`${city.countryName}, ${city.name}`}
+                </Dropdown.Item>
+            });
     }
 
     componentDidMount() {

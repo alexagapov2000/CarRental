@@ -20,7 +20,7 @@ namespace CarRental.DAL.Models
         public virtual DbSet<Cars> Cars { get; set; }
         public virtual DbSet<Cities> Cities { get; set; }
         public virtual DbSet<Countries> Countries { get; set; }
-        public virtual DbSet<Person> Persons { get; set; }
+        public virtual DbSet<Persons> Persons { get; set; }
         public virtual DbSet<RentCompanies> RentCompanies { get; set; }
         public virtual DbSet<RentCompanyServices> RentCompanyServices { get; set; }
         public virtual DbSet<Services> Services { get; set; }
@@ -49,9 +49,13 @@ namespace CarRental.DAL.Models
             {
                 entity.Property(e => e.BookedBefore).HasColumnType("date");
 
-                entity.Property(e => e.Name)
-                    .IsRequired()
-                    .HasMaxLength(500);
+                entity.Property(e => e.Price).HasColumnType("money");
+
+                entity.HasOne(d => d.CarMark)
+                    .WithMany(p => p.Cars)
+                    .HasForeignKey(d => d.CarMarkId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Cars_CarMarks");
 
                 entity.HasOne(d => d.RentCompany)
                     .WithMany(p => p.Cars)
@@ -79,7 +83,7 @@ namespace CarRental.DAL.Models
                     .HasMaxLength(500);
             });
 
-            modelBuilder.Entity<Person>(entity =>
+            modelBuilder.Entity<Persons>(entity =>
             {
                 entity.Property(e => e.Password)
                     .IsRequired()

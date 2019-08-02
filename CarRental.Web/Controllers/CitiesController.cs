@@ -1,4 +1,5 @@
 ﻿using CarRental.BL;
+using CarRental.BL.DTOs;
 using CarRental.DAL.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -47,6 +48,13 @@ namespace CarRental.Web.Controllers
         {
             var cities = await new CitiesService().DeleteCities(IDs);
             return cities;
+        }
+
+        [HttpGet("withCountries")]
+        public async Task<IEnumerable<CityWithCountryDTO>> GetCitiesWithCountries()
+        {
+            var result = new CitiesService().GetCitiesWithCountries();
+            return result;
         }
     }
 }

@@ -2,6 +2,7 @@ import { combineReducers } from 'redux';
 import creatingFormReducer from './creatingForm.jsx';
 import selectsReducer from './selects.jsx';
 import locationsTableReducer from './locationsTable.jsx';
+import carsFinderReducer from './carsFinder.jsx';
 //import authFormReducer from './authForm.jsx';
 import * as types from '../_actions/IndexActions.jsx';
 
@@ -20,13 +21,11 @@ export function commonReducer(state = initialState, action) {
 	switch (action.type) {
 		case types.LOAD_COUNTRIES:
 			return { ...state, countries: action.payload, isFetching: true };
-
 		case types.LOAD_COUNTRIES_SUCCESS:
 			return { ...state, countries: action.payload, isFetching: false };
 
 		case types.LOAD_CITIES:
 			return { ...state, cities: action.payload, isFetching: true };
-
 		case types.LOAD_CITIES_SUCCESS:
 			return { ...state, cities: action.payload, isFetching: false };
 
@@ -60,5 +59,5 @@ export const rootReducer = combineReducers({
 	creatingForm: creatingFormReducer,
 	selects: selectsReducer,
 	locationsTable: locationsTableReducer,
-	//authForm: authFormReducer,
+	carsFinder: carsFinderReducer,
 });

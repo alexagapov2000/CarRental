@@ -56,4 +56,11 @@
     <Property Name="ParentElementType" Value="SqlTable" />
     <Property Name="NewName" Value="BookedBefore" />
   </Operation>
+  <Operation Name="Rename Refactor" Key="af6b2d5e-7981-4e86-99e9-af75e6950088" ChangeDateTime="07/31/2019 13:18:56" xmlns="http://schemas.microsoft.com/sqlserver/dac/Serialization/2012/02">
+    <Property Name="ElementName" Value="[dbo].[CarMarks].[Passengers]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[CarMarks]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="Seats" />
+  </Operation>
 </Operations>

@@ -20,7 +20,7 @@ using System.Security.Authentication;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
-using Person = CarRental.DAL.Models.Auth.Person;
+using Persons = CarRental.DAL.Models.Auth.Persons;
 
 namespace CarRental.BL
 {
@@ -33,7 +33,7 @@ namespace CarRental.BL
             _context = new CarRentalContext();
         }
 
-        public object Token(Person person)
+        public object Token(Persons person)
         {
             var identity = GetIdentity(person.Username, person.Password);
             if (identity == null)
@@ -90,11 +90,11 @@ namespace CarRental.BL
             handler.ValidateToken(jwt, validationParameters, out _);
         }
 
-        public async Task<Person> RegisterUser(RegisterViewModel registerViewModel)
+        public async Task<Persons> RegisterUser(RegisterViewModel registerViewModel)
         {
             if (_context.Persons.Any(p => p.Username == registerViewModel.Username))
                 throw new SameDataException("This username is busy!");
-            var person = new Person
+            var person = new Persons
             {
                 Username = registerViewModel.Username,
                 Password = registerViewModel.Password,

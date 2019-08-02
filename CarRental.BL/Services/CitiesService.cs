@@ -1,7 +1,9 @@
-﻿using CarRental.DAL.Models;
+﻿using CarRental.BL.DTOs;
+using CarRental.DAL.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -65,6 +67,32 @@ namespace CarRental.BL
             _context.Cities.RemoveRange(pseudoCities);
             await _context.SaveChangesAsync();
             return pseudoCities;
+        }
+        class CitiesEqualityComparer : IEqualityComparer<Cities>
+        {
+            public bool Equals(Cities x, Cities y)
+            {
+                return x.Id == y.Id;
+            }
+
+            public int GetHashCode(Cities city)
+            {
+                return city.Id;
+            }
+        }
+
+        public IEnumerable<CityWithCountryDTO> GetCitiesWithCountries()
+        {
+            return _context.Cities
+                .Join(_context.Countries,
+                    city => city.CountryId,
+                    country => country.Id,
+                    (city, country) => new CityWithCountryDTO
+                    {
+                        Id = city.Id,
+                        Name = city.Name,
+                        CountryName = country.Name,
+                    });
         }
     }
 }

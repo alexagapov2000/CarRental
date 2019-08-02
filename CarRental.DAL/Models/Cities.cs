@@ -17,18 +17,4 @@ namespace CarRental.DAL.Models
         public virtual Countries Country { get; set; }
         public virtual ICollection<RentCompanies> RentCompanies { get; set; }
     }
-
-
-    public class CitiesEqualityComparer : IEqualityComparer<Cities>
-    {
-        public int GetHashCode(Cities city)
-        {
-            return city.Id;
-        }
-
-        public bool Equals(Cities c1, Cities c2)
-        {
-            return c1.Id == c2.Id;
-        }
-    }
 }
