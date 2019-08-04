@@ -1,0 +1,28 @@
+﻿** Выделение
+     Таблицы, которые будут перестроены
+       Нет
+     Кластеризованные индексы, которые будут удалены
+       Нет
+     Кластеризованные индексы, которые будут созданы
+       Нет
+     Возможные проблемы, связанные с данными
+       Нет
+
+** Действия пользователя
+     Создать
+       [dbo].[CarMarks] (Таблица)
+       [dbo].[Cars] (Таблица)
+       [dbo].[Cities] (Таблица)
+       [dbo].[Countries] (Таблица)
+       [dbo].[Persons] (Таблица)
+       [dbo].[RentCompanies] (Таблица)
+       [dbo].[RentCompanyServices] (Таблица)
+       [dbo].[Services] (Таблица)
+       [dbo].[FK_Cars_RentCompanies] (Внешний ключ)
+       [dbo].[FK_Cars_CarMarks] (Внешний ключ)
+       [dbo].[FK_Cities_Countries] (Внешний ключ)
+       [dbo].[FK_RentCompanies_Cities] (Внешний ключ)
+       [dbo].[FK_RentCompanyServices_Services] (Внешний ключ)
+       [dbo].[FK_RentCompanyServices_RentCompanies] (Внешний ключ)
+
+** Корректирующие действия

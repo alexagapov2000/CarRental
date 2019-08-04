@@ -13,7 +13,7 @@ export default class RentalsFinder extends React.Component {
     }
 
     componentDidMount() {
-        this.props.loadCars(486);
+        this.props.loadCars(1);
     }
     
     render() {

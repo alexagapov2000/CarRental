@@ -92,7 +92,8 @@ namespace CarRental.BL
                         Id = city.Id,
                         Name = city.Name,
                         CountryName = country.Name,
-                    });
+                    })
+                .Take(10);
         }
     }
 }

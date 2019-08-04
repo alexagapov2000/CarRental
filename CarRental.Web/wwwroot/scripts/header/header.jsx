@@ -1,7 +1,8 @@
 ﻿import React from 'react';
 import { Navbar, Nav, Button, ButtonGroup } from 'react-bootstrap';
 import { NavLink, Link, withRouter } from 'react-router-dom';
-import LocationsFinderContainer from '../_containers/LocationsFinderContainer.jsx';
+//import LocationsFinderContainer from '../_containers/LocationsFinderContainer.jsx';
+import LocationsFinder from '../_components/LocationsFinder/LocationsFinder.jsx';
 
 class Header extends React.Component {
     render() {
@@ -12,7 +13,7 @@ class Header extends React.Component {
                     <Nav.Link as={NavLink} to='/createLocation'>Create new location</Nav.Link>
                     <Nav.Link as={NavLink} to='/selectLocation'>Selects</Nav.Link>
                     <Nav.Link as={NavLink} to='/locationsTable'>Locations table</Nav.Link>
-                    <LocationsFinderContainer></LocationsFinderContainer>
+                    <LocationsFinder></LocationsFinder>
                 </Nav>
                 <Nav variant='pills'>
                     <ButtonGroup size='sm'>
