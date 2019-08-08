@@ -51,9 +51,9 @@ namespace CarRental.Web.Controllers
         }
 
         [HttpGet("withCountries")]
-        public async Task<IEnumerable<CityWithCountryDTO>> GetCitiesWithCountries()
+        public async Task<IEnumerable<CityWithCountryDTO>> GetCitiesWithCountries([FromQuery]string substring = null)
         {
-            var result = new CitiesService().GetCitiesWithCountries();
+            var result = new CitiesService().GetCitiesWithCountries(substring);
             return result;
         }
     }

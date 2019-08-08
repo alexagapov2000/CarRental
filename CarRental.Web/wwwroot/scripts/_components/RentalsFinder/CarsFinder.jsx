@@ -2,28 +2,28 @@ import React from 'react';
 import 'react-daypicker/lib/DayPicker.css';
 import DayPicker from 'react-daypicker';
 import { Container, Row, Col } from 'react-bootstrap';
-import SameCarsCard from './Rental.jsx';
-import { loadCars } from '../../_actions/CarsFinderActions.jsx';
+import SameCarsCard from './SameCarsCards.jsx';
 
-export default class RentalsFinder extends React.Component {
+export default class CarsFinder extends React.Component {
 
     renderSameCarsCards = () => {
         return this.props.cars
-            .map(car => <SameCarsCard info={car} />);
+            .map((car, id) => <SameCarsCard key={id} info={car} />);
     }
 
     componentDidMount() {
-        this.props.loadCars(1);
+        let {cityId, bookedFrom, bookedTo} = this.props;
+        this.props.loadCars(cityId, bookedFrom, bookedTo);
     }
-    
+
     render() {
-        return <Container fluid>
+        return <Container>
             <Row>
-                <Col lg='4'>
+                <Col key={0} lg='4'>
                     <DayPicker />
                     <DayPicker />
                 </Col>
-                <Col lg='8'>
+                <Col key={1} lg='8'>
                     {this.renderSameCarsCards()}
                 </Col>
             </Row>

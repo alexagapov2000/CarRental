@@ -20,7 +20,8 @@ namespace CarRental.DAL.Models
         public virtual DbSet<Cars> Cars { get; set; }
         public virtual DbSet<Cities> Cities { get; set; }
         public virtual DbSet<Countries> Countries { get; set; }
-        public virtual DbSet<Persons> Persons { get; set; }
+        public virtual DbSet<Orders> Orders { get; set; }
+        public virtual DbSet<Person> Persons { get; set; }
         public virtual DbSet<RentCompanies> RentCompanies { get; set; }
         public virtual DbSet<RentCompanyServices> RentCompanyServices { get; set; }
         public virtual DbSet<Services> Services { get; set; }
@@ -30,7 +31,7 @@ namespace CarRental.DAL.Models
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                optionsBuilder.UseSqlServer("Data Source=DESKTOP-24VF33H;Initial Catalog=CarRental;Integrated Security=True;");
+                optionsBuilder.UseSqlServer("Data Source=WSC-165-71\\SQLEXPRESS01;Initial Catalog=CarRental;Integrated Security=True;");
             }
         }
 
@@ -47,8 +48,6 @@ namespace CarRental.DAL.Models
 
             modelBuilder.Entity<Cars>(entity =>
             {
-                entity.Property(e => e.BookedBefore).HasColumnType("date");
-
                 entity.Property(e => e.Price).HasColumnType("money");
 
                 entity.HasOne(d => d.CarMark)
@@ -83,7 +82,26 @@ namespace CarRental.DAL.Models
                     .HasMaxLength(500);
             });
 
-            modelBuilder.Entity<Persons>(entity =>
+            modelBuilder.Entity<Orders>(entity =>
+            {
+                entity.Property(e => e.BookedFrom).HasColumnType("date");
+
+                entity.Property(e => e.BookedTo).HasColumnType("date");
+
+                entity.HasOne(d => d.Car)
+                    .WithMany(p => p.Orders)
+                    .HasForeignKey(d => d.CarId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Orders_Cars");
+
+                entity.HasOne(d => d.Person)
+                    .WithMany(p => p.Orders)
+                    .HasForeignKey(d => d.PersonId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Orders_Persons");
+            });
+
+            modelBuilder.Entity<Person>(entity =>
             {
                 entity.Property(e => e.Password)
                     .IsRequired()

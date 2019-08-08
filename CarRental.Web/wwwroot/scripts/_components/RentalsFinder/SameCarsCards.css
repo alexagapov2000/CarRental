@@ -1,0 +1,9 @@
+.sameCarsHeader:hover {
+    background-color: rgb(226, 230, 234);
+    cursor: pointer;
+    transition: 0.1s linear;
+}
+
+.sameCarsHeader:active {
+    background-color: rgb(218, 224, 229);
+}

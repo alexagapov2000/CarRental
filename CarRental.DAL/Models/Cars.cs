@@ -5,14 +5,29 @@ namespace CarRental.DAL.Models
 {
     public partial class Cars
     {
+        public Cars()
+        {
+            Orders = new HashSet<Orders>();
+        }
+
         public int Id { get; set; }
         public int? RentCompanyId { get; set; }
-        public DateTime? BookedBefore { get; set; }
         public int CarMarkId { get; set; }
         public decimal? Price { get; set; }
 
         public virtual CarMarks CarMark { get; set; }
         public virtual RentCompanies RentCompany { get; set; }
+        public virtual ICollection<Orders> Orders { get; set; }
+
+        public override bool Equals(object other)
+        {
+            return ((Cars)other).Id == this.Id;
+        }
+
+        public override int GetHashCode()
+        {
+            return this.Id;
+        }
     }
 
     public class CarsByRentalCompanyIdEqualityComparer : IEqualityComparer<Cars>

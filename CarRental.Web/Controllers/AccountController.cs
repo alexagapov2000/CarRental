@@ -21,7 +21,7 @@ namespace CarRental.Web.Controllers
     public class AccountController : ControllerBase
     {
         [HttpPost("token")]
-        public async Task<object> Token(Persons person)
+        public async Task<object> Token(Person person)
         {
             var token = new AccountService().Token(person);
             return token;
@@ -34,7 +34,7 @@ namespace CarRental.Web.Controllers
         }
 
         [HttpPost("register")]
-        public async Task<Persons> RegisterUser(RegisterViewModel registerViewModel)
+        public async Task<Person> RegisterUser(RegisterViewModel registerViewModel)
         {
             var person = await new AccountService().RegisterUser(registerViewModel);
             return person;

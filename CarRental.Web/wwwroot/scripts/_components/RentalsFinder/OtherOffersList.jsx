@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { ListGroup, Container, Row, Col } from 'react-bootstrap';
+import BookingModal from './BookingModal.jsx';
 
 export default class OtherOffersList extends React.Component {
 
@@ -9,6 +10,7 @@ export default class OtherOffersList extends React.Component {
         this.state = {
             pageStart: 0,
             pageSize: 3,
+            isModalsShown: [],
         };
     }
 
@@ -32,10 +34,29 @@ export default class OtherOffersList extends React.Component {
         </Container>;
     }
 
+    onModalShow = id => {
+        this.state.isModalsShown[id] = true;
+        this.setState({ isModalsShown: this.state.isModalsShown });
+    }
+    onModalHide = id => {
+        this.state.isModalsShown[id] = false;
+        this.setState({ isModalsShown: this.state.isModalsShown });
+    }
+
     renderCarsList = () => {
         let { pageSize, pageStart } = this.state;
-        return this.props.info
-            .map(car => <ListGroup.Item action>{this.getCarInfoContainer(car)}</ListGroup.Item>)
+        return this.props.info.map((car, id) => {
+            this.state.isModalsShown.push(false);
+            return <React.Fragment>
+                <ListGroup.Item action key={id} onClick={e => this.onModalShow(id)}>
+                    {this.getCarInfoContainer(car)}
+                </ListGroup.Item>
+                <BookingModal
+                    {...this.props.info[id]}
+                    show={this.state.isModalsShown[id]}
+                    onHide={() => this.onModalHide(id)} />
+            </React.Fragment>;
+        })
             .slice(pageStart, pageStart + pageSize);
     }
 

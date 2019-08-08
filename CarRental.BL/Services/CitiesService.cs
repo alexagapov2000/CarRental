@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace CarRental.BL
@@ -81,9 +82,12 @@ namespace CarRental.BL
             }
         }
 
-        public IEnumerable<CityWithCountryDTO> GetCitiesWithCountries()
+        public IEnumerable<CityWithCountryDTO> GetCitiesWithCountries(string locationsSubstrings)
         {
-            return _context.Cities
+            locationsSubstrings = locationsSubstrings == null ? "" : locationsSubstrings;
+            var locations = Regex.Split(locationsSubstrings, "[,;:./\\ ]+", RegexOptions.IgnoreCase)
+                .Where(location => location != "").ToList();
+            var DTOs = _context.Cities
                 .Join(_context.Countries,
                     city => city.CountryId,
                     country => country.Id,
@@ -92,8 +96,21 @@ namespace CarRental.BL
                         Id = city.Id,
                         Name = city.Name,
                         CountryName = country.Name,
-                    })
-                .Take(10);
+                    });
+            IEnumerable<CityWithCountryDTO> result = null;
+            if (locations.Count() == 0)
+                result = DTOs;
+            if (locations.Count() == 1)
+                result = DTOs.Where(dto =>
+                    locations.Any(location => dto.Name.Contains(location, StringComparison.OrdinalIgnoreCase)) ||
+                    locations.Any(location => dto.CountryName.Contains(location, StringComparison.OrdinalIgnoreCase)));
+            if (locations.Count() >= 2)
+                result = DTOs.Where(dto =>
+                    (dto.Name.Contains(locations[0], StringComparison.OrdinalIgnoreCase) &&
+                    dto.CountryName.Contains(locations[1], StringComparison.OrdinalIgnoreCase)) ||
+                    (dto.Name.Contains(locations[1], StringComparison.OrdinalIgnoreCase) &&
+                    dto.CountryName.Contains(locations[0], StringComparison.OrdinalIgnoreCase)));
+            return result.Take(11);
         }
     }
 }

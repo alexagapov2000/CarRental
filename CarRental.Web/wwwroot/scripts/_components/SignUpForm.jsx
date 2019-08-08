@@ -5,6 +5,16 @@ import './SignUpForm.css';
 
 class SignUpForm extends React.Component {
 
+    constructor(props) {
+        super(props);
+        this.state = {
+            show: false,
+        };
+    }
+
+    showDialog = () => this.setState({ show: true })
+    hideDialog = () => this.setState({ show: false })
+
     signUp = async (username, password1, password2) => {
         await this.props.signUpUser(username, password1, password2);
     }
@@ -15,7 +25,10 @@ class SignUpForm extends React.Component {
         let password1 = e.target.querySelector('#password1SignUp').value;
         let password2 = e.target.querySelector('#password2SignUp').value;
         await this.signUp(username, password1, password2);
-        this.props.history.push('/home');
+        let { pathname, search } = this.props.location;
+        await this.props.history.push('/');
+        await this.props.history.push(pathname + search);
+        this.hideDialog();
     }
 
     renderUsernameInput = () => {
@@ -52,7 +65,7 @@ class SignUpForm extends React.Component {
         </Alert>;
     }
 
-    render() {
+    renderModal = () => {
         let usernameInput = this.renderUsernameInput();
         let password1Input = this.renderPassword1Input();
         let password2Input = this.renderPassword2Input();
@@ -61,7 +74,7 @@ class SignUpForm extends React.Component {
             <React.Fragment>Loading...<Spinner animation='border' size='sm' /></React.Fragment> :
             'Register';
 
-        return <Modal.Dialog>
+        return <Modal show={this.state.show} onHide={this.hideDialog} centered>
             <Modal.Header>
                 <Modal.Title>Sign up</Modal.Title>
             </Modal.Header>
@@ -80,7 +93,14 @@ class SignUpForm extends React.Component {
                     <Button variant='primary' type='submit' disabled={this.props.isFetching}>{buttonValue}</Button>
                 </Modal.Footer>
             </Form>
-        </Modal.Dialog>;
+        </Modal>;
+    }
+
+    render() {
+        return <React.Fragment>
+            {this.renderModal()}
+            <Button onClick={this.showDialog} variant='light'>Sign up</Button>
+        </React.Fragment>;
     }
 }
 

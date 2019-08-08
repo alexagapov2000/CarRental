@@ -27,7 +27,7 @@ class App extends React.Component {
                             <Route path='/locationsTable' component={LocationsTableContainer} />
                             <Route path='/signIn' component={AuthFormContainer} />
                             <Route path='/signUp' component={SignUpContainer} />
-                            <Route path='/carsFinder' component={CarsFinderContainer}/>
+                            <Route path='/carsFinder' component={CarsFinderContainer} />
                         </Switch>
                     </main>
                 </div>

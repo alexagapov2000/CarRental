@@ -66,6 +66,7 @@
     <Build Include="Countries.sql" />
     <Build Include="Cities.sql" />
     <Build Include="Persons.sql" />
+    <Build Include="Orders.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="CarRental.DB.refactorlog" />

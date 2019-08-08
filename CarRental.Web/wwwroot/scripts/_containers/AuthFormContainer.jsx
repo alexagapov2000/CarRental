@@ -4,7 +4,7 @@ import * as commonActions from '../_actions/IndexActions.jsx';
 import AuthForm from '../_components/AuthForm.jsx';
 
 class AuthFormContainer extends React.Component {
-    
+
     render() {
         return <AuthForm
             username={this.props.username}

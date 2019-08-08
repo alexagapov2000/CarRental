@@ -10,9 +10,13 @@ class AuthForm extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            show: false,
             alertMessage: null,
         };
     }
+
+    showDialog = () => this.setState({ show: true })
+    hideDialog = () => this.setState({ show: false, alertMessage: false })
 
     signIn = async (username, password, isSaveSession) => {
         await this.props.authUser(username, password);
@@ -28,8 +32,12 @@ class AuthForm extends React.Component {
         let password = e.target.querySelector('#password').value;
         let isRemember = e.target.querySelector('#rememberMe input').checked;
         await this.signIn(username, password, isRemember);
-        if (store.getState().common.account)
-            this.props.history.push('/home');
+        if (store.getState().common.account) {
+            let { pathname, search } = this.props.location;
+            await this.props.history.push('/');
+            await this.props.history.push(pathname + search);
+            this.hideDialog();
+        }
         else
             this.setState({ alertMessage: store.getState().common.badResponse });
     }
@@ -63,7 +71,7 @@ class AuthForm extends React.Component {
         </ToggleButtonGroup>;
     }
 
-    render() {
+    renderModal = () => {
         let usernameInput = this.renderUsernameInput();
         let passwordInput = this.renderPasswordInput();
         let rememberMeCheckbox = this.renderRememberMeCheckbox();
@@ -72,7 +80,7 @@ class AuthForm extends React.Component {
             <React.Fragment>Loading...<Spinner animation='border' size='sm' /></React.Fragment> :
             'Login';
 
-        return <Modal.Dialog>
+        return <Modal show={this.state.show} onHide={this.hideDialog} centered>
             <Modal.Header>
                 <Modal.Title>Sign in</Modal.Title>
             </Modal.Header>
@@ -91,7 +99,14 @@ class AuthForm extends React.Component {
                 </Modal.Footer>
             </Form>
             <Alert variant='danger' hidden={!this.state.alertMessage}>{this.state.alertMessage}</Alert>
-        </Modal.Dialog>;
+        </Modal>;
+    }
+
+    render() {
+        return <React.Fragment>
+            {this.renderModal()}
+            <Button onClick={this.showDialog} variant='outline-light'>Sign in</Button>
+        </React.Fragment>;
     }
 }
 

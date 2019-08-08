@@ -1,0 +1,8 @@
+.pickedDates .react-datepicker__day:not(.react-datepicker__day--disabled) {
+    background-color: rgb(33, 107, 165);
+    border-radius: 25%;
+}
+
+.pickedDates .react-datepicker__day:not(.react-datepicker__day--disabled):nth-child(n) {
+    color: white;
+}

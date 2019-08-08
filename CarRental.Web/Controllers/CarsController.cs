@@ -27,9 +27,12 @@ namespace CarRental.Web.Controllers
         }
 
         [HttpGet]
-        public async Task<IEnumerable<IEnumerable<CarDTO>>> GetCarsByCity([FromQuery]int cityId)
+        public async Task<IEnumerable<IEnumerable<CarDTO>>> GetCarsByCity(
+            [FromQuery]int cityId,
+            [FromQuery]long bookedFromInMilliseconds,
+            [FromQuery]long bookedToInMilliseconds)
         {
-            var cars = new CarsService().GetCarsByCity(cityId);
+            var cars = new CarsService().GetCarsByCity(cityId, bookedFromInMilliseconds, bookedToInMilliseconds);
             return cars;
         }
     }

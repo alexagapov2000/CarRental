@@ -3,8 +3,11 @@ import { Navbar, Nav, Button, ButtonGroup } from 'react-bootstrap';
 import { NavLink, Link, withRouter } from 'react-router-dom';
 //import LocationsFinderContainer from '../_containers/LocationsFinderContainer.jsx';
 import LocationsFinder from '../_components/LocationsFinder/LocationsFinder.jsx';
+import SignUpContainer from '../_containers/SignUpContainer.jsx';
+import AuthFormContainer from '../_containers/AuthFormContainer.jsx';
 
 class Header extends React.Component {
+
     render() {
         return (
             <Navbar expand='lg' bg='dark' variant='dark' style={{ borderBottom: '1px solid black' }}>
@@ -17,8 +20,8 @@ class Header extends React.Component {
                 </Nav>
                 <Nav variant='pills'>
                     <ButtonGroup size='sm'>
-                        <Button onClick={() => this.props.history.push('/signIn')} variant='outline-light'>Sign in</Button>
-                        <Button onClick={() => this.props.history.push('/signUp')} variant='light'>Sign up</Button>
+                        <AuthFormContainer />
+                        <SignUpContainer />
                     </ButtonGroup>
                 </Nav>
             </Navbar>

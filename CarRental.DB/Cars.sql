@@ -2,7 +2,6 @@
 (
 	[Id] INT NOT NULL PRIMARY KEY IDENTITY, 
 	[RentCompanyId] INT NULL, 
-    [BookedBefore] DATE NULL, 
     [CarMarkId] INT NOT NULL, 
     [Price] MONEY NULL, 
     CONSTRAINT [FK_Cars_RentCompanies] FOREIGN KEY ([RentCompanyId]) REFERENCES [RentCompanies]([Id]), 

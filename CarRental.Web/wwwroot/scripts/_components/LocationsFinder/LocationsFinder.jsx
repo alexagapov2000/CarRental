@@ -5,9 +5,10 @@ import { Modal, Button, Form, Row, Col, Container, ListGroup } from 'react-boots
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import './LocationsFinder.css';
+import { debounce } from 'lodash';
 import { withRouter } from 'react-router-dom';
 
-export default class LocationsFinder extends React.Component {
+class LocationsFinder extends React.Component {
 
     constructor(props) {
         super(props);
@@ -28,33 +29,54 @@ export default class LocationsFinder extends React.Component {
             fixedHeight
             minDate={minDate}
             selected={this.state[stateKey] > minDate ? this.state[stateKey] : minDate}
-            onChange={(a, b) => {
+            onSelect={(date, e) => {
                 let newState = {};
-                newState[stateKey] = a;
+                newState[stateKey] = date;
                 this.setState(newState);
             }}>
         </DatePicker>;
     }
 
-    renderLocations = () => {
-        Axios.get('/api/cities/withCountries')
+    renderLocations = substring => {
+        let request = '/api/cities/withCountries';
+        Axios.get(substring ? `${request}?substring=${substring}` : `${request}`)
             .then(response => {
-                console.log(response.data);
-                let cities = response.data.map(city => <ListGroup.Item action>{city.name}</ListGroup.Item>);
-                return <ListGroup variant='flush'>{cities}</ListGroup>;
+                let cities = response.data.map(city => <ListGroup.Item
+                    onClick={async e => {
+                        let cityIdQuery = `?cityId=${city.id}`;
+                        let bookedFromQuery = `&bookedFrom=${this.state.selectedStartDate}`;
+                        let bookedToQuery = `&bookedTo=${
+                            this.state.selectedFinishDate <
+                                this.state.selectedStartDate ?
+                                this.state.selectedStartDate :
+                                this.state.selectedFinishDate}`;
+                        let redirect = this.props.history.push;
+                        await redirect('/');
+                        await redirect(`/carsFinder${cityIdQuery}${bookedFromQuery}${bookedToQuery}`);
+                        this.hideDialog();
+                    }}
+                    key={city.id}
+                    action>
+                    {`${city.countryName.trim()}, ${city.name}`}
+                </ListGroup.Item>);
+                if (cities.length == 11) {
+                    cities = cities.slice(1);
+                    cities[9] = <ListGroup.Item key={0} style={{ textAlign: 'center' }}>
+                        <span className='typewriter'>Keep typing</span>
+                    </ListGroup.Item>;
+                }
+                return <ListGroup style={{ paddingTop: '20px' }} variant='flush'>{cities}</ListGroup>;
             })
-            .then(cities => this.setState({cities}));
+            .then(cities => this.setState({ cities }));
     }
 
     componentDidMount() {
         this.renderLocations();
     }
 
-    renderModal = () => {
+    renderModal = debouncedOnChange => {
         return <Modal dialogClassName='locationsFinder' show={this.state.show} onHide={this.hideDialog} centered>
-            <Modal.Header closeButton>
-                <Modal.Title>Modal heading</Modal.Title>
-            </Modal.Header>
+            <Modal.Header closeButton><Modal.Title>Pick location and date range of booking</Modal.Title></Modal.Header>
             <Modal.Body>
                 <Container>
                     <Row>
@@ -63,24 +85,27 @@ export default class LocationsFinder extends React.Component {
                             {this.renderDatePicker(this.state.selectedStartDate, 'selectedFinishDate')}
                         </Col>
                         <Col>
-                            <Form.Control type='input' placeholder='Type location'></Form.Control>
+                            <Form.Control
+                                type='input'
+                                placeholder='Type location'
+                                onChange={e => { e.persist(); debouncedOnChange(e) }} />
                             {this.state.cities}
                         </Col>
                     </Row>
                 </Container>
             </Modal.Body>
-            <Modal.Footer>
-                <Button variant='primary' onClick={this.hideDialog}>Submit</Button>
-            </Modal.Footer>
         </Modal>;
     }
 
     render() {
+        let debouncedOnChange = debounce(e => this.renderLocations(e.target.value), 500);
         return <React.Fragment>
             <Button variant='outline-light' onClick={e => this.setState({ show: true })}>
                 Pick location
             </Button>
-            {this.renderModal()}
+            {this.renderModal(debouncedOnChange)}
         </React.Fragment>;
     }
 }
+
+export default withRouter(LocationsFinder);
