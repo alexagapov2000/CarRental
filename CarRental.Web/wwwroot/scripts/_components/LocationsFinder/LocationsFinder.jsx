@@ -7,6 +7,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import './LocationsFinder.css';
 import { debounce } from 'lodash';
 import { withRouter } from 'react-router-dom';
+import queryString from 'query-string';
 
 class LocationsFinder extends React.Component {
 
@@ -33,7 +34,8 @@ class LocationsFinder extends React.Component {
                 let newState = {};
                 newState[stateKey] = date;
                 this.setState(newState);
-            }}>
+            }}
+            dateFormat="MMMM d, yyyy h:mm aa">
         </DatePicker>;
     }
 
@@ -43,16 +45,15 @@ class LocationsFinder extends React.Component {
             .then(response => {
                 let cities = response.data.map(city => <ListGroup.Item
                     onClick={async e => {
-                        let cityIdQuery = `?cityId=${city.id}`;
-                        let bookedFromQuery = `&bookedFrom=${this.state.selectedStartDate}`;
-                        let bookedToQuery = `&bookedTo=${
-                            this.state.selectedFinishDate <
-                                this.state.selectedStartDate ?
+                        let cityIdQuery = 'cityId=' + encodeURIComponent(city.id);
+                        let bookedFromQuery = 'bookedFrom=' + encodeURIComponent(this.state.selectedStartDate);
+                        let bookedToQuery = 'bookedTo=' + encodeURIComponent(
+                            this.state.selectedFinishDate < this.state.selectedStartDate ?
                                 this.state.selectedStartDate :
-                                this.state.selectedFinishDate}`;
+                                this.state.selectedFinishDate);
                         let redirect = this.props.history.push;
                         await redirect('/');
-                        await redirect(`/carsFinder${cityIdQuery}${bookedFromQuery}${bookedToQuery}`);
+                        await redirect(`/carsFinder?${cityIdQuery}&${bookedFromQuery}&${bookedToQuery}`);
                         this.hideDialog();
                     }}
                     key={city.id}

@@ -10,6 +10,7 @@ using Microsoft.IdentityModel.Tokens;
 using CarRental.DAL.Models.Auth;
 using Westwind.AspNetCore.LiveReload;
 using CarRental.BL;
+using StackifyMiddleware;
 
 namespace CarRental.Web
 {
@@ -57,6 +58,7 @@ namespace CarRental.Web
             app.UseWebpackDevMiddleware();
             app.UseAuthentication();
             app.ConfigureExceptionHandler();
+            app.UseMiddleware<RequestTracerMiddleware>();
             app.UseMvc(routes =>
             {
                 routes.MapRoute(

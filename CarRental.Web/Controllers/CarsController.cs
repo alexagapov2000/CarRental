@@ -35,5 +35,19 @@ namespace CarRental.Web.Controllers
             var cars = new CarsService().GetCarsByCity(cityId, bookedFromInMilliseconds, bookedToInMilliseconds);
             return cars;
         }
+
+        [HttpPost]
+        public async Task<object> GetCarDTOs([FromBody]CityAndBookedRangeViewModel viewModel)
+        {
+            var result = new CarsService().GetCarDTOs(viewModel.CityId, viewModel.BookedFrom, viewModel.BookedTo);
+            return result;
+        }
+    }
+
+    public class CityAndBookedRangeViewModel
+    {
+        public int CityId { get; set; }
+        public TimeSpan BookedFrom { get; set; }
+        public TimeSpan BookedTo { get; set; }
     }
 }

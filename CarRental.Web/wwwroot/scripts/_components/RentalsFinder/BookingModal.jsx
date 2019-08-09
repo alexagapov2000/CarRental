@@ -21,7 +21,6 @@ export default class BookingModal extends React.Component {
     constructor(props) {
         super(props);
         let query = queryString.parse(window.location.search);
-        console.log(query.bookedFrom);
         this.state = {
             bookedFrom: new Date(query.bookedFrom),
             bookedTo: new Date(query.bookedTo),
@@ -35,22 +34,29 @@ export default class BookingModal extends React.Component {
     }
 
     render() {
+        let bookingDates = getDatesBetween(this.state.bookedFrom, this.state.bookedTo);
         let { name, price, rentalCompanyName, seats, fuelConsumption, id } = this.props;
         return <Modal show={this.props.show} onHide={this.hideDialog} centered size='lg'>
             <Modal.Header closeButton>
                 <Modal.Title>{name}</Modal.Title>
             </Modal.Header>
             <Modal.Body className='modalInfo'>
-                <strong>Rental: </strong><span style={{ fontSize: '20px' }}>{rentalCompanyName}</span>
+                <strong>Rental: </strong>
+                <span style={{ fontSize: '20px' }}>{rentalCompanyName}</span>
                 <hr />
-                <strong>Cost: </strong><span style={{ fontSize: '20px' }}>{'$' + price}</span>
+                <strong>Cost: </strong>
+                <span style={{ fontSize: '20px' }}>
+                    {`$${price.toFixed(2)} × ${bookingDates.length} days = $${(price * bookingDates.length).toFixed(2)}`}
+                </span>
                 <hr />
-                <strong>Fuel consumption: </strong><span style={{ fontSize: '20px' }}>{fuelConsumption}</span>
+                <strong>Fuel consumption: </strong>
+                <span style={{ fontSize: '20px' }}>{fuelConsumption + ' litres / 100km'}</span>
                 <hr />
-                <strong>Seats: </strong><span style={{ fontSize: '20px' }}>{seats}</span>
+                <strong>Seats: </strong>
+                <span style={{ fontSize: '20px' }}>{seats + ' adult seats'}</span>
                 <hr />
                 <DatePicker inline
-                    includeDates={getDatesBetween(this.state.bookedFrom, this.state.bookedTo)}
+                    includeDates={bookingDates}
                     calendarClassName='pickedDates' />
             </Modal.Body>
             <Modal.Footer>

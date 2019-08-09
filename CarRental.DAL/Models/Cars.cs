@@ -21,7 +21,14 @@ namespace CarRental.DAL.Models
 
         public override bool Equals(object other)
         {
-            return ((Cars)other).Id == this.Id;
+            try
+            {
+                return ((Cars)other).Id == this.Id;
+            }
+            catch
+            {
+                return false;
+            }
         }
 
         public override int GetHashCode()

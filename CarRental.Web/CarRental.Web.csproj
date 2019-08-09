@@ -26,6 +26,7 @@
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.3" />
     <PackageReference Include="React.AspNet" Version="4.1.1" />
+    <PackageReference Include="StackifyMiddleware" Version="3.0.4.1" />
     <PackageReference Include="WestWind.AspnetCore.LiveReload" Version="0.1.5.2" />
   </ItemGroup>
 

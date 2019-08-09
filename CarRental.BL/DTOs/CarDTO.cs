@@ -13,5 +13,11 @@ namespace CarRental.BL.DTOs
         public int FuelConsumption { get; set; }
         public DateTime? BookedBefore { get; set; }
         public int Count { get; set; }
+
+        public static CarDTO AddCount(CarDTO withoutCount, int count)
+        {
+            withoutCount.Count = count;
+            return withoutCount;
+        }
     }
 }

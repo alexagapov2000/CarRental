@@ -43,6 +43,12 @@ namespace CarRental.BL.Services
 
         public IEnumerable<IEnumerable<CarDTO>> GetCarsByCity(int cityId, long bookedFromInMilliseconds, long bookedToInMilliseconds)
         {
+            //timestamp
+            //отправлять дату
+            //post 
+            //sql profiler
+            //переделать с лямбд
+
             var bookedFrom = new DateTime(1970, 1, 1).AddMilliseconds(bookedFromInMilliseconds / 24 / 3600000 * 24 * 3600000);
             var bookedTo = new DateTime(1970, 1, 1).AddMilliseconds(bookedToInMilliseconds / 24 / 3600000 * 24 * 3600000);
             var rentals = _context.RentCompanies
@@ -75,6 +81,33 @@ namespace CarRental.BL.Services
                     Seats = _context.CarMarks.First(model => model.Id == tuple.Item1.CarMarkId).Seats,
                     Count = tuple.Item2,
                 });
+        }
+
+        public object GetCarDTOs(int cityId, TimeSpan bookedFrom, TimeSpan bookedTo)
+        {
+            var result = from car in _context.Cars
+                         join rental in _context.RentCompanies on car.RentCompanyId.Value equals rental.Id
+                         join model in _context.CarMarks on car.CarMarkId equals model.Id
+                         join o in _context.Orders on car.Id equals o.CarId into carsOrders
+                         from order in carsOrders.DefaultIfEmpty()
+                         where rental.CityId == cityId
+                         orderby car.Price
+                         select new CarDTO
+                         {
+                             Id = car.Id,
+                             Name = model.Name,
+                             Price = car.Price,
+                             RentalCompanyName = rental.Name,
+                             FuelConsumption = model.FuelConsumption,
+                             Seats = model.Seats,
+                         } into dto
+                         group dto by dto.Name into dtosByModel
+                         from dtosByModelByRentals in
+                            (from dtoByRental in dtosByModel
+                             group dtoByRental by dtoByRental.RentalCompanyName into dtosByRentalsByModels
+                             select CarDTO.AddCount(dtosByRentalsByModels.First(), dtosByRentalsByModels.Count()))
+                         group dtosByModelByRentals by dtosByModel;
+            return result;
         }
 
         public IEnumerable<CarDTO> GetCarsPage(int page, int count)
