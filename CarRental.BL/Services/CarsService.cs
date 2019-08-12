@@ -15,37 +15,30 @@ namespace CarRental.BL.Services
             _context = new CarRentalContext();
         }
 
-        public IEnumerable<CarDTO> GetCars()
+        public static Func<CarDTO, IComparable> GetPropertyToSort(string orderbyPropertyName)
         {
-            Func<IGrouping<string, CarDTO>, CarDTO> selector = group =>
+            switch(orderbyPropertyName.ToLower())
             {
-                var firstCar = group.First();
-                firstCar.Count = group.Count();
-                return firstCar;
-            };
-            return _context.Cars
-                .Join(_context.CarMarks,
-                    car => car.CarMarkId,
-                    carMark => carMark.Id,
-                    (car, carMark) => new CarDTO
-                    {
-                        Id = car.Id,
-                        Name = carMark.Name,
-                        Price = car.Price,
-                        Seats = carMark.Seats,
-                    })
-                .GroupBy(car => car.Name)
-                .Select(selector)
-                .ToList();
-        }
-        public bool IsDatesIntersects(Orders confirmedOrder, DateTime bookedFrom, DateTime bookedTo)
-        {
-            return !(
-                confirmedOrder.BookedTo < bookedFrom ||
-                bookedTo < confirmedOrder.BookedFrom);
+                case "price": return car => car.Price;
+                case "name": return car => (car.Name, car.RentalCompanyName);
+                case "seats": return car => (car.Seats, car.Name, car.RentalCompanyName);
+                case "rental": return car => car.RentalCompanyName;
+                case "fuel": return car => (car.FuelConsumption, car.Name, car.RentalCompanyName);
+                default: return car => car.Price;
+            }
         }
 
-        public IEnumerable<IEnumerable<CarDTO>> GetCarsByCity(int cityId, DateTime bookedFrom, DateTime bookedTo)
+        private bool IsDatesIntersects(Orders confirmedOrder, DateTime bookedFrom, DateTime bookedTo)
+        {
+            return !(
+                confirmedOrder.BookedTo.Day < bookedFrom.Day ||
+                bookedTo.Day < confirmedOrder.BookedFrom.Day);
+        }
+
+        public IEnumerable<IEnumerable<CarDTO>> GetCarsByCity(
+            int cityId, DateTime bookedFrom, DateTime bookedTo,
+            int pageNumber, int pageSize,
+            Func<CarDTO, IComparable> orderbyProperty, bool isDescending)
         {
             var result = from car in _context.Cars
                          join rental in _context.RentCompanies on car.RentCompanyId.Value equals rental.Id
@@ -63,39 +56,38 @@ namespace CarRental.BL.Services
                              Price = car.Price,
                              RentalCompanyName = rental.Name,
                              FuelConsumption = model.FuelConsumption,
-                             Seats = model.Seats,
-                         } into dto
+                             Seats = model.Seats
+                         };
+            return GroupCars(result, orderbyProperty)
+                .Select(group => group.Order(orderbyProperty, isDescending))
+                .Order(group => orderbyProperty(group.First()), isDescending)
+                .Skip(pageNumber * pageSize)
+                .Take(pageSize);
+        }
+
+        private static IEnumerable<IEnumerable<CarDTO>> GroupCars(IQueryable<CarDTO> cars, Func<CarDTO, IComparable> keySelector)
+        {
+            var result = from dto in cars
                          group dto by dto.Name into dtos
                          from dto in
                             (from dto in dtos
+                                 //orderby keySelector(dto)
                              group dto by dto.RentalCompanyName into dtos2
-                             select CarDTO.AddCount(dtos2.First(), dtos2.Count()))
-                         group dto by dtos;
+                             select dtos2.First().SetCount(dtos2.Count()))
+                         group dto by dtos;// into dtos
+                         //orderby keySelector(dtos.First())
+                         //select dtos;
             return result;
-        }
-
-        public IEnumerable<CarDTO> GetCarsPage(int page, int count)
-        {
-            return GetCars()
-                .Skip(page * count)
-                .Take(count)
-                .ToList();
-        }
-
-        public int GetPagesCount(int pageSize)
-        {
-            return GetCars().Count() / pageSize;
         }
     }
 
     public static class LINQExtensions
     {
-        public static bool AllTrue<T>(this IEnumerable<T> collection, Func<T, bool> predicate)
+        public static IOrderedEnumerable<T> Order<T, TKey>(this IEnumerable<T> collection, Func<T, TKey> keySelector, bool isDescending)
         {
-            foreach (var element in collection)
-                if (!predicate(element))
-                    return false;
-            return true;
+            if (isDescending)
+                return collection.OrderByDescending(keySelector);
+            return collection.OrderBy(keySelector);
         }
     }
 }

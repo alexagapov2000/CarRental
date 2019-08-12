@@ -13,27 +13,18 @@ namespace CarRental.Web.Controllers
     [ApiController]
     public class CarsController : ControllerBase
     {
-        [HttpGet("pagination")]
-        public async Task<IEnumerable<CarDTO>> GetCarsPage([FromQuery]int page, [FromQuery]int count)
-        {
-            var cars = new CarsService().GetCarsPage(page, count);
-            return cars;
-        }
-
-        [HttpGet("pagesCount")]
-        public async Task<int> GetPagesCount([FromQuery]int pageSize)
-        {
-            var result = new CarsService().GetPagesCount(pageSize);
-            return result;
-        }
-
         [HttpPost]
-        public async Task<IEnumerable<IEnumerable<CarDTO>>> GetCarsByCity([FromBody]CityAndBookedRangeViewModel cityAndBookedRange)
+        public async Task<IEnumerable<IEnumerable<CarDTO>>> GetCarsByCity(
+            [FromBody]CityAndBookedRangeViewModel cityAndBookedRange,
+            [FromQuery]int pageNumber,
+            [FromQuery]int pageSize,
+            [FromQuery]string orderbyPropertyName,
+            [FromQuery]bool isDescendingSort)
         {
             var cars = new CarsService().GetCarsByCity(
-                cityAndBookedRange.CityId,
-                cityAndBookedRange.BookedFrom,
-                cityAndBookedRange.BookedTo);
+                cityAndBookedRange.CityId, cityAndBookedRange.BookedFrom, cityAndBookedRange.BookedTo,
+                pageNumber, pageSize,
+                CarsService.GetPropertyToSort(orderbyPropertyName), isDescendingSort);
             return cars;
         }
     }

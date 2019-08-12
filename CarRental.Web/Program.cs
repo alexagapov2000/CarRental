@@ -8,7 +8,7 @@ namespace CarRental.Web
     {
         public static void Main(string[] args)
         {
-            IdentityModelEventSource.ShowPII = true;
+            //IdentityModelEventSource.ShowPII = true;
             CreateWebHostBuilder(args).Build().Run();
         }
 

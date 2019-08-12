@@ -28,7 +28,8 @@ const mapStateToProps = store => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        loadCars: (cityId, bookedFrom, bookedTo) => dispatch(actions.loadCars(cityId, bookedFrom, bookedTo)),
+        loadCars: (cityId, bookedFrom, bookedTo, pageNumber, pageSize, isDescendingSort, orderbyPropertyName) =>
+            dispatch(actions.loadCars(cityId, bookedFrom, bookedTo, pageNumber, pageSize, isDescendingSort, orderbyPropertyName)),
     };
 };
 
