@@ -61,11 +61,13 @@ export default class OtherOffersList extends React.Component {
     }
 
     slideList = difference => {
-        let newPageStart = this.state.pageStart + difference;
+        let newPageStart = this.state.pageStart + (difference || 0);
         if (newPageStart < 0)
             newPageStart = 0;
         if (newPageStart > this.props.info.length - this.state.pageSize)
             newPageStart = this.props.info.length - this.state.pageSize;
+        if(this.props.info.length < this.state.pageSize)
+            newPageStart = 0;
         this.setState({ pageStart: newPageStart });
     }
 

@@ -14,5 +14,27 @@ namespace CarRental.DAL.Models
 
         public virtual Cars Car { get; set; }
         public virtual Person Person { get; set; }
+
+        public static Orders MinValue
+        {
+            get
+            {
+                return new Orders
+                {
+                    Id = -1,
+                    BookedFrom = DateTime.MinValue,
+                    BookedTo = DateTime.MinValue,
+                    PersonId = -1,
+                    CarId = -1,
+                };
+            }
+        }
+
+        public static Orders SetCarId(int carId)
+        {
+            var result = MinValue;
+            result.CarId = carId;
+            return result;
+        }
     }
 }

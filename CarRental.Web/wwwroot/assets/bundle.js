@@ -41266,12 +41266,12 @@ var LOAD_CARS = exports.LOAD_CARS = 'LOAD_CARS';
 var LOAD_CARS_SUCCESS = exports.LOAD_CARS_SUCCESS = 'LOAD_CARS_SUCCESS';
 var LOAD_CARS_FAILED = exports.LOAD_CARS_FAILED = 'LOAD_CARS_FAILED';
 
-function loadCars(cityId, bookedFromInMilliseconds, bookedToInMilliseconds) {
+function loadCars(cityId, bookedFrom, bookedTo) {
     var _this = this;
 
     return function () {
         var _ref = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee(dispatch) {
-            var dispatchSuccess, dispatchFailed, cityIdQuery, bookedFromQuery, bookedToQuery;
+            var dispatchSuccess, dispatchFailed;
             return _regenerator2.default.wrap(function _callee$(_context) {
                 while (1) {
                     switch (_context.prev = _context.next) {
@@ -41293,15 +41293,12 @@ function loadCars(cityId, bookedFromInMilliseconds, bookedToInMilliseconds) {
                                 });
                             };
 
-                            cityIdQuery = '?cityId=' + cityId;
-                            bookedFromQuery = '&bookedFromInMilliseconds=' + bookedFromInMilliseconds;
-                            bookedToQuery = '&bookedToInMilliseconds=' + bookedToInMilliseconds;
-                            _context.next = 8;
-                            return _axios2.default.get('/api/cars' + cityIdQuery + bookedFromQuery + bookedToQuery).then(function (response) {
+                            _context.next = 5;
+                            return _axios2.default.post('/api/cars', { cityId: cityId, bookedFrom: bookedFrom, bookedTo: bookedTo }).then(function (response) {
                                 return dispatchSuccess(response.data);
                             });
 
-                        case 8:
+                        case 5:
                         case 'end':
                             return _context.stop();
                     }
@@ -90423,8 +90420,8 @@ var CarsFinderContainer = function (_React$Component) {
                 loadCars: this.props.loadCars,
                 isFetching: this.props.isFetching,
                 cityId: cityId,
-                bookedFrom: new Date(bookedFrom).getTime(),
-                bookedTo: new Date(bookedTo).getTime() });
+                bookedFrom: new Date(bookedFrom),
+                bookedTo: new Date(bookedTo) });
         }
     }]);
     return CarsFinderContainer;
@@ -91147,9 +91144,10 @@ var OtherOffersList = function (_React$Component) {
         };
 
         _this.slideList = function (difference) {
-            var newPageStart = _this.state.pageStart + difference;
+            var newPageStart = _this.state.pageStart + (difference || 0);
             if (newPageStart < 0) newPageStart = 0;
             if (newPageStart > _this.props.info.length - _this.state.pageSize) newPageStart = _this.props.info.length - _this.state.pageSize;
+            if (_this.props.info.length < _this.state.pageSize) newPageStart = 0;
             _this.setState({ pageStart: newPageStart });
         };
 

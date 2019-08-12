@@ -18,7 +18,7 @@ namespace CarRental.DAL.Models
         public virtual CarMarks CarMark { get; set; }
         public virtual RentCompanies RentCompany { get; set; }
         public virtual ICollection<Orders> Orders { get; set; }
-
+        /*
         public override bool Equals(object other)
         {
             try
@@ -35,6 +35,7 @@ namespace CarRental.DAL.Models
         {
             return this.Id;
         }
+        */
     }
 
     public class CarsByRentalCompanyIdEqualityComparer : IEqualityComparer<Cars>

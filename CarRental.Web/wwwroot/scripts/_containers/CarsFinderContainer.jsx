@@ -14,8 +14,8 @@ class CarsFinderContainer extends React.Component {
             loadCars={this.props.loadCars}
             isFetching={this.props.isFetching}
             cityId={cityId}
-            bookedFrom={new Date(bookedFrom).getTime()}
-            bookedTo={new Date(bookedTo).getTime()} />;
+            bookedFrom={new Date(bookedFrom)}
+            bookedTo={new Date(bookedTo)} />;
     }
 }
 

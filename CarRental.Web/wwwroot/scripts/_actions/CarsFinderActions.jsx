@@ -4,7 +4,7 @@ export const LOAD_CARS = 'LOAD_CARS';
 export const LOAD_CARS_SUCCESS = 'LOAD_CARS_SUCCESS';
 export const LOAD_CARS_FAILED = 'LOAD_CARS_FAILED';
 
-export function loadCars(cityId, bookedFromInMilliseconds, bookedToInMilliseconds) {
+export function loadCars(cityId, bookedFrom, bookedTo) {
     return async dispatch => {
         dispatch({
             type: LOAD_CARS,
@@ -16,10 +16,7 @@ export function loadCars(cityId, bookedFromInMilliseconds, bookedToInMillisecond
         let dispatchFailed = message => dispatch({
             type: LOAD_CARS_FAILED,
         });
-        let cityIdQuery = `?cityId=${cityId}`;
-        let bookedFromQuery = `&bookedFromInMilliseconds=${bookedFromInMilliseconds}`;
-        let bookedToQuery = `&bookedToInMilliseconds=${bookedToInMilliseconds}`;
-        await Axios.get(`/api/cars${cityIdQuery}${bookedFromQuery}${bookedToQuery}`)
+        await Axios.post('/api/cars', {cityId, bookedFrom, bookedTo})
             .then(response => dispatchSuccess(response.data));
     };
 }

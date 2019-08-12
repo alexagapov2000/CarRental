@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using CarRental.BL.DTOs;
 using CarRental.BL.Services;
 using CarRental.DAL.Models;
+using CarRental.Web.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CarRental.Web.Controllers
@@ -26,28 +27,14 @@ namespace CarRental.Web.Controllers
             return result;
         }
 
-        [HttpGet]
-        public async Task<IEnumerable<IEnumerable<CarDTO>>> GetCarsByCity(
-            [FromQuery]int cityId,
-            [FromQuery]long bookedFromInMilliseconds,
-            [FromQuery]long bookedToInMilliseconds)
+        [HttpPost]
+        public async Task<IEnumerable<IEnumerable<CarDTO>>> GetCarsByCity([FromBody]CityAndBookedRangeViewModel cityAndBookedRange)
         {
-            var cars = new CarsService().GetCarsByCity(cityId, bookedFromInMilliseconds, bookedToInMilliseconds);
+            var cars = new CarsService().GetCarsByCity(
+                cityAndBookedRange.CityId,
+                cityAndBookedRange.BookedFrom,
+                cityAndBookedRange.BookedTo);
             return cars;
         }
-
-        [HttpPost]
-        public async Task<object> GetCarDTOs([FromBody]CityAndBookedRangeViewModel viewModel)
-        {
-            var result = new CarsService().GetCarDTOs(viewModel.CityId, viewModel.BookedFrom, viewModel.BookedTo);
-            return result;
-        }
-    }
-
-    public class CityAndBookedRangeViewModel
-    {
-        public int CityId { get; set; }
-        public TimeSpan BookedFrom { get; set; }
-        public TimeSpan BookedTo { get; set; }
     }
 }

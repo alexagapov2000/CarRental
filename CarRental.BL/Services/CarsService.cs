@@ -1,10 +1,8 @@
 ﻿using CarRental.BL.DTOs;
 using CarRental.DAL.Models;
-using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.EntityFrameworkCore.Query.Internal;
 
 namespace CarRental.BL.Services
 {
@@ -40,58 +38,24 @@ namespace CarRental.BL.Services
                 .Select(selector)
                 .ToList();
         }
-
-        public IEnumerable<IEnumerable<CarDTO>> GetCarsByCity(int cityId, long bookedFromInMilliseconds, long bookedToInMilliseconds)
+        public bool IsDatesIntersects(Orders confirmedOrder, DateTime bookedFrom, DateTime bookedTo)
         {
-            //timestamp
-            //отправлять дату
-            //post 
-            //sql profiler
-            //переделать с лямбд
-
-            var bookedFrom = new DateTime(1970, 1, 1).AddMilliseconds(bookedFromInMilliseconds / 24 / 3600000 * 24 * 3600000);
-            var bookedTo = new DateTime(1970, 1, 1).AddMilliseconds(bookedToInMilliseconds / 24 / 3600000 * 24 * 3600000);
-            var rentals = _context.RentCompanies
-                .Where(rental => rental.CityId == cityId);
-            var rentalIDs = rentals
-                .Select(rental => rental.Id)
-                .ToHashSet();
-            return _context.Cars
-                .Where(car => rentalIDs.Contains(car.RentCompanyId.Value))
-                .GetNotBookedCars(_context.Orders, bookedFrom, bookedTo)
-                .GroupBy(car => car.CarMarkId)
-                .Select(group => group.GroupBy(car => car.RentCompanyId))
-                .Select(groups => groups.Select(group => Tuple.Create(group.First(), group.Count())))
-                .Select(sameCars => ToDTO(sameCars))
-                .Select(sameCars => sameCars.OrderBy(car => car.Price))
-                .ToArray()
-                .OrderBy(sameCars => sameCars.First().Price);
+            return !(
+                confirmedOrder.BookedTo < bookedFrom ||
+                bookedTo < confirmedOrder.BookedFrom);
         }
 
-        private IEnumerable<CarDTO> ToDTO(IEnumerable<Tuple<Cars, int>> sameCars)
-        {
-            return sameCars
-                .Select(tuple => new CarDTO
-                {
-                    Id = tuple.Item1.Id,
-                    Name = _context.CarMarks.First(model => model.Id == tuple.Item1.CarMarkId).Name,
-                    Price = tuple.Item1.Price,
-                    RentalCompanyName = _context.RentCompanies.First(rental => rental.Id == tuple.Item1.RentCompanyId).Name,
-                    FuelConsumption = _context.CarMarks.First(model => model.Id == tuple.Item1.CarMarkId).FuelConsumption,
-                    Seats = _context.CarMarks.First(model => model.Id == tuple.Item1.CarMarkId).Seats,
-                    Count = tuple.Item2,
-                });
-        }
-
-        public object GetCarDTOs(int cityId, TimeSpan bookedFrom, TimeSpan bookedTo)
+        public IEnumerable<IEnumerable<CarDTO>> GetCarsByCity(int cityId, DateTime bookedFrom, DateTime bookedTo)
         {
             var result = from car in _context.Cars
                          join rental in _context.RentCompanies on car.RentCompanyId.Value equals rental.Id
                          join model in _context.CarMarks on car.CarMarkId equals model.Id
-                         join o in _context.Orders on car.Id equals o.CarId into carsOrders
-                         from order in carsOrders.DefaultIfEmpty()
+                         join order in (from order in _context.Orders
+                                        where IsDatesIntersects(order, bookedFrom, bookedTo)
+                                        select order) on car.Id equals order.CarId into orders
+                         from order in orders.DefaultIfEmpty()
+                         where order == null
                          where rental.CityId == cityId
-                         orderby car.Price
                          select new CarDTO
                          {
                              Id = car.Id,
@@ -101,12 +65,12 @@ namespace CarRental.BL.Services
                              FuelConsumption = model.FuelConsumption,
                              Seats = model.Seats,
                          } into dto
-                         group dto by dto.Name into dtosByModel
-                         from dtosByModelByRentals in
-                            (from dtoByRental in dtosByModel
-                             group dtoByRental by dtoByRental.RentalCompanyName into dtosByRentalsByModels
-                             select CarDTO.AddCount(dtosByRentalsByModels.First(), dtosByRentalsByModels.Count()))
-                         group dtosByModelByRentals by dtosByModel;
+                         group dto by dto.Name into dtos
+                         from dto in
+                            (from dto in dtos
+                             group dto by dto.RentalCompanyName into dtos2
+                             select CarDTO.AddCount(dtos2.First(), dtos2.Count()))
+                         group dto by dtos;
             return result;
         }
 
@@ -124,23 +88,14 @@ namespace CarRental.BL.Services
         }
     }
 
-    static class LINQExtensions
+    public static class LINQExtensions
     {
-        public static IEnumerable<Cars> GetNotBookedCars(
-            this IEnumerable<Cars> cars, IEnumerable<Orders> orders, DateTime bookedFrom, DateTime bookedTo)
+        public static bool AllTrue<T>(this IEnumerable<T> collection, Func<T, bool> predicate)
         {
-            var carIDsWithBookingHistory = new SortedDictionary<int, List<Tuple<DateTime, DateTime>>>();
-            foreach (var car in cars)
-                carIDsWithBookingHistory[car.Id] = new List<Tuple<DateTime, DateTime>>();
-            foreach (var order in orders.Where(order => carIDsWithBookingHistory.ContainsKey(order.CarId)))
-                carIDsWithBookingHistory[order.CarId].Add(Tuple.Create(order.BookedFrom, order.BookedTo));
-            return carIDsWithBookingHistory
-                .Where(pair => pair.Value.All(bookingRange =>
-                    bookingRange.Item1 > bookedTo ||
-                    bookingRange.Item2 < bookedFrom))
-                .Select(pair => pair.Key)
-                .Distinct()
-                .Join(cars, id => id, car => car.Id, (id, car) => car);
+            foreach (var element in collection)
+                if (!predicate(element))
+                    return false;
+            return true;
         }
     }
 }

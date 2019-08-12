@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.IdentityModel.Logging;
 
 namespace CarRental.Web
 {
@@ -7,6 +8,7 @@ namespace CarRental.Web
     {
         public static void Main(string[] args)
         {
+            IdentityModelEventSource.ShowPII = true;
             CreateWebHostBuilder(args).Build().Run();
         }
 
