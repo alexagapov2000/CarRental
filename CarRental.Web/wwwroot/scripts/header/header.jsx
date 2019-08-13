@@ -10,7 +10,7 @@ class Header extends React.Component {
 
     render() {
         return (
-            <Navbar expand='lg' bg='dark' variant='dark' style={{ borderBottom: '1px solid black' }}>
+            <Navbar sticky='top' expand='lg' bg='dark' variant='dark' style={{ borderBottom: '1px solid black' }}>
                 <Navbar.Brand as={Link} to='/home'>CarRental</Navbar.Brand>
                 <Nav className='mr-auto justify-content-between'>
                     <Nav.Link as={NavLink} to='/createLocation'>Create new location</Nav.Link>

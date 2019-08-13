@@ -27,5 +27,12 @@ namespace CarRental.Web.Controllers
                 CarsService.GetPropertyToSort(orderbyPropertyName), isDescendingSort);
             return cars;
         }
+
+        [HttpPost("submit")]
+        public async Task<int> SubmitPurchase([FromBody]OrderViewModel order)
+        {
+            var result = await new CarsService().SubmitPurchase(order.PersonID, order.CarID, order.BookedFrom, order.BookedTo);
+            return result;
+        }
     }
 }

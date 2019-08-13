@@ -18,7 +18,7 @@ class App extends React.Component {
         return (
             <Router>
                 <div>
-                    <Header />
+                    <Header/>
                     <main>
                         <Switch>
                             <Route path='/home' component={HomePage} />

@@ -3,6 +3,7 @@ using CarRental.DAL.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace CarRental.BL.Services
 {
@@ -17,7 +18,7 @@ namespace CarRental.BL.Services
 
         public static Func<CarDTO, IComparable> GetPropertyToSort(string orderbyPropertyName)
         {
-            switch(orderbyPropertyName.ToLower())
+            switch (orderbyPropertyName.ToLower())
             {
                 case "price": return car => car.Price;
                 case "name": return car => (car.Name, car.RentalCompanyName);
@@ -71,13 +72,23 @@ namespace CarRental.BL.Services
                          group dto by dto.Name into dtos
                          from dto in
                             (from dto in dtos
-                                 //orderby keySelector(dto)
                              group dto by dto.RentalCompanyName into dtos2
                              select dtos2.First().SetCount(dtos2.Count()))
-                         group dto by dtos;// into dtos
-                         //orderby keySelector(dtos.First())
-                         //select dtos;
+                         group dto by dtos;
             return result;
+        }
+
+        public async Task<int> SubmitPurchase(int personID, int carID, DateTime bookedFrom, DateTime bookedTo)
+        {
+            var order = new Orders
+            {
+                PersonId = personID,
+                CarId = carID,
+                BookedFrom = bookedFrom,
+                BookedTo = bookedTo,
+            };
+            await _context.Orders.AddAsync(order);
+            return await _context.SaveChangesAsync();
         }
     }
 

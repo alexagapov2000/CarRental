@@ -1,5 +1,5 @@
 import React from 'react';
-import { Modal, Button } from 'react-bootstrap';
+import { Modal, Button, Row, Col, Form } from 'react-bootstrap';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import queryString from 'query-string';
@@ -55,12 +55,21 @@ export default class BookingModal extends React.Component {
                 <strong>Seats: </strong>
                 <span style={{ fontSize: '20px' }}>{seats + ' adult seats'}</span>
                 <hr />
-                <DatePicker inline
-                    includeDates={bookingDates}
-                    calendarClassName='pickedDates' />
+                <Row>
+                    <Col lg={4}>
+                        <DatePicker inline
+                            includeDates={bookingDates}
+                            calendarClassName='pickedDates' />
+                    </Col>
+                    <Col lg={8} style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+                        <Form.Control type='input' placeholder='Your name and surname'></Form.Control>
+                        <Form.Control type='input' placeholder='Driver license number'></Form.Control>
+                        <Form.Control type='input' placeholder='Birth date'></Form.Control>
+                    </Col>
+                </Row>
             </Modal.Body>
             <Modal.Footer>
-                <Button onClick={() => null}>Submit</Button>
+                <Button onClick={() => this.props.submit}>Submit</Button>
             </Modal.Footer>
         </Modal>;
     }

@@ -3,6 +3,7 @@ import React from 'react';
 //import DayPicker from 'react-daypicker';
 import { Container, Row, Col, ButtonToolbar, ToggleButtonGroup, ToggleButton } from 'react-bootstrap';
 import SameCarsCard from './SameCarsCards.jsx';
+import { store } from '../../_store/configureStore.jsx';
 
 export default class CarsFinder extends React.Component {
 
@@ -19,8 +20,28 @@ export default class CarsFinder extends React.Component {
             .map((car, id) => <SameCarsCard key={id} info={car} />);
     }
 
+    renderSortButtons = () => {
+        return <ButtonToolbar className='d-flex flex-column' style={{ position: 'sticky', top: '0' }}>
+            <ToggleButtonGroup vertical
+                style={{ margin: '9px 0 10px' }} type='radio' name='options' defaultValue={'price'}
+                onChange={value => this.setState({ orderbyPropertyName: value })}>
+                <ToggleButton variant='none' size='lg' value={0} disabled>Sort cars by</ToggleButton>
+                <ToggleButton variant='outline-dark' value={'price'}>Price</ToggleButton>
+                <ToggleButton variant='outline-dark' value={'name'}>Car model name</ToggleButton>
+                <ToggleButton variant='outline-dark' value={'seats'}>Count of seats</ToggleButton>
+                <ToggleButton variant='outline-dark' value={'rental'}>Rent company name</ToggleButton>
+                <ToggleButton variant='outline-dark' value={'fuel'}>Fuel consumption</ToggleButton>
+            </ToggleButtonGroup>
+            <ToggleButtonGroup
+                style={{ margin: '10px 0 20px' }} type='radio' name='options' defaultValue={false}
+                onChange={value => this.setState({ isDescending: value })}>
+                <ToggleButton variant='outline-secondary' value={false} size='sm'>Ascending</ToggleButton>
+                <ToggleButton variant='outline-secondary' value={true} size='sm'>Descending</ToggleButton>
+            </ToggleButtonGroup>
+        </ButtonToolbar>;
+    }
+
     componentDidMount() {
-        console.log('kal');
         let { cityId, bookedFrom, bookedTo } = this.props;
         this.props.loadCars(cityId, bookedFrom, bookedTo);
     }
@@ -32,7 +53,7 @@ export default class CarsFinder extends React.Component {
             this.props.loadCars(
                 cityId,
                 bookedFrom, bookedTo,
-                0, 1000,
+                0, store.getState().carsFinder.cars.length,
                 nextState.isDescending, nextState.orderbyPropertyName);
         }
     }
@@ -40,27 +61,10 @@ export default class CarsFinder extends React.Component {
     render() {
         return <Container>
             <Row>
-                <Col key={0} lg='4'>
-                    <ButtonToolbar className='d-flex flex-column' style={{ position: 'sticky', top: '0' }}>
-                        <ToggleButtonGroup vertical
-                            style={{ margin: '20px 0 10px' }} type='radio' name='options' defaultValue={'price'}
-                            onChange={value => this.setState({ orderbyPropertyName: value })}>
-                            <ToggleButton variant='secondary' value={0} disabled>Sort cars by</ToggleButton>
-                            <ToggleButton variant='outline-dark' value={'price'}>Price</ToggleButton>
-                            <ToggleButton variant='outline-dark' value={'name'}>Car model name</ToggleButton>
-                            <ToggleButton variant='outline-dark' value={'seats'}>Count of seats</ToggleButton>
-                            <ToggleButton variant='outline-dark' value={'rental'}>Rent company name</ToggleButton>
-                            <ToggleButton variant='outline-dark' value={'fuel'}>Fuel consumption</ToggleButton>
-                        </ToggleButtonGroup>
-                        <ToggleButtonGroup
-                            style={{ margin: '10px 0 20px' }} type='radio' name='options' defaultValue={false}
-                            onChange={value => this.setState({ isDescending: value })}>
-                            <ToggleButton variant='outline-dark' value={false}>Ascending</ToggleButton>
-                            <ToggleButton variant='outline-dark' value={true}>Descending</ToggleButton>
-                        </ToggleButtonGroup>
-                    </ButtonToolbar>
+                <Col lg='4'>
+                    {this.renderSortButtons()}
                 </Col>
-                <Col key={1} lg='8'>
+                <Col lg='8'>
                     {this.renderSameCarsCards()}
                 </Col>
             </Row>
