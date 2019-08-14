@@ -76,7 +76,7 @@ namespace CarRental.BL
             return claimsIdentity;
         }
 
-        public void DecodeToken(string jwt)
+        public string DecodeToken(string jwt)
         {
             var validationParameters = new TokenValidationParameters()
             {
@@ -87,7 +87,10 @@ namespace CarRental.BL
             };
             var handler = new JwtSecurityTokenHandler();
             var roles = new List<string>();
-            handler.ValidateToken(jwt, validationParameters, out _);
+            return handler.ValidateToken(jwt, validationParameters, out _)
+                .Claims
+                .First(x => x.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name")
+                .Value;
         }
 
         public async Task<Person> RegisterUser(RegisterViewModel registerViewModel)

@@ -7,6 +7,7 @@ class AuthFormContainer extends React.Component {
 
     render() {
         return <AuthForm
+            {...this.props}
             username={this.props.username}
             password={this.props.password}
             authUser={this.props.authUser}

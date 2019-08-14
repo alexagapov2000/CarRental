@@ -34,8 +34,10 @@ class AuthForm extends React.Component {
         await this.signIn(username, password, isRemember);
         if (store.getState().common.account) {
             let { pathname, search } = this.props.location;
-            await this.props.history.push('/');
-            await this.props.history.push(pathname + search);
+            if (this.props.reloadPage) {
+                await this.props.history.push('/');
+                await this.props.history.push(pathname + search);
+            }
             this.hideDialog();
         }
         else
@@ -105,7 +107,7 @@ class AuthForm extends React.Component {
     render() {
         return <React.Fragment>
             {this.renderModal()}
-            <Button onClick={this.showDialog} variant='outline-light'>Sign in</Button>
+            <Button onClick={this.showDialog} variant={this.props.variant || 'outline-light'}>Sign in</Button>
         </React.Fragment>;
     }
 }

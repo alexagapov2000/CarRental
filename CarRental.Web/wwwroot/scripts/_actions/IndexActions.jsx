@@ -93,16 +93,16 @@ export function reAuthUser() {
     return dispatch => {
         let token = localStorage.getItem('token');
         if (!token) return;
-        let actionCreator = () => dispatch({
+        let actionCreator = response => dispatch({
             type: REAUTHORIZE_USER,
             payload: {
-                username: '',
+                username: response.data,
                 password: '',
                 token,
             },
         });
         Axios.post('api/account/decode', null, { headers: { jwt: token } })
-            .then(actionCreator());
+            .then(actionCreator);
     };
 }
 

@@ -28,9 +28,10 @@ namespace CarRental.Web.Controllers
         }
 
         [HttpPost("decode")]
-        public async Task DecodeToken([FromHeader] string jwt)
+        public async Task<string> DecodeToken([FromHeader] string jwt)
         {
-            new AccountService().DecodeToken(jwt);
+            var result = new AccountService().DecodeToken(jwt);
+            return result;
         }
 
         [HttpPost("register")]

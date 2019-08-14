@@ -4,7 +4,7 @@ import { withRouter } from 'react-router-dom';
 import { Card, Collapse, Button, ListGroup, Modal, Row, Container } from 'react-bootstrap';
 import OtherOffersList from './OtherOffersList.jsx';
 import './SameCarsCards.css';
-import BookingModal from './BookingModal.jsx';
+import BookingModalContainer from '../../_containers/BookingModalContainer.jsx';
 
 class SameCarsCard extends React.Component {
 
@@ -62,7 +62,7 @@ class SameCarsCard extends React.Component {
     render() {
         return <React.Fragment>
             {this.renderCard()}
-            <BookingModal
+            <BookingModalContainer
                 {...this.props.info[0]}
                 show={this.state.showBookingCard}
                 onHide={() => this.setState({ showBookingCard: false })} />

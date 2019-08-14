@@ -29,9 +29,9 @@ namespace CarRental.Web.Controllers
         }
 
         [HttpPost("submit")]
-        public async Task<int> SubmitPurchase([FromBody]OrderViewModel order)
+        public async Task<bool> SubmitPurchase([FromBody]OrderViewModel order)
         {
-            var result = await new CarsService().SubmitPurchase(order.PersonID, order.CarID, order.BookedFrom, order.BookedTo);
+            var result = await new CarsService().SubmitPurchase(order.Username, order.CarID, order.BookedFrom, order.BookedTo);
             return result;
         }
     }

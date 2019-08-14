@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { ListGroup, Container, Row, Col } from 'react-bootstrap';
-import BookingModal from './BookingModal.jsx';
+import BookingModalContainer from '../../_containers/BookingModalContainer.jsx';
 
 export default class OtherOffersList extends React.Component {
 
@@ -51,7 +51,7 @@ export default class OtherOffersList extends React.Component {
                 <ListGroup.Item action key={id} onClick={e => this.onModalShow(id)}>
                     {this.getCarInfoContainer(car)}
                 </ListGroup.Item>
-                <BookingModal
+                <BookingModalContainer
                     {...this.props.info[id]}
                     show={this.state.isModalsShown[id]}
                     onHide={() => this.onModalHide(id)} />

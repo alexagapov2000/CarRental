@@ -22,8 +22,8 @@ export function loadCars(
         });
         await Axios.post(`/api/cars?pageNumber=${pageNumber}&pageSize=${pageSize}&isDescendingSort=${isDescendingSort}&orderbyPropertyName=${orderbyPropertyName}`, {
             cityId,
-            bookedFrom: new Date(bookedFrom.setUTCHours(12, 0, 0, 0)),
-            bookedTo : new Date(bookedTo.setUTCHours(12, 0, 0, 0)),
+            bookedFrom,
+            bookedTo,
         })
             .then(response => dispatchSuccess(response.data));
     };

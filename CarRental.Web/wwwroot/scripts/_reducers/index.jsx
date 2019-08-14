@@ -3,7 +3,7 @@ import creatingFormReducer from './creatingForm.jsx';
 import selectsReducer from './selects.jsx';
 import locationsTableReducer from './locationsTable.jsx';
 import carsFinderReducer from './carsFinder.jsx';
-//import authFormReducer from './authForm.jsx';
+import bookingModalReducer from './bookingModal.jsx';
 import * as types from '../_actions/IndexActions.jsx';
 
 const initialState = {
@@ -60,4 +60,5 @@ export const rootReducer = combineReducers({
 	selects: selectsReducer,
 	locationsTable: locationsTableReducer,
 	carsFinder: carsFinderReducer,
+	bookingModal: bookingModalReducer,
 });

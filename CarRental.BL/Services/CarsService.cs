@@ -78,17 +78,25 @@ namespace CarRental.BL.Services
             return result;
         }
 
-        public async Task<int> SubmitPurchase(int personID, int carID, DateTime bookedFrom, DateTime bookedTo)
+        public async Task<bool> SubmitPurchase(string username, int carID, DateTime bookedFrom, DateTime bookedTo)
         {
-            var order = new Orders
+            var person = _context.Persons.FirstOrDefault(p => p.Username == username);
+            if (person == null)
+                throw new Exception("This person does not exist!");
+            var result = new Orders
             {
-                PersonId = personID,
+                PersonId = person.Id,
                 CarId = carID,
                 BookedFrom = bookedFrom,
                 BookedTo = bookedTo,
             };
-            await _context.Orders.AddAsync(order);
-            return await _context.SaveChangesAsync();
+            var conflictOrder = _context.Orders
+                .Where(order => order.CarId == carID)
+                .FirstOrDefault(order => IsDatesIntersects(order, bookedFrom, bookedTo));
+            if (conflictOrder != null)
+                throw new Exception($"This car is already booked from {conflictOrder.BookedFrom.ToShortDateString()} to {conflictOrder.BookedTo.ToShortDateString()}");
+            await _context.Orders.AddAsync(result);
+            return await _context.SaveChangesAsync() == 1;
         }
     }
 
