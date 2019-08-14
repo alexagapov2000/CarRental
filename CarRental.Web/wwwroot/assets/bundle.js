@@ -41615,11 +41615,12 @@ var BookingModalContainer = function (_React$Component) {
 }(_react2.default.Component);
 
 var mapStateToProps = function mapStateToProps(store) {
+    var account = store.common.account;
     return {
         dangerMessage: store.bookingModal.dangerMessage,
         isOrderWasMade: store.bookingModal.isOrderWasMade,
         isFetching: store.bookingModal.isFetching,
-        username: store.common.account.username,
+        username: account ? account.username : account,
         isPausedAfterSubmitting: store.bookingModal.isPausedAfterSubmitting
     };
 };

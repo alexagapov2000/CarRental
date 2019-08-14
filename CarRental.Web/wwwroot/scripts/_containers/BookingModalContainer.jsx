@@ -17,11 +17,12 @@ class BookingModalContainer extends React.Component {
 }
 
 const mapStateToProps = store => {
+    let account = store.common.account;
     return {
         dangerMessage: store.bookingModal.dangerMessage,
         isOrderWasMade: store.bookingModal.isOrderWasMade,
         isFetching: store.bookingModal.isFetching,
-        username: store.common.account.username,
+        username: account ? account.username : account,
         isPausedAfterSubmitting: store.bookingModal.isPausedAfterSubmitting,
     };
 };

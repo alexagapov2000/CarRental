@@ -83,19 +83,26 @@ namespace CarRental.BL.Services
             var person = _context.Persons.FirstOrDefault(p => p.Username == username);
             if (person == null)
                 throw new Exception("This person does not exist!");
-            var result = new Orders
+            var carBySendedId = _context.Cars.First(c => c.Id == carID);
+            var sameCars = _context.Cars.Where(c =>
+                c.RentCompanyId == carBySendedId.RentCompanyId &&
+                c.CarMarkId == carBySendedId.CarMarkId);
+            var suitableCars = from car in sameCars
+                               join order in (from order in _context.Orders
+                                              where IsDatesIntersects(order, bookedFrom, bookedTo)
+                                              select order) on car.Id equals order.CarId into orders
+                               from order in orders.DefaultIfEmpty()
+                               where order == null
+                               select car;
+            if (suitableCars.Count() == 0)
+                throw new Exception($"All of theese cars was already booked! Please refresh this page or repick booking dates!");
+            await _context.Orders.AddAsync(new Orders
             {
                 PersonId = person.Id,
-                CarId = carID,
                 BookedFrom = bookedFrom,
                 BookedTo = bookedTo,
-            };
-            var conflictOrder = _context.Orders
-                .Where(order => order.CarId == carID)
-                .FirstOrDefault(order => IsDatesIntersects(order, bookedFrom, bookedTo));
-            if (conflictOrder != null)
-                throw new Exception($"This car is already booked from {conflictOrder.BookedFrom.ToShortDateString()} to {conflictOrder.BookedTo.ToShortDateString()}");
-            await _context.Orders.AddAsync(result);
+                CarId = suitableCars.First().Id
+            });
             return await _context.SaveChangesAsync() == 1;
         }
     }
