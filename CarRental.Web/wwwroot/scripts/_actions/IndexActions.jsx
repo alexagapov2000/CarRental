@@ -12,11 +12,14 @@ export const AUTHORIZE_USER_SUCCESS = 'AUTHORIZE_USER_SUCCESS';
 export const AUTHORIZE_USER_FAILED = 'AUTHORIZE_USER_FAILED';
 
 export const REMEMBER_USER = 'REMEMBER_USER';
+
 export const REAUTHORIZE_USER = 'REAUTHORIZE_USER';
 
 export const SIGN_UP_USER = 'SIGN_UP_USER';
 export const SIGN_UP_USER_SUCCESS = 'SIGN_UP_USER_SUCCESS';
 export const SIGN_UP_USER_FAILED = 'SIGN_UP_USER_FAILED';
+
+export const EXIT = 'EXIT';
 
 export function loadCountries() {
     return async dispatch => {
@@ -64,16 +67,16 @@ export function authUser(username, password) {
         });
         let dispatchFailed = response => dispatch({
             type: AUTHORIZE_USER_FAILED,
-            payload: response.response.data.Message,
+            payload: response.response ? response.response.data.Message : response.response,
         });
-        let accountData = {
-            username: username,
-            password: password,
-        };
+        let accountData = { username, password };
         await Axios.post("api/account/token", accountData)
             .then(response => accountData.token = response.data.jwtKey)
             .then(() => dispatchSuccess(accountData))
-            .catch(dispatchFailed);
+            .catch(x => {
+                dispatchFailed(x.response.data.Message);
+                throw x.response.data.Message;
+            });
     };
 }
 
@@ -101,7 +104,7 @@ export function reAuthUser() {
                 token,
             },
         });
-        Axios.post('api/account/decode', null, { headers: { jwt: token } })
+        return Axios.post('api/account/decode', null, { headers: { jwt: token } })
             .then(actionCreator);
     };
 }
@@ -115,15 +118,27 @@ export function signUpUser(username, password1, password2) {
             type: SIGN_UP_USER_SUCCESS,
             payload: response.data,
         });
-        let dispatchFailed = () => dispatch({
+        let dispatchFailed = message => dispatch({
             type: SIGN_UP_USER_FAILED,
+            payload: message,
         });
         if (password1 != password2) {
-            dispatchFailed();
-            return;
+            let message = 'Passwords do not match';
+            dispatchFailed(message);
+            throw message;
         }
         await Axios.post('api/account/register', { username, password: password1 })
             .then(dispatchSuccess)
-            .catch(dispatchFailed);
+            .catch(x => {
+                dispatchFailed(x.response.data.Message);
+                throw x.response.data.Message;
+            });
+    };
+}
+
+export function exit() {
+    return dispatch => {
+        localStorage.removeItem('token');
+        dispatch({type: EXIT, payload: null});
     };
 }

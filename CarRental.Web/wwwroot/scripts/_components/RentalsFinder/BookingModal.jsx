@@ -51,20 +51,27 @@ class BookingModal extends React.Component {
             null;
     }
 
+    renderProperty = (key, value) => {
+        return <React.Fragment>
+            <strong>{key + ': '}</strong>
+            <span style={{ fontSize: '20px' }}>{value}</span>
+            <hr />
+        </React.Fragment>;
+    }
+
     componentDidMount() {
         this.setState({ show: this.props.show });
     }
 
     render() {
+        let isDisabled = this.props.isFetching || this.props.isPausedAfterSubmitting;
         let okImage = this.props.isPausedAfterSubmitting ?
             <div className='imageBackground'>
                 <Image className='okImage' src='../../../CarRentalIcons/ok.png' />
-            </div> :
-            null;
+            </div> : null;
         let submitButton = this.props.isAuthorized ?
             <Button onClick={this.submitPurchase} disabled={isDisabled}>Submit</Button> :
             <AuthFormContainer variant='outline-dark' />;
-        let isDisabled = this.props.isFetching;
         let bookingDates = getDatesBetween(this.state.bookedFrom, this.state.bookedTo);
         let { name, price, rentalCompanyName, seats, fuelConsumption, id } = this.props;
         return <Modal show={this.props.show} onHide={this.hideDialog} centered size='lg'>
@@ -73,20 +80,10 @@ class BookingModal extends React.Component {
             </Modal.Header>
             <Modal.Body className='modalInfo'>
                 {okImage}
-                <strong>Rental: </strong>
-                <span style={{ fontSize: '20px' }}>{rentalCompanyName}</span>
-                <hr />
-                <strong>Cost: </strong>
-                <span style={{ fontSize: '20px' }}>
-                    {`$${price.toFixed(2)} × ${bookingDates.length} days = $${(price * bookingDates.length).toFixed(2)}`}
-                </span>
-                <hr />
-                <strong>Fuel consumption: </strong>
-                <span style={{ fontSize: '20px' }}>{fuelConsumption + ' litres / 100km'}</span>
-                <hr />
-                <strong>Seats: </strong>
-                <span style={{ fontSize: '20px' }}>{seats + ' adult seats'}</span>
-                <hr />
+                {this.renderProperty('Rental', rentalCompanyName)}
+                {this.renderProperty('Cost', `$${price.toFixed(2)} × ${bookingDates.length} days = $${(price * bookingDates.length).toFixed(2)}`)}
+                {this.renderProperty('Fuel consumption', fuelConsumption + ' litres / 100km')}
+                {this.renderProperty('Seats', seats + ' adult seats')}
                 <Row>
                     <Col lg={4}>
                         <DatePicker inline
@@ -98,8 +95,8 @@ class BookingModal extends React.Component {
                         <Form.Control disabled={isDisabled} type='input' placeholder='Your name and surname'></Form.Control>
                         <Form.Control disabled={isDisabled} type='number' placeholder='Driver license number'></Form.Control>
                         <Row>
-                            <Col lg={3}><Form.Control disabled={isDisabled} placeholder='+375'></Form.Control></Col>
-                            <Col lg={9}><Form.Control disabled={isDisabled} placeholder='29-000-0000' type='number'></Form.Control></Col>
+                            <Col lg={3}><Form.Control disabled={isDisabled} placeholder='+375' pattern={'[+][0-9]{1,4}'}></Form.Control></Col>
+                            <Col lg={9}><Form.Control disabled={isDisabled} placeholder='12-345-6789' type='number'></Form.Control></Col>
                         </Row>
                     </Col>
                 </Row>

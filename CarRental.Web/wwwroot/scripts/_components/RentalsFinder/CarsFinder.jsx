@@ -4,6 +4,7 @@ import React from 'react';
 import { Container, Row, Col, ButtonToolbar, ToggleButtonGroup, ToggleButton } from 'react-bootstrap';
 import SameCarsCard from './SameCarsCards.jsx';
 import { store } from '../../_store/configureStore.jsx';
+import EmptyNotificator from '../EmptyNotificator.jsx';
 
 export default class CarsFinder extends React.Component {
 
@@ -59,13 +60,16 @@ export default class CarsFinder extends React.Component {
     }
 
     render() {
+        let sameCarsCards = this.renderSameCarsCards();
+        if(sameCarsCards.length == 0)
+        return <EmptyNotificator>There is no any offer on this location! You may repick booking dates!</EmptyNotificator>;
         return <Container>
             <Row>
                 <Col lg='4'>
                     {this.renderSortButtons()}
                 </Col>
                 <Col lg='8'>
-                    {this.renderSameCarsCards()}
+                    {sameCarsCards}
                 </Col>
             </Row>
         </Container>;

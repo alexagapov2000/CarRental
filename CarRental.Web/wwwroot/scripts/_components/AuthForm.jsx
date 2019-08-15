@@ -2,7 +2,6 @@ import React from 'react';
 import { Modal, Button, Form, Spinner, ToggleButtonGroup, ToggleButton, Alert } from "react-bootstrap";
 import { withRouter } from 'react-router-dom';
 import { store } from '../_store/configureStore.jsx';
-import { debounce } from 'lodash';
 import './AuthForm.css';
 
 class AuthForm extends React.Component {
@@ -31,17 +30,15 @@ class AuthForm extends React.Component {
         let username = e.target.querySelector('#username').value;
         let password = e.target.querySelector('#password').value;
         let isRemember = e.target.querySelector('#rememberMe input').checked;
-        await this.signIn(username, password, isRemember);
-        if (store.getState().common.account) {
-            let { pathname, search } = this.props.location;
-            if (this.props.reloadPage) {
-                await this.props.history.push('/');
-                await this.props.history.push(pathname + search);
-            }
-            this.hideDialog();
-        }
-        else
-            this.setState({ alertMessage: store.getState().common.badResponse });
+        await this.signIn(username, password, isRemember)
+            .catch(x => {
+                this.setState({ alertMessage: x });
+                throw x;
+            });
+        let { pathname, search } = this.props.location;
+        await this.props.history.push('/');
+        await this.props.history.push(pathname + search);
+        this.hideDialog();
     }
 
     renderUsernameInput = () => {

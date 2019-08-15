@@ -4,16 +4,13 @@ import selectsReducer from './selects.jsx';
 import locationsTableReducer from './locationsTable.jsx';
 import carsFinderReducer from './carsFinder.jsx';
 import bookingModalReducer from './bookingModal.jsx';
+import privateOfficeReducer from './privateOffice.jsx';
 import * as types from '../_actions/IndexActions.jsx';
 
 const initialState = {
 	countries: [],
 	cities: [],
-	account: {
-		username: '',
-		password: '',
-		token: '',
-	},
+	account: null,
 	isFetching: false,
 };
 
@@ -49,6 +46,9 @@ export function commonReducer(state = initialState, action) {
 		case types.SIGN_UP_USER_FAILED:
 			return { ...state, isFetching: false };
 
+		case types.EXIT:
+			return {...state, account: action.payload};
+
 		default:
 			return state;
 	}
@@ -61,4 +61,5 @@ export const rootReducer = combineReducers({
 	locationsTable: locationsTableReducer,
 	carsFinder: carsFinderReducer,
 	bookingModal: bookingModalReducer,
+	privateOffice: privateOfficeReducer,
 });

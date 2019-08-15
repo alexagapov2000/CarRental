@@ -105,6 +105,31 @@ namespace CarRental.BL.Services
             });
             return await _context.SaveChangesAsync() == 1;
         }
+
+        public IEnumerable<OrderDTO> GetCarsByPerson(string username)
+        {
+            var personId = _context.Persons.First(p => p.Username == username).Id;
+            var result = from order in _context.Orders
+                         where order.PersonId == personId
+                         join car in _context.Cars on order.CarId equals car.Id
+                         join model in _context.CarMarks on car.CarMarkId equals model.Id
+                         join rental in _context.RentCompanies on car.RentCompanyId equals rental.Id
+                         join city in _context.Cities on rental.CityId equals city.Id
+                         join country in _context.Countries on city.CountryId equals country.Id
+                         select new OrderDTO
+                         {
+                             Id = order.Id,
+                             Name = model.Name,
+                             Location = country.Name.Trim() + ", " + city.Name.Trim(),
+                             Price = car.Price,
+                             RentalCompanyName = rental.Name,
+                             Seats = model.Seats,
+                             FuelConsumption = model.FuelConsumption,
+                             BookedFrom = order.BookedFrom,
+                             BookedTo = order.BookedTo,
+                         };
+            return result.ToList();
+        }
     }
 
     public static class LINQExtensions

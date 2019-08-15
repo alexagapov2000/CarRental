@@ -39,7 +39,7 @@ export function submitPurchase(username, carID, bookedFrom, bookedTo) {
             })
             .catch(x => {
                 dispatchFailed(x.response.data.Message);
-                throw x.response.data.Message
+                throw x.response.data.Message;
             });
     };
 }

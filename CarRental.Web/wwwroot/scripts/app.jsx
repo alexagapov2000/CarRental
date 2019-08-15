@@ -10,6 +10,8 @@ import * as commonActions from './_actions/IndexActions.jsx';
 import SignUpContainer from './_containers/SignUpContainer.jsx';
 import HomePage from './_components/HomePage.jsx';
 import CarsFinderContainer from './_containers/CarsFinderContainer.jsx';
+import PrivateOfficeContainer from './_containers/PrivateOfficeContainer.jsx';
+import HeaderContainer from './header/headerContainer.jsx';
 
 class App extends React.Component {
 
@@ -18,7 +20,7 @@ class App extends React.Component {
         return (
             <Router>
                 <div>
-                    <Header/>
+                    <HeaderContainer />
                     <main>
                         <Switch>
                             <Route path='/home' component={HomePage} />
@@ -28,6 +30,7 @@ class App extends React.Component {
                             <Route path='/signIn' component={AuthFormContainer} />
                             <Route path='/signUp' component={SignUpContainer} />
                             <Route path='/carsFinder' component={CarsFinderContainer} />
+                            <Route path='/privateOffice' component={PrivateOfficeContainer} />
                         </Switch>
                     </main>
                 </div>

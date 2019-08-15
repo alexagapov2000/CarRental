@@ -34,5 +34,12 @@ namespace CarRental.Web.Controllers
             var result = await new CarsService().SubmitPurchase(order.Username, order.CarID, order.BookedFrom, order.BookedTo);
             return result;
         }
+
+        [HttpPost("byPerson")]
+        public async Task<IEnumerable<OrderDTO>> GetCarsByPerson([FromBody]PersonViewModel person)
+        {
+            var result = new CarsService().GetCarsByPerson(person.Username);
+            return result;
+        }
     }
 }
