@@ -1808,7 +1808,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "ResponsiveEmbed", function() { return __WEBPACK_IMPORTED_MODULE_52__ResponsiveEmbed__["a"]; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_53__Row__ = __webpack_require__(608);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "Row", function() { return __WEBPACK_IMPORTED_MODULE_53__Row__["a"]; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_54__SafeAnchor__ = __webpack_require__(68);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_54__SafeAnchor__ = __webpack_require__(69);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "SafeAnchor", function() { return __WEBPACK_IMPORTED_MODULE_54__SafeAnchor__["a"]; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_55__Spinner__ = __webpack_require__(609);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "Spinner", function() { return __WEBPACK_IMPORTED_MODULE_55__Spinner__["a"]; });
@@ -2261,8 +2261,8 @@ module.exports = function (TYPE, $create) {
 var global = __webpack_require__(28);
 var core = __webpack_require__(29);
 var ctx = __webpack_require__(106);
-var hide = __webpack_require__(76);
-var has = __webpack_require__(77);
+var hide = __webpack_require__(77);
+var has = __webpack_require__(78);
 var PROTOTYPE = 'prototype';
 
 var $export = function (type, name, source) {
@@ -2326,7 +2326,7 @@ module.exports = $export;
 /* 60 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var isObject = __webpack_require__(66);
+var isObject = __webpack_require__(67);
 module.exports = function (it) {
   if (!isObject(it)) throw TypeError(it + ' is not an object!');
   return it;
@@ -2414,8 +2414,288 @@ function startOfWeek(dirtyDate, dirtyOptions) {
 
 "use strict";
 
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.EXIT = exports.SIGN_UP_USER_FAILED = exports.SIGN_UP_USER_SUCCESS = exports.SIGN_UP_USER = exports.REAUTHORIZE_USER = exports.REMEMBER_USER = exports.AUTHORIZE_USER_FAILED = exports.AUTHORIZE_USER_SUCCESS = exports.AUTHORIZE_USER = exports.LOAD_CITIES_SUCCESS = exports.LOAD_CITIES = exports.LOAD_COUNTRIES_SUCCESS = exports.LOAD_COUNTRIES = undefined;
+
+var _regenerator = __webpack_require__(37);
+
+var _regenerator2 = _interopRequireDefault(_regenerator);
+
+var _asyncToGenerator2 = __webpack_require__(38);
+
+var _asyncToGenerator3 = _interopRequireDefault(_asyncToGenerator2);
+
+exports.loadCountries = loadCountries;
+exports.loadCities = loadCities;
+exports.authUser = authUser;
+exports.saveUser = saveUser;
+exports.reAuthUser = reAuthUser;
+exports.signUpUser = signUpUser;
+exports.exit = exit;
+
+var _configureStore = __webpack_require__(72);
+
+var _axios = __webpack_require__(81);
+
+var _axios2 = _interopRequireDefault(_axios);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var LOAD_COUNTRIES = exports.LOAD_COUNTRIES = 'LOAD_COUNTRIES';
+var LOAD_COUNTRIES_SUCCESS = exports.LOAD_COUNTRIES_SUCCESS = 'LOAD_COUNTRIES_SUCCESS';
+
+var LOAD_CITIES = exports.LOAD_CITIES = 'LOAD_CITIES';
+var LOAD_CITIES_SUCCESS = exports.LOAD_CITIES_SUCCESS = 'LOAD_CITIES_SUCCESS';
+
+var AUTHORIZE_USER = exports.AUTHORIZE_USER = 'AUTHORIZE_USER';
+var AUTHORIZE_USER_SUCCESS = exports.AUTHORIZE_USER_SUCCESS = 'AUTHORIZE_USER_SUCCESS';
+var AUTHORIZE_USER_FAILED = exports.AUTHORIZE_USER_FAILED = 'AUTHORIZE_USER_FAILED';
+
+var REMEMBER_USER = exports.REMEMBER_USER = 'REMEMBER_USER';
+
+var REAUTHORIZE_USER = exports.REAUTHORIZE_USER = 'REAUTHORIZE_USER';
+
+var SIGN_UP_USER = exports.SIGN_UP_USER = 'SIGN_UP_USER';
+var SIGN_UP_USER_SUCCESS = exports.SIGN_UP_USER_SUCCESS = 'SIGN_UP_USER_SUCCESS';
+var SIGN_UP_USER_FAILED = exports.SIGN_UP_USER_FAILED = 'SIGN_UP_USER_FAILED';
+
+var EXIT = exports.EXIT = 'EXIT';
+
+function loadCountries() {
+    var _this = this;
+
+    return function () {
+        var _ref = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee(dispatch) {
+            return _regenerator2.default.wrap(function _callee$(_context) {
+                while (1) {
+                    switch (_context.prev = _context.next) {
+                        case 0:
+                            dispatch({
+                                type: LOAD_COUNTRIES,
+                                payload: []
+                            });
+                            _context.next = 3;
+                            return fetch('api/countries').then(function (x) {
+                                return x.json();
+                            }).then(function (countries) {
+                                dispatch({
+                                    type: LOAD_COUNTRIES_SUCCESS,
+                                    payload: countries
+                                });
+                            });
+
+                        case 3:
+                        case 'end':
+                            return _context.stop();
+                    }
+                }
+            }, _callee, _this);
+        }));
+
+        return function (_x) {
+            return _ref.apply(this, arguments);
+        };
+    }();
+}
+
+function loadCities() {
+    var _this2 = this;
+
+    return function () {
+        var _ref2 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee2(dispatch) {
+            var token;
+            return _regenerator2.default.wrap(function _callee2$(_context2) {
+                while (1) {
+                    switch (_context2.prev = _context2.next) {
+                        case 0:
+                            dispatch({
+                                type: LOAD_CITIES,
+                                payload: []
+                            });
+                            token = _configureStore.store.getState().common.account.token;
+                            _context2.next = 4;
+                            return fetch('api/cities', { headers: { Authorization: 'bearer ' + token } }).then(function (x) {
+                                return x.json();
+                            }).then(function (cities) {
+                                dispatch({
+                                    type: LOAD_CITIES_SUCCESS,
+                                    payload: cities
+                                });
+                            });
+
+                        case 4:
+                        case 'end':
+                            return _context2.stop();
+                    }
+                }
+            }, _callee2, _this2);
+        }));
+
+        return function (_x2) {
+            return _ref2.apply(this, arguments);
+        };
+    }();
+}
+
+function authUser(username, password) {
+    var _this3 = this;
+
+    return function () {
+        var _ref3 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee3(dispatch) {
+            var dispatchSuccess, dispatchFailed, accountData;
+            return _regenerator2.default.wrap(function _callee3$(_context3) {
+                while (1) {
+                    switch (_context3.prev = _context3.next) {
+                        case 0:
+                            dispatch({
+                                type: AUTHORIZE_USER
+                            });
+
+                            dispatchSuccess = function dispatchSuccess(accountData) {
+                                return dispatch({
+                                    type: AUTHORIZE_USER_SUCCESS,
+                                    payload: accountData
+                                });
+                            };
+
+                            dispatchFailed = function dispatchFailed(response) {
+                                return dispatch({
+                                    type: AUTHORIZE_USER_FAILED,
+                                    payload: response.response ? response.response.data.Message : response.response
+                                });
+                            };
+
+                            accountData = { username: username, password: password };
+                            _context3.next = 6;
+                            return _axios2.default.post("api/account/token", accountData).then(function (response) {
+                                return accountData.token = response.data.jwtKey;
+                            }).then(function () {
+                                return dispatchSuccess(accountData);
+                            }).catch(function (x) {
+                                dispatchFailed(x.response.data.Message);
+                                throw x.response.data.Message;
+                            });
+
+                        case 6:
+                        case 'end':
+                            return _context3.stop();
+                    }
+                }
+            }, _callee3, _this3);
+        }));
+
+        return function (_x3) {
+            return _ref3.apply(this, arguments);
+        };
+    }();
+}
+
+function saveUser() {
+    return function (dispatch) {
+        var account = _configureStore.store.getState().common.account;
+        if (!account) return;
+        localStorage.setItem('token', account.token);
+        dispatch({
+            type: REMEMBER_USER
+        });
+    };
+}
+
+function reAuthUser() {
+    return function (dispatch) {
+        var token = localStorage.getItem('token');
+        if (!token) return;
+        var actionCreator = function actionCreator(response) {
+            return dispatch({
+                type: REAUTHORIZE_USER,
+                payload: {
+                    username: response.data,
+                    password: '',
+                    token: token
+                }
+            });
+        };
+        return _axios2.default.post('api/account/decode', null, { headers: { jwt: token } }).then(actionCreator);
+    };
+}
+
+function signUpUser(username, password1, password2) {
+    var _this4 = this;
+
+    return function () {
+        var _ref4 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee4(dispatch) {
+            var dispatchSuccess, dispatchFailed, message;
+            return _regenerator2.default.wrap(function _callee4$(_context4) {
+                while (1) {
+                    switch (_context4.prev = _context4.next) {
+                        case 0:
+                            dispatch({
+                                type: SIGN_UP_USER
+                            });
+
+                            dispatchSuccess = function dispatchSuccess(response) {
+                                return dispatch({
+                                    type: SIGN_UP_USER_SUCCESS,
+                                    payload: response.data
+                                });
+                            };
+
+                            dispatchFailed = function dispatchFailed(message) {
+                                return dispatch({
+                                    type: SIGN_UP_USER_FAILED,
+                                    payload: message
+                                });
+                            };
+
+                            if (!(password1 != password2)) {
+                                _context4.next = 7;
+                                break;
+                            }
+
+                            message = 'Passwords do not match';
+
+                            dispatchFailed(message);
+                            throw message;
+
+                        case 7:
+                            _context4.next = 9;
+                            return _axios2.default.post('api/account/register', { username: username, password: password1 }).then(dispatchSuccess).catch(function (x) {
+                                dispatchFailed(x.response.data.Message);
+                                throw x.response.data.Message;
+                            });
+
+                        case 9:
+                        case 'end':
+                            return _context4.stop();
+                    }
+                }
+            }, _callee4, _this4);
+        }));
+
+        return function (_x4) {
+            return _ref4.apply(this, arguments);
+        };
+    }();
+}
+
+function exit() {
+    return function (dispatch) {
+        localStorage.removeItem('token');
+        dispatch({ type: EXIT, payload: null });
+    };
+}
+
+/***/ }),
+/* 64 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
 if (__webpack_require__(21)) {
-  var LIBRARY = __webpack_require__(73);
+  var LIBRARY = __webpack_require__(74);
   var global = __webpack_require__(11);
   var fails = __webpack_require__(12);
   var $export = __webpack_require__(1);
@@ -2896,7 +3176,7 @@ if (__webpack_require__(21)) {
 
 
 /***/ }),
-/* 64 */
+/* 65 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var Map = __webpack_require__(451);
@@ -2953,7 +3233,7 @@ module.exports = {
 
 
 /***/ }),
-/* 65 */
+/* 66 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var anObject = __webpack_require__(60);
@@ -2975,7 +3255,7 @@ exports.f = __webpack_require__(61) ? Object.defineProperty : function definePro
 
 
 /***/ }),
-/* 66 */
+/* 67 */
 /***/ (function(module, exports) {
 
 module.exports = function (it) {
@@ -2984,7 +3264,7 @@ module.exports = function (it) {
 
 
 /***/ }),
-/* 67 */
+/* 68 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3047,7 +3327,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 /***/ }),
-/* 68 */
+/* 69 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3154,7 +3434,7 @@ function (_React$Component) {
 /* harmony default export */ __webpack_exports__["a"] = (SafeAnchor);
 
 /***/ }),
-/* 69 */
+/* 70 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3245,7 +3525,7 @@ function toComment(sourceMap) {
 }
 
 /***/ }),
-/* 70 */
+/* 71 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*
@@ -3617,7 +3897,7 @@ function updateLink (link, options, obj) {
 
 
 /***/ }),
-/* 71 */
+/* 72 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3626,278 +3906,31 @@ function updateLink (link, options, obj) {
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.EXIT = exports.SIGN_UP_USER_FAILED = exports.SIGN_UP_USER_SUCCESS = exports.SIGN_UP_USER = exports.REAUTHORIZE_USER = exports.REMEMBER_USER = exports.AUTHORIZE_USER_FAILED = exports.AUTHORIZE_USER_SUCCESS = exports.AUTHORIZE_USER = exports.LOAD_CITIES_SUCCESS = exports.LOAD_CITIES = exports.LOAD_COUNTRIES_SUCCESS = exports.LOAD_COUNTRIES = undefined;
+exports.store = undefined;
 
-var _regenerator = __webpack_require__(37);
+var _redux = __webpack_require__(226);
 
-var _regenerator2 = _interopRequireDefault(_regenerator);
+var _index = __webpack_require__(704);
 
-var _asyncToGenerator2 = __webpack_require__(38);
+var _reduxLogger = __webpack_require__(715);
 
-var _asyncToGenerator3 = _interopRequireDefault(_asyncToGenerator2);
+var _reduxLogger2 = _interopRequireDefault(_reduxLogger);
 
-exports.loadCountries = loadCountries;
-exports.loadCities = loadCities;
-exports.authUser = authUser;
-exports.saveUser = saveUser;
-exports.reAuthUser = reAuthUser;
-exports.signUpUser = signUpUser;
-exports.exit = exit;
+var _reduxThunk = __webpack_require__(716);
 
-var _configureStore = __webpack_require__(83);
-
-var _axios = __webpack_require__(80);
-
-var _axios2 = _interopRequireDefault(_axios);
+var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var LOAD_COUNTRIES = exports.LOAD_COUNTRIES = 'LOAD_COUNTRIES';
-var LOAD_COUNTRIES_SUCCESS = exports.LOAD_COUNTRIES_SUCCESS = 'LOAD_COUNTRIES_SUCCESS';
-
-var LOAD_CITIES = exports.LOAD_CITIES = 'LOAD_CITIES';
-var LOAD_CITIES_SUCCESS = exports.LOAD_CITIES_SUCCESS = 'LOAD_CITIES_SUCCESS';
-
-var AUTHORIZE_USER = exports.AUTHORIZE_USER = 'AUTHORIZE_USER';
-var AUTHORIZE_USER_SUCCESS = exports.AUTHORIZE_USER_SUCCESS = 'AUTHORIZE_USER_SUCCESS';
-var AUTHORIZE_USER_FAILED = exports.AUTHORIZE_USER_FAILED = 'AUTHORIZE_USER_FAILED';
-
-var REMEMBER_USER = exports.REMEMBER_USER = 'REMEMBER_USER';
-
-var REAUTHORIZE_USER = exports.REAUTHORIZE_USER = 'REAUTHORIZE_USER';
-
-var SIGN_UP_USER = exports.SIGN_UP_USER = 'SIGN_UP_USER';
-var SIGN_UP_USER_SUCCESS = exports.SIGN_UP_USER_SUCCESS = 'SIGN_UP_USER_SUCCESS';
-var SIGN_UP_USER_FAILED = exports.SIGN_UP_USER_FAILED = 'SIGN_UP_USER_FAILED';
-
-var EXIT = exports.EXIT = 'EXIT';
-
-function loadCountries() {
-    var _this = this;
-
-    return function () {
-        var _ref = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee(dispatch) {
-            return _regenerator2.default.wrap(function _callee$(_context) {
-                while (1) {
-                    switch (_context.prev = _context.next) {
-                        case 0:
-                            dispatch({
-                                type: LOAD_COUNTRIES,
-                                payload: []
-                            });
-                            _context.next = 3;
-                            return fetch('api/countries').then(function (x) {
-                                return x.json();
-                            }).then(function (countries) {
-                                dispatch({
-                                    type: LOAD_COUNTRIES_SUCCESS,
-                                    payload: countries
-                                });
-                            });
-
-                        case 3:
-                        case 'end':
-                            return _context.stop();
-                    }
-                }
-            }, _callee, _this);
-        }));
-
-        return function (_x) {
-            return _ref.apply(this, arguments);
-        };
-    }();
-}
-
-function loadCities() {
-    var _this2 = this;
-
-    return function () {
-        var _ref2 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee2(dispatch) {
-            var token;
-            return _regenerator2.default.wrap(function _callee2$(_context2) {
-                while (1) {
-                    switch (_context2.prev = _context2.next) {
-                        case 0:
-                            dispatch({
-                                type: LOAD_CITIES,
-                                payload: []
-                            });
-                            token = _configureStore.store.getState().common.account.token;
-                            _context2.next = 4;
-                            return fetch('api/cities', { headers: { Authorization: 'bearer ' + token } }).then(function (x) {
-                                return x.json();
-                            }).then(function (cities) {
-                                dispatch({
-                                    type: LOAD_CITIES_SUCCESS,
-                                    payload: cities
-                                });
-                            });
-
-                        case 4:
-                        case 'end':
-                            return _context2.stop();
-                    }
-                }
-            }, _callee2, _this2);
-        }));
-
-        return function (_x2) {
-            return _ref2.apply(this, arguments);
-        };
-    }();
-}
-
-function authUser(username, password) {
-    var _this3 = this;
-
-    return function () {
-        var _ref3 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee3(dispatch) {
-            var dispatchSuccess, dispatchFailed, accountData;
-            return _regenerator2.default.wrap(function _callee3$(_context3) {
-                while (1) {
-                    switch (_context3.prev = _context3.next) {
-                        case 0:
-                            dispatch({
-                                type: AUTHORIZE_USER
-                            });
-
-                            dispatchSuccess = function dispatchSuccess(accountData) {
-                                return dispatch({
-                                    type: AUTHORIZE_USER_SUCCESS,
-                                    payload: accountData
-                                });
-                            };
-
-                            dispatchFailed = function dispatchFailed(response) {
-                                return dispatch({
-                                    type: AUTHORIZE_USER_FAILED,
-                                    payload: response.response ? response.response.data.Message : response.response
-                                });
-                            };
-
-                            accountData = { username: username, password: password };
-                            _context3.next = 6;
-                            return _axios2.default.post("api/account/token", accountData).then(function (response) {
-                                return accountData.token = response.data.jwtKey;
-                            }).then(function () {
-                                return dispatchSuccess(accountData);
-                            }).catch(function (x) {
-                                dispatchFailed(x.response.data.Message);
-                                throw x.response.data.Message;
-                            });
-
-                        case 6:
-                        case 'end':
-                            return _context3.stop();
-                    }
-                }
-            }, _callee3, _this3);
-        }));
-
-        return function (_x3) {
-            return _ref3.apply(this, arguments);
-        };
-    }();
-}
-
-function saveUser() {
-    return function (dispatch) {
-        var account = _configureStore.store.getState().common.account;
-        if (!account) return;
-        localStorage.setItem('token', account.token);
-        dispatch({
-            type: REMEMBER_USER
-        });
-    };
-}
-
-function reAuthUser() {
-    return function (dispatch) {
-        var token = localStorage.getItem('token');
-        if (!token) return;
-        var actionCreator = function actionCreator(response) {
-            return dispatch({
-                type: REAUTHORIZE_USER,
-                payload: {
-                    username: response.data,
-                    password: '',
-                    token: token
-                }
-            });
-        };
-        return _axios2.default.post('api/account/decode', null, { headers: { jwt: token } }).then(actionCreator);
-    };
-}
-
-function signUpUser(username, password1, password2) {
-    var _this4 = this;
-
-    return function () {
-        var _ref4 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee4(dispatch) {
-            var dispatchSuccess, dispatchFailed, message;
-            return _regenerator2.default.wrap(function _callee4$(_context4) {
-                while (1) {
-                    switch (_context4.prev = _context4.next) {
-                        case 0:
-                            dispatch({
-                                type: SIGN_UP_USER
-                            });
-
-                            dispatchSuccess = function dispatchSuccess(response) {
-                                return dispatch({
-                                    type: SIGN_UP_USER_SUCCESS,
-                                    payload: response.data
-                                });
-                            };
-
-                            dispatchFailed = function dispatchFailed(message) {
-                                return dispatch({
-                                    type: SIGN_UP_USER_FAILED,
-                                    payload: message
-                                });
-                            };
-
-                            if (!(password1 != password2)) {
-                                _context4.next = 7;
-                                break;
-                            }
-
-                            message = 'Passwords do not match';
-
-                            dispatchFailed(message);
-                            throw message;
-
-                        case 7:
-                            _context4.next = 9;
-                            return _axios2.default.post('api/account/register', { username: username, password: password1 }).then(dispatchSuccess).catch(function (x) {
-                                dispatchFailed(x.response.data.Message);
-                                throw x.response.data.Message;
-                            });
-
-                        case 9:
-                        case 'end':
-                            return _context4.stop();
-                    }
-                }
-            }, _callee4, _this4);
-        }));
-
-        return function (_x4) {
-            return _ref4.apply(this, arguments);
-        };
-    }();
-}
-
-function exit() {
-    return function (dispatch) {
-        localStorage.removeItem('token');
-        dispatch({ type: EXIT, payload: null });
-    };
-}
+/*
+export const store = createStore(rootReducer, compose(
+    applyMiddleware(thunk, logger),
+    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()));
+*/
+var store = exports.store = (0, _redux.createStore)(_index.rootReducer, (0, _redux.applyMiddleware)(_reduxThunk2.default, _reduxLogger2.default));
 
 /***/ }),
-/* 72 */
+/* 73 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3960,14 +3993,14 @@ function compareAsc(dirtyDateLeft, dirtyDateRight) {
 }
 
 /***/ }),
-/* 73 */
+/* 74 */
 /***/ (function(module, exports) {
 
 module.exports = false;
 
 
 /***/ }),
-/* 74 */
+/* 75 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var META = __webpack_require__(86)('meta');
@@ -4026,7 +4059,7 @@ var meta = module.exports = {
 
 
 /***/ }),
-/* 75 */
+/* 76 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 22.1.3.31 Array.prototype[@@unscopables]
@@ -4039,10 +4072,10 @@ module.exports = function (key) {
 
 
 /***/ }),
-/* 76 */
+/* 77 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var dP = __webpack_require__(65);
+var dP = __webpack_require__(66);
 var createDesc = __webpack_require__(133);
 module.exports = __webpack_require__(61) ? function (object, key, value) {
   return dP.f(object, key, createDesc(1, value));
@@ -4053,7 +4086,7 @@ module.exports = __webpack_require__(61) ? function (object, key, value) {
 
 
 /***/ }),
-/* 77 */
+/* 78 */
 /***/ (function(module, exports) {
 
 var hasOwnProperty = {}.hasOwnProperty;
@@ -4063,7 +4096,7 @@ module.exports = function (it, key) {
 
 
 /***/ }),
-/* 78 */
+/* 79 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -4081,7 +4114,7 @@ function useEventCallback(fn) {
 }
 
 /***/ }),
-/* 79 */
+/* 80 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -4260,13 +4293,13 @@ function uncontrollable(Component, controlledValues, methods) {
 /* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(9)))
 
 /***/ }),
-/* 80 */
+/* 81 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__(636);
 
 /***/ }),
-/* 81 */
+/* 82 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -4310,7 +4343,7 @@ function addDays(dirtyDate, dirtyAmount) {
 }
 
 /***/ }),
-/* 82 */
+/* 83 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -4369,39 +4402,6 @@ function differenceInCalendarDays(dirtyDateLeft, dirtyDateRight) {
 
   return Math.round((timestampLeft - timestampRight) / MILLISECONDS_IN_DAY);
 }
-
-/***/ }),
-/* 83 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports.store = undefined;
-
-var _redux = __webpack_require__(226);
-
-var _index = __webpack_require__(704);
-
-var _reduxLogger = __webpack_require__(715);
-
-var _reduxLogger2 = _interopRequireDefault(_reduxLogger);
-
-var _reduxThunk = __webpack_require__(716);
-
-var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-/*
-export const store = createStore(rootReducer, compose(
-    applyMiddleware(thunk, logger),
-    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()));
-*/
-var store = exports.store = (0, _redux.createStore)(_index.rootReducer, (0, _redux.applyMiddleware)(_reduxThunk2.default, _reduxLogger2.default));
 
 /***/ }),
 /* 84 */
@@ -6346,7 +6346,7 @@ function addMilliseconds(dirtyDate, dirtyAmount) {
 "use strict";
 /* harmony export (immutable) */ __webpack_exports__["a"] = addWeeks;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__lib_toInteger_index_js__ = __webpack_require__(7);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__addDays_index_js__ = __webpack_require__(81);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__addDays_index_js__ = __webpack_require__(82);
 
 
 /**
@@ -6621,7 +6621,7 @@ var store = global[SHARED] || (global[SHARED] = {});
   return store[key] || (store[key] = value !== undefined ? value : {});
 })('versions', []).push({
   version: core.version,
-  mode: __webpack_require__(73) ? 'pure' : 'global',
+  mode: __webpack_require__(74) ? 'pure' : 'global',
   copyright: '© 2019 Denis Pushkarev (zloirock.ru)'
 });
 
@@ -6732,8 +6732,8 @@ module.exports = function (key) {
 /* 136 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var def = __webpack_require__(65).f;
-var has = __webpack_require__(77);
+var def = __webpack_require__(66).f;
+var has = __webpack_require__(78);
 var TAG = __webpack_require__(30)('toStringTag');
 
 module.exports = function (it, tag, stat) {
@@ -6898,7 +6898,7 @@ CloseButton.defaultProps = defaultProps;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_react__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_react__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ThemeProvider__ = __webpack_require__(6);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__SafeAnchor__ = __webpack_require__(68);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__SafeAnchor__ = __webpack_require__(69);
 
 
 
@@ -7001,7 +7001,7 @@ function forEach(children, func) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_react_overlays_Dropdown___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_react_overlays_Dropdown__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_uncontrollable_hook__ = __webpack_require__(138);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_uncontrollable_hook___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_uncontrollable_hook__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__restart_hooks_useEventCallback__ = __webpack_require__(78);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__restart_hooks_useEventCallback__ = __webpack_require__(79);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__ThemeProvider__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__DropdownMenu__ = __webpack_require__(569);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__DropdownToggle__ = __webpack_require__(570);
@@ -7729,7 +7729,7 @@ var global = __webpack_require__(11);
 var $export = __webpack_require__(1);
 var redefine = __webpack_require__(33);
 var redefineAll = __webpack_require__(94);
-var meta = __webpack_require__(74);
+var meta = __webpack_require__(75);
 var forOf = __webpack_require__(93);
 var anInstance = __webpack_require__(92);
 var isObject = __webpack_require__(14);
@@ -7852,7 +7852,7 @@ module.exports = {
 "use strict";
 
 // Forced replacement prototype accessors methods
-module.exports = __webpack_require__(73) || !__webpack_require__(12)(function () {
+module.exports = __webpack_require__(74) || !__webpack_require__(12)(function () {
   var K = Math.random();
   // In FF throws only define methods
   // eslint-disable-next-line no-undef, no-useless-call
@@ -8048,7 +8048,7 @@ module.exports = ReactPropTypesSecret;
 /* 170 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var isObject = __webpack_require__(66);
+var isObject = __webpack_require__(67);
 var document = __webpack_require__(28).document;
 // typeof document.createElement is 'object' in old IE
 var is = isObject(document) && isObject(document.createElement);
@@ -8062,7 +8062,7 @@ module.exports = function (it) {
 /***/ (function(module, exports, __webpack_require__) {
 
 // 7.1.1 ToPrimitive(input [, PreferredType])
-var isObject = __webpack_require__(66);
+var isObject = __webpack_require__(67);
 // instead of the ES6 spec version, we didn't implement @@toPrimitive case
 // and the second argument - flag - preferred type is a string
 module.exports = function (it, S) {
@@ -8210,7 +8210,7 @@ var global = __webpack_require__(28);
 var core = __webpack_require__(29);
 var LIBRARY = __webpack_require__(108);
 var wksExt = __webpack_require__(179);
-var defineProperty = __webpack_require__(65).f;
+var defineProperty = __webpack_require__(66).f;
 module.exports = function (name) {
   var $Symbol = core.Symbol || (core.Symbol = LIBRARY ? {} : global.Symbol || {});
   if (name.charAt(0) != '_' && !(name in $Symbol)) defineProperty($Symbol, name, { value: wksExt.f(name) });
@@ -9167,7 +9167,7 @@ module.exports = exports['default'];
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_classnames___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_classnames__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_react__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_react__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__SafeAnchor__ = __webpack_require__(68);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__SafeAnchor__ = __webpack_require__(69);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__AbstractNavItem__ = __webpack_require__(313);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__ThemeProvider__ = __webpack_require__(6);
 
@@ -9215,7 +9215,7 @@ NavLink.defaultProps = defaultProps;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__babel_runtime_helpers_esm_inheritsLoose__ = __webpack_require__(10);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_react__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_react__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_uncontrollable__ = __webpack_require__(79);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_uncontrollable__ = __webpack_require__(80);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__TabContext__ = __webpack_require__(200);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__SelectableContext__ = __webpack_require__(52);
 
@@ -10151,7 +10151,7 @@ function addYears(dirtyDate, dirtyAmount) {
 "use strict";
 /* harmony export (immutable) */ __webpack_exports__["a"] = subDays;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__lib_toInteger_index_js__ = __webpack_require__(7);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__addDays_index_js__ = __webpack_require__(81);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__addDays_index_js__ = __webpack_require__(82);
 
 
 /**
@@ -10955,7 +10955,7 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactRedux = __webpack_require__(45);
 
-var _IndexActions = __webpack_require__(71);
+var _IndexActions = __webpack_require__(63);
 
 var commonActions = _interopRequireWildcard(_IndexActions);
 
@@ -11118,7 +11118,7 @@ function eachDayOfInterval(dirtyInterval, options) {
 /* harmony export (immutable) */ __webpack_exports__["a"] = differenceInMonths;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__toDate_index_js__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__differenceInCalendarMonths_index_js__ = __webpack_require__(219);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__compareAsc_index_js__ = __webpack_require__(72);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__compareAsc_index_js__ = __webpack_require__(73);
 
 
 
@@ -11455,7 +11455,7 @@ module.exports = function (it) {
 
 var global = __webpack_require__(11);
 var core = __webpack_require__(47);
-var LIBRARY = __webpack_require__(73);
+var LIBRARY = __webpack_require__(74);
 var wksExt = __webpack_require__(429);
 var defineProperty = __webpack_require__(22).f;
 module.exports = function (name) {
@@ -11599,7 +11599,7 @@ module.exports = (!$expm1
 
 "use strict";
 
-var LIBRARY = __webpack_require__(73);
+var LIBRARY = __webpack_require__(74);
 var $export = __webpack_require__(1);
 var redefine = __webpack_require__(33);
 var hide = __webpack_require__(32);
@@ -11804,7 +11804,7 @@ module.exports = function fill(value /* , start = 0, end = @length */) {
 
 "use strict";
 
-var addToUnscopables = __webpack_require__(75);
+var addToUnscopables = __webpack_require__(76);
 var step = __webpack_require__(446);
 var Iterators = __webpack_require__(105);
 var toIObject = __webpack_require__(40);
@@ -12117,7 +12117,7 @@ module.exports.f = function (C) {
 
 var global = __webpack_require__(11);
 var DESCRIPTORS = __webpack_require__(21);
-var LIBRARY = __webpack_require__(73);
+var LIBRARY = __webpack_require__(74);
 var $typed = __webpack_require__(164);
 var hide = __webpack_require__(32);
 var redefineAll = __webpack_require__(94);
@@ -12482,7 +12482,7 @@ __webpack_require__(267)(String, 'String', function (iterated) {
 var LIBRARY = __webpack_require__(108);
 var $export = __webpack_require__(59);
 var redefine = __webpack_require__(268);
-var hide = __webpack_require__(76);
+var hide = __webpack_require__(77);
 var Iterators = __webpack_require__(109);
 var $iterCreate = __webpack_require__(481);
 var setToStringTag = __webpack_require__(136);
@@ -12553,14 +12553,14 @@ module.exports = function (Base, NAME, Constructor, next, DEFAULT, IS_SET, FORCE
 /* 268 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(76);
+module.exports = __webpack_require__(77);
 
 
 /***/ }),
 /* 269 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var has = __webpack_require__(77);
+var has = __webpack_require__(78);
 var toIObject = __webpack_require__(97);
 var arrayIndexOf = __webpack_require__(483)(false);
 var IE_PROTO = __webpack_require__(175)('IE_PROTO');
@@ -12617,7 +12617,7 @@ module.exports = document && document.documentElement;
 
 __webpack_require__(486);
 var global = __webpack_require__(28);
-var hide = __webpack_require__(76);
+var hide = __webpack_require__(77);
 var Iterators = __webpack_require__(109);
 var TO_STRING_TAG = __webpack_require__(30)('toStringTag');
 
@@ -12657,7 +12657,7 @@ var pIE = __webpack_require__(137);
 var createDesc = __webpack_require__(133);
 var toIObject = __webpack_require__(97);
 var toPrimitive = __webpack_require__(171);
-var has = __webpack_require__(77);
+var has = __webpack_require__(78);
 var IE8_DOM_DEFINE = __webpack_require__(264);
 var gOPD = Object.getOwnPropertyDescriptor;
 
@@ -13469,7 +13469,7 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactBootstrap = __webpack_require__(44);
 
-var _reactRouterDom = __webpack_require__(67);
+var _reactRouterDom = __webpack_require__(68);
 
 var _LocationsFinder = __webpack_require__(617);
 
@@ -13483,7 +13483,7 @@ var _AuthFormContainer = __webpack_require__(227);
 
 var _AuthFormContainer2 = _interopRequireDefault(_AuthFormContainer);
 
-var _configureStore = __webpack_require__(83);
+var _configureStore = __webpack_require__(72);
 
 var _PrivateOfficeContainer = __webpack_require__(396);
 
@@ -14318,7 +14318,7 @@ function _assertThisInitialized(self) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_classnames___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_classnames__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_react__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_react__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__SafeAnchor__ = __webpack_require__(68);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__SafeAnchor__ = __webpack_require__(69);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__ThemeProvider__ = __webpack_require__(6);
 
 
@@ -15176,8 +15176,8 @@ module.exports = exports.default;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_classnames___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_classnames__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_react__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_react__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__restart_hooks_useEventCallback__ = __webpack_require__(78);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__SafeAnchor__ = __webpack_require__(68);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__restart_hooks_useEventCallback__ = __webpack_require__(79);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__SafeAnchor__ = __webpack_require__(69);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__SelectableContext__ = __webpack_require__(52);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__ThemeProvider__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__NavContext__ = __webpack_require__(199);
@@ -15912,7 +15912,7 @@ ListGroupItem.defaultProps = {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_classnames___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_classnames__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_react__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_react__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__restart_hooks_useEventCallback__ = __webpack_require__(78);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__restart_hooks_useEventCallback__ = __webpack_require__(79);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__NavContext__ = __webpack_require__(199);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__SelectableContext__ = __webpack_require__(52);
 
@@ -16688,7 +16688,7 @@ Overlay.defaultProps = defaultProps;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_classnames___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_classnames__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_react__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_react__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__SafeAnchor__ = __webpack_require__(68);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__SafeAnchor__ = __webpack_require__(69);
 
 
 
@@ -16879,7 +16879,7 @@ function (_React$Component) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_classnames___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_classnames__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_react__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_react__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__restart_hooks_useEventCallback__ = __webpack_require__(78);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__restart_hooks_useEventCallback__ = __webpack_require__(79);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__ThemeProvider__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__CloseButton__ = __webpack_require__(140);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__ToastContext__ = __webpack_require__(331);
@@ -17099,7 +17099,7 @@ module.exports = function (exec) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var anObject = __webpack_require__(60);
-var isObject = __webpack_require__(66);
+var isObject = __webpack_require__(67);
 var newPromiseCapability = __webpack_require__(207);
 
 module.exports = function (C, x) {
@@ -17637,7 +17637,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_date_fns_format__ = __webpack_require__(208);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_date_fns_addMinutes__ = __webpack_require__(210);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_date_fns_addHours__ = __webpack_require__(211);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_date_fns_addDays__ = __webpack_require__(81);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_date_fns_addDays__ = __webpack_require__(82);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_date_fns_addWeeks__ = __webpack_require__(121);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10_date_fns_addMonths__ = __webpack_require__(122);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11_date_fns_addYears__ = __webpack_require__(213);
@@ -17662,7 +17662,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_30_date_fns_setYear__ = __webpack_require__(368);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_31_date_fns_min__ = __webpack_require__(369);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_32_date_fns_max__ = __webpack_require__(370);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_33_date_fns_differenceInCalendarDays__ = __webpack_require__(82);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_33_date_fns_differenceInCalendarDays__ = __webpack_require__(83);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_34_date_fns_differenceInCalendarMonths__ = __webpack_require__(219);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_35_date_fns_differenceInCalendarWeeks__ = __webpack_require__(220);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_36_date_fns_setDayOfYear__ = __webpack_require__(371);
@@ -23233,7 +23233,7 @@ var transform;
 var options = {"hmr":true}
 options.transform = transform
 // add the styles to the DOM
-var update = __webpack_require__(70)(content, options);
+var update = __webpack_require__(71)(content, options);
 if(content.locals) module.exports = content.locals;
 // Hot Module Replacement
 if(false) {
@@ -23282,7 +23282,7 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactRedux = __webpack_require__(45);
 
-var _IndexActions = __webpack_require__(71);
+var _IndexActions = __webpack_require__(63);
 
 var commonActions = _interopRequireWildcard(_IndexActions);
 
@@ -24196,7 +24196,7 @@ exports.createCountry = createCountry;
 exports.createCity = createCity;
 exports.changeCountry = changeCountry;
 
-var _axios = __webpack_require__(80);
+var _axios = __webpack_require__(81);
 
 var _axios2 = _interopRequireDefault(_axios);
 
@@ -24296,7 +24296,7 @@ Object.defineProperty(exports, "__esModule", {
 exports.FILTER_CITIES = undefined;
 exports.filterCities = filterCities;
 
-var _configureStore = __webpack_require__(83);
+var _configureStore = __webpack_require__(72);
 
 var FILTER_CITIES = exports.FILTER_CITIES = 'FILTER_CITIES';
 
@@ -24337,7 +24337,7 @@ var _asyncToGenerator3 = _interopRequireDefault(_asyncToGenerator2);
 
 exports.deleteSeveralObjects = deleteSeveralObjects;
 
-var _axios = __webpack_require__(80);
+var _axios = __webpack_require__(81);
 
 var _axios2 = _interopRequireDefault(_axios);
 
@@ -24403,7 +24403,7 @@ var _asyncToGenerator3 = _interopRequireDefault(_asyncToGenerator2);
 
 exports.loadCars = loadCars;
 
-var _axios = __webpack_require__(80);
+var _axios = __webpack_require__(81);
 
 var _axios2 = _interopRequireDefault(_axios);
 
@@ -24491,7 +24491,7 @@ var _asyncToGenerator3 = _interopRequireDefault(_asyncToGenerator2);
 
 exports.submitPurchase = submitPurchase;
 
-var _axios = __webpack_require__(80);
+var _axios = __webpack_require__(81);
 
 var _axios2 = _interopRequireDefault(_axios);
 
@@ -24613,11 +24613,11 @@ var _asyncToGenerator3 = _interopRequireDefault(_asyncToGenerator2);
 exports.deleteOrder = deleteOrder;
 exports.loadOrders = loadOrders;
 
-var _axios = __webpack_require__(80);
+var _axios = __webpack_require__(81);
 
 var _axios2 = _interopRequireDefault(_axios);
 
-var _configureStore = __webpack_require__(83);
+var _configureStore = __webpack_require__(72);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -24759,7 +24759,7 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactRedux = __webpack_require__(45);
 
-var _IndexActions = __webpack_require__(71);
+var _IndexActions = __webpack_require__(63);
 
 var commonActions = _interopRequireWildcard(_IndexActions);
 
@@ -25036,7 +25036,7 @@ function addISOWeekYears(dirtyDate, dirtyAmount) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__lib_toInteger_index_js__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__toDate_index_js__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__startOfISOWeekYear_index_js__ = __webpack_require__(126);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__differenceInCalendarDays_index_js__ = __webpack_require__(82);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__differenceInCalendarDays_index_js__ = __webpack_require__(83);
 
 
 
@@ -25313,8 +25313,8 @@ function differenceInCalendarYears(dirtyDateLeft, dirtyDateRight) {
 "use strict";
 /* harmony export (immutable) */ __webpack_exports__["a"] = differenceInDays;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__toDate_index_js__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__differenceInCalendarDays_index_js__ = __webpack_require__(82);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__compareAsc_index_js__ = __webpack_require__(72);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__differenceInCalendarDays_index_js__ = __webpack_require__(83);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__compareAsc_index_js__ = __webpack_require__(73);
 
 
 
@@ -25506,7 +25506,7 @@ function endOfYear(dirtyDate) {
 
 "use strict";
 /* harmony export (immutable) */ __webpack_exports__["a"] = formatDistance;
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__compareAsc_index_js__ = __webpack_require__(72);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__compareAsc_index_js__ = __webpack_require__(73);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__differenceInMonths_index_js__ = __webpack_require__(229);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__differenceInSeconds_index_js__ = __webpack_require__(230);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__locale_en_US_index_js__ = __webpack_require__(118);
@@ -27005,7 +27005,7 @@ var $iterDefine = __webpack_require__(246);
 var step = __webpack_require__(446);
 var setSpecies = __webpack_require__(91);
 var DESCRIPTORS = __webpack_require__(21);
-var fastKey = __webpack_require__(74).fastKey;
+var fastKey = __webpack_require__(75).fastKey;
 var validate = __webpack_require__(95);
 var SIZE = DESCRIPTORS ? '_s' : 'size';
 
@@ -27170,7 +27170,7 @@ module.exports = __webpack_require__(163)(SET, function (get) {
 var global = __webpack_require__(11);
 var each = __webpack_require__(58)(0);
 var redefine = __webpack_require__(33);
-var meta = __webpack_require__(74);
+var meta = __webpack_require__(75);
 var assign = __webpack_require__(433);
 var weak = __webpack_require__(455);
 var isObject = __webpack_require__(14);
@@ -27235,7 +27235,7 @@ if (NATIVE_WEAK_MAP && IS_IE11) {
 "use strict";
 
 var redefineAll = __webpack_require__(94);
-var getWeak = __webpack_require__(74).getWeak;
+var getWeak = __webpack_require__(75).getWeak;
 var anObject = __webpack_require__(8);
 var isObject = __webpack_require__(14);
 var anInstance = __webpack_require__(92);
@@ -27526,7 +27526,7 @@ var _app2 = _interopRequireDefault(_app);
 
 var _reactRedux = __webpack_require__(45);
 
-var _configureStore = __webpack_require__(83);
+var _configureStore = __webpack_require__(72);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -52269,7 +52269,7 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactRouterDom = __webpack_require__(67);
+var _reactRouterDom = __webpack_require__(68);
 
 var _header = __webpack_require__(282);
 
@@ -52293,7 +52293,7 @@ var _AuthFormContainer = __webpack_require__(227);
 
 var _AuthFormContainer2 = _interopRequireDefault(_AuthFormContainer);
 
-var _IndexActions = __webpack_require__(71);
+var _IndexActions = __webpack_require__(63);
 
 var commonActions = _interopRequireWildcard(_IndexActions);
 
@@ -52392,7 +52392,7 @@ module.exports = function defineProperty(it, key, desc) {
 
 var $export = __webpack_require__(59);
 // 19.1.2.4 / 15.2.3.6 Object.defineProperty(O, P, Attributes)
-$export($export.S + $export.F * !__webpack_require__(61), 'Object', { defineProperty: __webpack_require__(65).f });
+$export($export.S + $export.F * !__webpack_require__(61), 'Object', { defineProperty: __webpack_require__(66).f });
 
 
 /***/ }),
@@ -52445,7 +52445,7 @@ var setToStringTag = __webpack_require__(136);
 var IteratorPrototype = {};
 
 // 25.1.2.1.1 %IteratorPrototype%[@@iterator]()
-__webpack_require__(76)(IteratorPrototype, __webpack_require__(30)('iterator'), function () { return this; });
+__webpack_require__(77)(IteratorPrototype, __webpack_require__(30)('iterator'), function () { return this; });
 
 module.exports = function (Constructor, NAME, next) {
   Constructor.prototype = create(IteratorPrototype, { next: descriptor(1, next) });
@@ -52457,7 +52457,7 @@ module.exports = function (Constructor, NAME, next) {
 /* 482 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var dP = __webpack_require__(65);
+var dP = __webpack_require__(66);
 var anObject = __webpack_require__(60);
 var getKeys = __webpack_require__(134);
 
@@ -52519,7 +52519,7 @@ module.exports = function (index, length) {
 /***/ (function(module, exports, __webpack_require__) {
 
 // 19.1.2.9 / 15.2.3.2 Object.getPrototypeOf(O)
-var has = __webpack_require__(77);
+var has = __webpack_require__(78);
 var toObject = __webpack_require__(178);
 var IE_PROTO = __webpack_require__(175)('IE_PROTO');
 var ObjectProto = Object.prototype;
@@ -52615,7 +52615,7 @@ module.exports = __webpack_require__(29).Symbol;
 
 // ECMAScript 6 symbols shim
 var global = __webpack_require__(28);
-var has = __webpack_require__(77);
+var has = __webpack_require__(78);
 var DESCRIPTORS = __webpack_require__(61);
 var $export = __webpack_require__(59);
 var redefine = __webpack_require__(268);
@@ -52630,7 +52630,7 @@ var wksDefine = __webpack_require__(180);
 var enumKeys = __webpack_require__(493);
 var isArray = __webpack_require__(494);
 var anObject = __webpack_require__(60);
-var isObject = __webpack_require__(66);
+var isObject = __webpack_require__(67);
 var toObject = __webpack_require__(178);
 var toIObject = __webpack_require__(97);
 var toPrimitive = __webpack_require__(171);
@@ -52639,7 +52639,7 @@ var _create = __webpack_require__(174);
 var gOPNExt = __webpack_require__(495);
 var $GOPD = __webpack_require__(275);
 var $GOPS = __webpack_require__(181);
-var $DP = __webpack_require__(65);
+var $DP = __webpack_require__(66);
 var $keys = __webpack_require__(134);
 var gOPD = $GOPD.f;
 var dP = $DP.f;
@@ -52851,7 +52851,7 @@ $JSON && $export($export.S + $export.F * (!USE_NATIVE || $fails(function () {
 });
 
 // 19.4.3.4 Symbol.prototype[@@toPrimitive](hint)
-$Symbol[PROTOTYPE][TO_PRIMITIVE] || __webpack_require__(76)($Symbol[PROTOTYPE], TO_PRIMITIVE, $Symbol[PROTOTYPE].valueOf);
+$Symbol[PROTOTYPE][TO_PRIMITIVE] || __webpack_require__(77)($Symbol[PROTOTYPE], TO_PRIMITIVE, $Symbol[PROTOTYPE].valueOf);
 // 19.4.3.5 Symbol.prototype[@@toStringTag]
 setToStringTag($Symbol, 'Symbol');
 // 20.2.1.9 Math[@@toStringTag]
@@ -52865,9 +52865,9 @@ setToStringTag(global.JSON, 'JSON', true);
 /***/ (function(module, exports, __webpack_require__) {
 
 var META = __webpack_require__(135)('meta');
-var isObject = __webpack_require__(66);
-var has = __webpack_require__(77);
-var setDesc = __webpack_require__(65).f;
+var isObject = __webpack_require__(67);
+var has = __webpack_require__(78);
+var setDesc = __webpack_require__(66).f;
 var id = 0;
 var isExtensible = Object.isExtensible || function () {
   return true;
@@ -53019,7 +53019,7 @@ $export($export.S, 'Object', { setPrototypeOf: __webpack_require__(501).set });
 
 // Works with __proto__ only. Old v8 can't work with null proto objects.
 /* eslint-disable no-proto */
-var isObject = __webpack_require__(66);
+var isObject = __webpack_require__(67);
 var anObject = __webpack_require__(60);
 var check = function (O, proto) {
   anObject(O);
@@ -55561,13 +55561,13 @@ var classNamesShape = process.env.NODE_ENV !== 'production' ? __WEBPACK_IMPORTED
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_react__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_uncontrollable_hook__ = __webpack_require__(138);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_uncontrollable_hook___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_uncontrollable_hook__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__restart_hooks_useEventCallback__ = __webpack_require__(78);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__restart_hooks_useEventCallback__ = __webpack_require__(79);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__utils_createWithBsPrefix__ = __webpack_require__(25);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__utils_divWithClassName__ = __webpack_require__(191);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__ThemeProvider__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__Fade__ = __webpack_require__(99);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__CloseButton__ = __webpack_require__(140);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__SafeAnchor__ = __webpack_require__(68);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__SafeAnchor__ = __webpack_require__(69);
 
 
 
@@ -55902,10 +55902,10 @@ Card.ImgOverlay = Object(__WEBPACK_IMPORTED_MODULE_5__utils_createWithBsPrefix__
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_dom_helpers_transition___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_dom_helpers_transition__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_react__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_react__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_uncontrollable__ = __webpack_require__(79);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_uncontrollable__ = __webpack_require__(80);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__CarouselCaption__ = __webpack_require__(557);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__CarouselItem__ = __webpack_require__(293);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__SafeAnchor__ = __webpack_require__(68);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__SafeAnchor__ = __webpack_require__(69);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__utils_ElementChildren__ = __webpack_require__(142);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__utils_triggerBrowserReflow__ = __webpack_require__(189);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__ThemeProvider__ = __webpack_require__(6);
@@ -56417,7 +56417,7 @@ var _reactDom = _interopRequireDefault(__webpack_require__(26));
 
 var _propTypes = _interopRequireDefault(__webpack_require__(13));
 
-var _uncontrollable = _interopRequireDefault(__webpack_require__(79));
+var _uncontrollable = _interopRequireDefault(__webpack_require__(80));
 
 var Popper = _interopRequireWildcard(__webpack_require__(114));
 
@@ -60816,7 +60816,7 @@ Jumbotron.defaultProps = defaultProps;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_classnames___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_classnames__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_react__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_react__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_uncontrollable__ = __webpack_require__(79);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_uncontrollable__ = __webpack_require__(80);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__ThemeProvider__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__AbstractNav__ = __webpack_require__(311);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__ListGroupItem__ = __webpack_require__(312);
@@ -62060,7 +62060,7 @@ function showSiblings(container, _ref3) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_classnames___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_classnames__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_react__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_react__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__restart_hooks_useEventCallback__ = __webpack_require__(78);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__restart_hooks_useEventCallback__ = __webpack_require__(79);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__ThemeProvider__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__CloseButton__ = __webpack_require__(140);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__ModalContext__ = __webpack_require__(323);
@@ -62263,7 +62263,7 @@ module.exports = exports['default'];
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_classnames___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_classnames__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_react__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_react__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_uncontrollable__ = __webpack_require__(79);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_uncontrollable__ = __webpack_require__(80);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__utils_createWithBsPrefix__ = __webpack_require__(25);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__NavbarBrand__ = __webpack_require__(326);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__NavbarCollapse__ = __webpack_require__(599);
@@ -62443,7 +62443,7 @@ NavbarCollapse.displayName = 'NavbarCollapse';
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_classnames___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_classnames__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_react__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_react__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__restart_hooks_useEventCallback__ = __webpack_require__(78);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__restart_hooks_useEventCallback__ = __webpack_require__(79);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__ThemeProvider__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__NavbarContext__ = __webpack_require__(116);
 
@@ -63810,7 +63810,7 @@ function (_React$Component) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_react__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_prop_types_extra_lib_isRequiredForA11y__ = __webpack_require__(145);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_prop_types_extra_lib_isRequiredForA11y___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_prop_types_extra_lib_isRequiredForA11y__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_uncontrollable__ = __webpack_require__(79);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_uncontrollable__ = __webpack_require__(80);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__Nav__ = __webpack_require__(325);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__NavLink__ = __webpack_require__(203);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__NavItem__ = __webpack_require__(147);
@@ -63930,7 +63930,7 @@ Tabs.defaultProps = defaultProps;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_react__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_invariant__ = __webpack_require__(36);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_invariant___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_invariant__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_uncontrollable__ = __webpack_require__(79);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_uncontrollable__ = __webpack_require__(80);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__utils_createChainedFunction__ = __webpack_require__(190);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__utils_ElementChildren__ = __webpack_require__(142);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__ButtonGroup__ = __webpack_require__(192);
@@ -64207,7 +64207,7 @@ var _react2 = _interopRequireDefault(_react);
 
 __webpack_require__(114);
 
-var _axios = __webpack_require__(80);
+var _axios = __webpack_require__(81);
 
 var _axios2 = _interopRequireDefault(_axios);
 
@@ -64223,7 +64223,7 @@ __webpack_require__(673);
 
 var _lodash = __webpack_require__(675);
 
-var _reactRouterDom = __webpack_require__(67);
+var _reactRouterDom = __webpack_require__(68);
 
 var _queryString = __webpack_require__(224);
 
@@ -65220,7 +65220,7 @@ var global = __webpack_require__(28);
 var ctx = __webpack_require__(106);
 var classof = __webpack_require__(333);
 var $export = __webpack_require__(59);
-var isObject = __webpack_require__(66);
+var isObject = __webpack_require__(67);
 var aFunction = __webpack_require__(132);
 var anInstance = __webpack_require__(623);
 var forOf = __webpack_require__(624);
@@ -65701,7 +65701,7 @@ module.exports = navigator && navigator.userAgent || '';
 /* 631 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var hide = __webpack_require__(76);
+var hide = __webpack_require__(77);
 module.exports = function (target, src, safe) {
   for (var key in src) {
     if (safe && target[key]) target[key] = src[key];
@@ -65718,7 +65718,7 @@ module.exports = function (target, src, safe) {
 
 var global = __webpack_require__(28);
 var core = __webpack_require__(29);
-var dP = __webpack_require__(65);
+var dP = __webpack_require__(66);
 var DESCRIPTORS = __webpack_require__(61);
 var SPECIES = __webpack_require__(30)('species');
 
@@ -70071,7 +70071,7 @@ function onClickOutsideHOC(WrappedComponent, config) {
 /* 671 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(69)(false);
+exports = module.exports = __webpack_require__(70)(false);
 // Module
 exports.push([module.i, ".react-datepicker-popper[data-placement^=\"bottom\"] .react-datepicker__triangle, .react-datepicker-popper[data-placement^=\"top\"] .react-datepicker__triangle, .react-datepicker__year-read-view--down-arrow,\n.react-datepicker__month-read-view--down-arrow,\n.react-datepicker__month-year-read-view--down-arrow {\n  margin-left: -8px;\n  position: absolute;\n}\n\n.react-datepicker-popper[data-placement^=\"bottom\"] .react-datepicker__triangle, .react-datepicker-popper[data-placement^=\"top\"] .react-datepicker__triangle, .react-datepicker__year-read-view--down-arrow,\n.react-datepicker__month-read-view--down-arrow,\n.react-datepicker__month-year-read-view--down-arrow, .react-datepicker-popper[data-placement^=\"bottom\"] .react-datepicker__triangle::before, .react-datepicker-popper[data-placement^=\"top\"] .react-datepicker__triangle::before, .react-datepicker__year-read-view--down-arrow::before,\n.react-datepicker__month-read-view--down-arrow::before,\n.react-datepicker__month-year-read-view--down-arrow::before {\n  box-sizing: content-box;\n  position: absolute;\n  border: 8px solid transparent;\n  height: 0;\n  width: 1px;\n}\n\n.react-datepicker-popper[data-placement^=\"bottom\"] .react-datepicker__triangle::before, .react-datepicker-popper[data-placement^=\"top\"] .react-datepicker__triangle::before, .react-datepicker__year-read-view--down-arrow::before,\n.react-datepicker__month-read-view--down-arrow::before,\n.react-datepicker__month-year-read-view--down-arrow::before {\n  content: \"\";\n  z-index: -1;\n  border-width: 8px;\n  left: -8px;\n  border-bottom-color: #aeaeae;\n}\n\n.react-datepicker-popper[data-placement^=\"bottom\"] .react-datepicker__triangle {\n  top: 0;\n  margin-top: -8px;\n}\n\n.react-datepicker-popper[data-placement^=\"bottom\"] .react-datepicker__triangle, .react-datepicker-popper[data-placement^=\"bottom\"] .react-datepicker__triangle::before {\n  border-top: none;\n  border-bottom-color: #f0f0f0;\n}\n\n.react-datepicker-popper[data-placement^=\"bottom\"] .react-datepicker__triangle::before {\n  top: -1px;\n  border-bottom-color: #aeaeae;\n}\n\n.react-datepicker-popper[data-placement^=\"top\"] .react-datepicker__triangle, .react-datepicker__year-read-view--down-arrow,\n.react-datepicker__month-read-view--down-arrow,\n.react-datepicker__month-year-read-view--down-arrow {\n  bottom: 0;\n  margin-bottom: -8px;\n}\n\n.react-datepicker-popper[data-placement^=\"top\"] .react-datepicker__triangle, .react-datepicker__year-read-view--down-arrow,\n.react-datepicker__month-read-view--down-arrow,\n.react-datepicker__month-year-read-view--down-arrow, .react-datepicker-popper[data-placement^=\"top\"] .react-datepicker__triangle::before, .react-datepicker__year-read-view--down-arrow::before,\n.react-datepicker__month-read-view--down-arrow::before,\n.react-datepicker__month-year-read-view--down-arrow::before {\n  border-bottom: none;\n  border-top-color: #fff;\n}\n\n.react-datepicker-popper[data-placement^=\"top\"] .react-datepicker__triangle::before, .react-datepicker__year-read-view--down-arrow::before,\n.react-datepicker__month-read-view--down-arrow::before,\n.react-datepicker__month-year-read-view--down-arrow::before {\n  bottom: -1px;\n  border-top-color: #aeaeae;\n}\n\n.react-datepicker-wrapper {\n  display: inline-block;\n}\n\n.react-datepicker {\n  font-family: \"Helvetica Neue\", Helvetica, Arial, sans-serif;\n  font-size: 0.8rem;\n  background-color: #fff;\n  color: #000;\n  border: 1px solid #aeaeae;\n  border-radius: 0.3rem;\n  display: inline-block;\n  position: relative;\n}\n\n.react-datepicker--time-only .react-datepicker__triangle {\n  left: 35px;\n}\n\n.react-datepicker--time-only .react-datepicker__time-container {\n  border-left: 0;\n}\n\n.react-datepicker--time-only .react-datepicker__time {\n  border-radius: 0.3rem;\n}\n\n.react-datepicker--time-only .react-datepicker__time-box {\n  border-radius: 0.3rem;\n}\n\n.react-datepicker__triangle {\n  position: absolute;\n  left: 50px;\n}\n\n.react-datepicker-popper {\n  z-index: 1;\n}\n\n.react-datepicker-popper[data-placement^=\"bottom\"] {\n  margin-top: 10px;\n}\n\n.react-datepicker-popper[data-placement^=\"top\"] {\n  margin-bottom: 10px;\n}\n\n.react-datepicker-popper[data-placement^=\"right\"] {\n  margin-left: 8px;\n}\n\n.react-datepicker-popper[data-placement^=\"right\"] .react-datepicker__triangle {\n  left: auto;\n  right: 42px;\n}\n\n.react-datepicker-popper[data-placement^=\"left\"] {\n  margin-right: 8px;\n}\n\n.react-datepicker-popper[data-placement^=\"left\"] .react-datepicker__triangle {\n  left: 42px;\n  right: auto;\n}\n\n.react-datepicker__header {\n  text-align: center;\n  background-color: #f0f0f0;\n  border-bottom: 1px solid #aeaeae;\n  border-top-left-radius: 0.3rem;\n  border-top-right-radius: 0.3rem;\n  padding-top: 8px;\n  position: relative;\n}\n\n.react-datepicker__header--time {\n  padding-bottom: 8px;\n  padding-left: 5px;\n  padding-right: 5px;\n}\n\n.react-datepicker__year-dropdown-container--select,\n.react-datepicker__month-dropdown-container--select,\n.react-datepicker__month-year-dropdown-container--select,\n.react-datepicker__year-dropdown-container--scroll,\n.react-datepicker__month-dropdown-container--scroll,\n.react-datepicker__month-year-dropdown-container--scroll {\n  display: inline-block;\n  margin: 0 2px;\n}\n\n.react-datepicker__current-month,\n.react-datepicker-time__header,\n.react-datepicker-year-header {\n  margin-top: 0;\n  color: #000;\n  font-weight: bold;\n  font-size: 0.944rem;\n}\n\n.react-datepicker-time__header {\n  text-overflow: ellipsis;\n  white-space: nowrap;\n  overflow: hidden;\n}\n\n.react-datepicker__navigation {\n  background: none;\n  line-height: 1.7rem;\n  text-align: center;\n  cursor: pointer;\n  position: absolute;\n  top: 10px;\n  width: 0;\n  padding: 0;\n  border: 0.45rem solid transparent;\n  z-index: 1;\n  height: 10px;\n  width: 10px;\n  text-indent: -999em;\n  overflow: hidden;\n}\n\n.react-datepicker__navigation--previous {\n  left: 10px;\n  border-right-color: #ccc;\n}\n\n.react-datepicker__navigation--previous:hover {\n  border-right-color: #b3b3b3;\n}\n\n.react-datepicker__navigation--previous--disabled, .react-datepicker__navigation--previous--disabled:hover {\n  border-right-color: #e6e6e6;\n  cursor: default;\n}\n\n.react-datepicker__navigation--next {\n  right: 10px;\n  border-left-color: #ccc;\n}\n\n.react-datepicker__navigation--next--with-time:not(.react-datepicker__navigation--next--with-today-button) {\n  right: 80px;\n}\n\n.react-datepicker__navigation--next:hover {\n  border-left-color: #b3b3b3;\n}\n\n.react-datepicker__navigation--next--disabled, .react-datepicker__navigation--next--disabled:hover {\n  border-left-color: #e6e6e6;\n  cursor: default;\n}\n\n.react-datepicker__navigation--years {\n  position: relative;\n  top: 0;\n  display: block;\n  margin-left: auto;\n  margin-right: auto;\n}\n\n.react-datepicker__navigation--years-previous {\n  top: 4px;\n  border-top-color: #ccc;\n}\n\n.react-datepicker__navigation--years-previous:hover {\n  border-top-color: #b3b3b3;\n}\n\n.react-datepicker__navigation--years-upcoming {\n  top: -4px;\n  border-bottom-color: #ccc;\n}\n\n.react-datepicker__navigation--years-upcoming:hover {\n  border-bottom-color: #b3b3b3;\n}\n\n.react-datepicker__month-container {\n  float: left;\n}\n\n.react-datepicker__month {\n  margin: 0.4rem;\n  text-align: center;\n}\n\n.react-datepicker__month .react-datepicker__month-text {\n  display: inline-block;\n  width: 4rem;\n  margin: 2px;\n}\n\n.react-datepicker__input-time-container {\n  clear: both;\n  width: 100%;\n  float: left;\n  margin: 5px 0 10px 15px;\n  text-align: left;\n}\n\n.react-datepicker__input-time-container .react-datepicker-time__caption {\n  display: inline-block;\n}\n\n.react-datepicker__input-time-container .react-datepicker-time__input-container {\n  display: inline-block;\n}\n\n.react-datepicker__input-time-container .react-datepicker-time__input-container .react-datepicker-time__input {\n  display: inline-block;\n  margin-left: 10px;\n}\n\n.react-datepicker__input-time-container .react-datepicker-time__input-container .react-datepicker-time__input input {\n  width: 85px;\n}\n\n.react-datepicker__input-time-container .react-datepicker-time__input-container .react-datepicker-time__input input[type=\"time\"]::-webkit-inner-spin-button,\n.react-datepicker__input-time-container .react-datepicker-time__input-container .react-datepicker-time__input input[type=\"time\"]::-webkit-outer-spin-button {\n  -webkit-appearance: none;\n  margin: 0;\n}\n\n.react-datepicker__input-time-container .react-datepicker-time__input-container .react-datepicker-time__input input[type=\"time\"] {\n  -moz-appearance: textfield;\n}\n\n.react-datepicker__input-time-container .react-datepicker-time__input-container .react-datepicker-time__delimiter {\n  margin-left: 5px;\n  display: inline-block;\n}\n\n.react-datepicker__time-container {\n  float: right;\n  border-left: 1px solid #aeaeae;\n  width: 70px;\n}\n\n.react-datepicker__time-container--with-today-button {\n  display: inline;\n  border: 1px solid #aeaeae;\n  border-radius: 0.3rem;\n  position: absolute;\n  right: -72px;\n  top: 0;\n}\n\n.react-datepicker__time-container .react-datepicker__time {\n  position: relative;\n  background: white;\n}\n\n.react-datepicker__time-container .react-datepicker__time .react-datepicker__time-box {\n  width: 70px;\n  overflow-x: hidden;\n  margin: 0 auto;\n  text-align: center;\n}\n\n.react-datepicker__time-container .react-datepicker__time .react-datepicker__time-box ul.react-datepicker__time-list {\n  list-style: none;\n  margin: 0;\n  height: calc(195px + (1.7rem / 2));\n  overflow-y: scroll;\n  padding-right: 0px;\n  padding-left: 0px;\n  width: 100%;\n  box-sizing: content-box;\n}\n\n.react-datepicker__time-container .react-datepicker__time .react-datepicker__time-box ul.react-datepicker__time-list li.react-datepicker__time-list-item {\n  height: 30px;\n  padding: 5px 10px;\n}\n\n.react-datepicker__time-container .react-datepicker__time .react-datepicker__time-box ul.react-datepicker__time-list li.react-datepicker__time-list-item:hover {\n  cursor: pointer;\n  background-color: #f0f0f0;\n}\n\n.react-datepicker__time-container .react-datepicker__time .react-datepicker__time-box ul.react-datepicker__time-list li.react-datepicker__time-list-item--selected {\n  background-color: #216ba5;\n  color: white;\n  font-weight: bold;\n}\n\n.react-datepicker__time-container .react-datepicker__time .react-datepicker__time-box ul.react-datepicker__time-list li.react-datepicker__time-list-item--selected:hover {\n  background-color: #216ba5;\n}\n\n.react-datepicker__time-container .react-datepicker__time .react-datepicker__time-box ul.react-datepicker__time-list li.react-datepicker__time-list-item--disabled {\n  color: #ccc;\n}\n\n.react-datepicker__time-container .react-datepicker__time .react-datepicker__time-box ul.react-datepicker__time-list li.react-datepicker__time-list-item--disabled:hover {\n  cursor: default;\n  background-color: transparent;\n}\n\n.react-datepicker__week-number {\n  color: #ccc;\n  display: inline-block;\n  width: 1.7rem;\n  line-height: 1.7rem;\n  text-align: center;\n  margin: 0.166rem;\n}\n\n.react-datepicker__week-number.react-datepicker__week-number--clickable {\n  cursor: pointer;\n}\n\n.react-datepicker__week-number.react-datepicker__week-number--clickable:hover {\n  border-radius: 0.3rem;\n  background-color: #f0f0f0;\n}\n\n.react-datepicker__day-names,\n.react-datepicker__week {\n  white-space: nowrap;\n}\n\n.react-datepicker__day-name,\n.react-datepicker__day,\n.react-datepicker__time-name {\n  color: #000;\n  display: inline-block;\n  width: 1.7rem;\n  line-height: 1.7rem;\n  text-align: center;\n  margin: 0.166rem;\n}\n\n.react-datepicker__month--selected, .react-datepicker__month--in-selecting-range, .react-datepicker__month--in-range {\n  border-radius: 0.3rem;\n  background-color: #216ba5;\n  color: #fff;\n}\n\n.react-datepicker__month--selected:hover, .react-datepicker__month--in-selecting-range:hover, .react-datepicker__month--in-range:hover {\n  background-color: #1d5d90;\n}\n\n.react-datepicker__month--disabled {\n  color: #ccc;\n  pointer-events: none;\n}\n\n.react-datepicker__month--disabled:hover {\n  cursor: default;\n  background-color: transparent;\n}\n\n.react-datepicker__day,\n.react-datepicker__month-text {\n  cursor: pointer;\n}\n\n.react-datepicker__day:hover,\n.react-datepicker__month-text:hover {\n  border-radius: 0.3rem;\n  background-color: #f0f0f0;\n}\n\n.react-datepicker__day--today,\n.react-datepicker__month-text--today {\n  font-weight: bold;\n}\n\n.react-datepicker__day--highlighted,\n.react-datepicker__month-text--highlighted {\n  border-radius: 0.3rem;\n  background-color: #3dcc4a;\n  color: #fff;\n}\n\n.react-datepicker__day--highlighted:hover,\n.react-datepicker__month-text--highlighted:hover {\n  background-color: #32be3f;\n}\n\n.react-datepicker__day--highlighted-custom-1,\n.react-datepicker__month-text--highlighted-custom-1 {\n  color: magenta;\n}\n\n.react-datepicker__day--highlighted-custom-2,\n.react-datepicker__month-text--highlighted-custom-2 {\n  color: green;\n}\n\n.react-datepicker__day--selected, .react-datepicker__day--in-selecting-range, .react-datepicker__day--in-range,\n.react-datepicker__month-text--selected,\n.react-datepicker__month-text--in-selecting-range,\n.react-datepicker__month-text--in-range {\n  border-radius: 0.3rem;\n  background-color: #216ba5;\n  color: #fff;\n}\n\n.react-datepicker__day--selected:hover, .react-datepicker__day--in-selecting-range:hover, .react-datepicker__day--in-range:hover,\n.react-datepicker__month-text--selected:hover,\n.react-datepicker__month-text--in-selecting-range:hover,\n.react-datepicker__month-text--in-range:hover {\n  background-color: #1d5d90;\n}\n\n.react-datepicker__day--keyboard-selected,\n.react-datepicker__month-text--keyboard-selected {\n  border-radius: 0.3rem;\n  background-color: #2a87d0;\n  color: #fff;\n}\n\n.react-datepicker__day--keyboard-selected:hover,\n.react-datepicker__month-text--keyboard-selected:hover {\n  background-color: #1d5d90;\n}\n\n.react-datepicker__day--in-selecting-range ,\n.react-datepicker__month-text--in-selecting-range {\n  background-color: rgba(33, 107, 165, 0.5);\n}\n\n.react-datepicker__month--selecting-range .react-datepicker__day--in-range , .react-datepicker__month--selecting-range\n.react-datepicker__month-text--in-range {\n  background-color: #f0f0f0;\n  color: #000;\n}\n\n.react-datepicker__day--disabled,\n.react-datepicker__month-text--disabled {\n  cursor: default;\n  color: #ccc;\n}\n\n.react-datepicker__day--disabled:hover,\n.react-datepicker__month-text--disabled:hover {\n  background-color: transparent;\n}\n\n.react-datepicker__month-text.react-datepicker__month--selected:hover, .react-datepicker__month-text.react-datepicker__month--in-range:hover {\n  background-color: #216ba5;\n}\n\n.react-datepicker__month-text:hover {\n  background-color: #f0f0f0;\n}\n\n.react-datepicker__input-container {\n  position: relative;\n  display: inline-block;\n}\n\n.react-datepicker__year-read-view,\n.react-datepicker__month-read-view,\n.react-datepicker__month-year-read-view {\n  border: 1px solid transparent;\n  border-radius: 0.3rem;\n}\n\n.react-datepicker__year-read-view:hover,\n.react-datepicker__month-read-view:hover,\n.react-datepicker__month-year-read-view:hover {\n  cursor: pointer;\n}\n\n.react-datepicker__year-read-view:hover .react-datepicker__year-read-view--down-arrow,\n.react-datepicker__year-read-view:hover .react-datepicker__month-read-view--down-arrow,\n.react-datepicker__month-read-view:hover .react-datepicker__year-read-view--down-arrow,\n.react-datepicker__month-read-view:hover .react-datepicker__month-read-view--down-arrow,\n.react-datepicker__month-year-read-view:hover .react-datepicker__year-read-view--down-arrow,\n.react-datepicker__month-year-read-view:hover .react-datepicker__month-read-view--down-arrow {\n  border-top-color: #b3b3b3;\n}\n\n.react-datepicker__year-read-view--down-arrow,\n.react-datepicker__month-read-view--down-arrow,\n.react-datepicker__month-year-read-view--down-arrow {\n  border-top-color: #ccc;\n  float: right;\n  margin-left: 20px;\n  top: 8px;\n  position: relative;\n  border-width: 0.45rem;\n}\n\n.react-datepicker__year-dropdown,\n.react-datepicker__month-dropdown,\n.react-datepicker__month-year-dropdown {\n  background-color: #f0f0f0;\n  position: absolute;\n  width: 50%;\n  left: 25%;\n  top: 30px;\n  z-index: 1;\n  text-align: center;\n  border-radius: 0.3rem;\n  border: 1px solid #aeaeae;\n}\n\n.react-datepicker__year-dropdown:hover,\n.react-datepicker__month-dropdown:hover,\n.react-datepicker__month-year-dropdown:hover {\n  cursor: pointer;\n}\n\n.react-datepicker__year-dropdown--scrollable,\n.react-datepicker__month-dropdown--scrollable,\n.react-datepicker__month-year-dropdown--scrollable {\n  height: 150px;\n  overflow-y: scroll;\n}\n\n.react-datepicker__year-option,\n.react-datepicker__month-option,\n.react-datepicker__month-year-option {\n  line-height: 20px;\n  width: 100%;\n  display: block;\n  margin-left: auto;\n  margin-right: auto;\n}\n\n.react-datepicker__year-option:first-of-type,\n.react-datepicker__month-option:first-of-type,\n.react-datepicker__month-year-option:first-of-type {\n  border-top-left-radius: 0.3rem;\n  border-top-right-radius: 0.3rem;\n}\n\n.react-datepicker__year-option:last-of-type,\n.react-datepicker__month-option:last-of-type,\n.react-datepicker__month-year-option:last-of-type {\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n  border-bottom-left-radius: 0.3rem;\n  border-bottom-right-radius: 0.3rem;\n}\n\n.react-datepicker__year-option:hover,\n.react-datepicker__month-option:hover,\n.react-datepicker__month-year-option:hover {\n  background-color: #ccc;\n}\n\n.react-datepicker__year-option:hover .react-datepicker__navigation--years-upcoming,\n.react-datepicker__month-option:hover .react-datepicker__navigation--years-upcoming,\n.react-datepicker__month-year-option:hover .react-datepicker__navigation--years-upcoming {\n  border-bottom-color: #b3b3b3;\n}\n\n.react-datepicker__year-option:hover .react-datepicker__navigation--years-previous,\n.react-datepicker__month-option:hover .react-datepicker__navigation--years-previous,\n.react-datepicker__month-year-option:hover .react-datepicker__navigation--years-previous {\n  border-top-color: #b3b3b3;\n}\n\n.react-datepicker__year-option--selected,\n.react-datepicker__month-option--selected,\n.react-datepicker__month-year-option--selected {\n  position: absolute;\n  left: 15px;\n}\n\n.react-datepicker__close-icon {\n  cursor: pointer;\n  background-color: transparent;\n  border: 0;\n  outline: 0;\n  padding: 0;\n  position: absolute;\n  top: 50%;\n  right: 7px;\n  height: 16px;\n  width: 16px;\n  margin: -8px auto 0;\n}\n\n.react-datepicker__close-icon::after {\n  cursor: pointer;\n  background-color: #216ba5;\n  color: #fff;\n  border-radius: 50%;\n  position: absolute;\n  top: 0;\n  right: 0;\n  height: 16px;\n  width: 16px;\n  padding: 2px;\n  font-size: 12px;\n  line-height: 1;\n  text-align: center;\n  content: \"\\00d7\";\n}\n\n.react-datepicker__today-button {\n  background: #f0f0f0;\n  border-top: 1px solid #aeaeae;\n  cursor: pointer;\n  text-align: center;\n  font-weight: bold;\n  padding: 5px 0;\n  clear: left;\n}\n\n.react-datepicker__portal {\n  position: fixed;\n  width: 100vw;\n  height: 100vh;\n  background-color: rgba(0, 0, 0, 0.8);\n  left: 0;\n  top: 0;\n  justify-content: center;\n  align-items: center;\n  display: flex;\n  z-index: 2147483647;\n}\n\n.react-datepicker__portal .react-datepicker__day-name,\n.react-datepicker__portal .react-datepicker__day,\n.react-datepicker__portal .react-datepicker__time-name {\n  width: 3rem;\n  line-height: 3rem;\n}\n\n@media (max-width: 400px), (max-height: 550px) {\n  .react-datepicker__portal .react-datepicker__day-name,\n  .react-datepicker__portal .react-datepicker__day,\n  .react-datepicker__portal .react-datepicker__time-name {\n    width: 2rem;\n    line-height: 2rem;\n  }\n}\n\n.react-datepicker__portal .react-datepicker__current-month,\n.react-datepicker__portal .react-datepicker-time__header {\n  font-size: 1.44rem;\n}\n\n.react-datepicker__portal .react-datepicker__navigation {\n  border: 0.81rem solid transparent;\n}\n\n.react-datepicker__portal .react-datepicker__navigation--previous {\n  border-right-color: #ccc;\n}\n\n.react-datepicker__portal .react-datepicker__navigation--previous:hover {\n  border-right-color: #b3b3b3;\n}\n\n.react-datepicker__portal .react-datepicker__navigation--previous--disabled, .react-datepicker__portal .react-datepicker__navigation--previous--disabled:hover {\n  border-right-color: #e6e6e6;\n  cursor: default;\n}\n\n.react-datepicker__portal .react-datepicker__navigation--next {\n  border-left-color: #ccc;\n}\n\n.react-datepicker__portal .react-datepicker__navigation--next:hover {\n  border-left-color: #b3b3b3;\n}\n\n.react-datepicker__portal .react-datepicker__navigation--next--disabled, .react-datepicker__portal .react-datepicker__navigation--next--disabled:hover {\n  border-left-color: #e6e6e6;\n  cursor: default;\n}\n", ""]);
 
@@ -70190,7 +70190,7 @@ var transform;
 var options = { "hmr": true };
 options.transform = transform;
 // add the styles to the DOM
-var update = __webpack_require__(70)(content, options);
+var update = __webpack_require__(71)(content, options);
 if (content.locals) module.exports = content.locals;
 // Hot Module Replacement
 if (false) {
@@ -70212,7 +70212,7 @@ if (false) {
 /* 674 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(69)(false);
+exports = module.exports = __webpack_require__(70)(false);
 // Module
 exports.push([module.i, ".locationsFinder {\r\n    width: 50%;\r\n    max-width: none!important;\r\n}\r\n\r\n.typewriter {\r\n    overflow: hidden;\r\n    /* Ensures the content is not revealed until the animation */\r\n    border-right: .15em solid black;\r\n    /* The typwriter cursor */\r\n    white-space: nowrap;\r\n    /* Keeps the content on a single line */\r\n    margin: 0 auto;\r\n    /* Gives that scrolling effect as the typing happens */\r\n    letter-spacing: .15em;\r\n    /* Adjust as needed */\r\n    animation: typing 3.5s steps(40, end), blink-caret .75s step-end infinite;\r\n}\r\n\r\n\r\n/* The typing effect */\r\n\r\n@keyframes typing {\r\n    from {\r\n        width: 0%\r\n    }\r\n    to {\r\n        width: 100%\r\n    }\r\n}\r\n\r\n\r\n/* The typewriter cursor effect */\r\n\r\n@keyframes blink-caret {\r\n    from,\r\n    to {\r\n        border-color: transparent\r\n    }\r\n    50% {\r\n        border-color: black;\r\n    }\r\n}", ""]);
 
@@ -88762,7 +88762,7 @@ var _privateOffice = __webpack_require__(714);
 
 var _privateOffice2 = _interopRequireDefault(_privateOffice);
 
-var _IndexActions = __webpack_require__(71);
+var _IndexActions = __webpack_require__(63);
 
 var types = _interopRequireWildcard(_IndexActions);
 
@@ -89304,7 +89304,7 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactBootstrap = __webpack_require__(44);
 
-var _reactRouterDom = __webpack_require__(67);
+var _reactRouterDom = __webpack_require__(68);
 
 __webpack_require__(718);
 
@@ -89510,7 +89510,7 @@ var transform;
 var options = { "hmr": true };
 options.transform = transform;
 // add the styles to the DOM
-var update = __webpack_require__(70)(content, options);
+var update = __webpack_require__(71)(content, options);
 if (content.locals) module.exports = content.locals;
 // Hot Module Replacement
 if (false) {
@@ -89532,7 +89532,7 @@ if (false) {
 /* 719 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(69)(false);
+exports = module.exports = __webpack_require__(70)(false);
 // Module
 exports.push([module.i, "#usernameAlertSignUp {\r\n    display: none;\r\n}\r\n\r\n#usernameSignUp:invalid+#usernameAlertSignUp {\r\n    display: block;\r\n}\r\n\r\n#password1AlertSignUp {\r\n    display: none;\r\n}\r\n\r\n#password1SignUp:invalid+#password1AlertSignUp {\r\n    display: block;\r\n}\r\n\r\n#password2AlertSignUp {\r\n    display: none;\r\n}\r\n\r\n#password2SignUp:invalid+#password2AlertSignUp {\r\n    display: block;\r\n}", ""]);
 
@@ -89579,9 +89579,9 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactBootstrap = __webpack_require__(44);
 
-var _reactRouterDom = __webpack_require__(67);
+var _reactRouterDom = __webpack_require__(68);
 
-var _configureStore = __webpack_require__(83);
+var _configureStore = __webpack_require__(72);
 
 __webpack_require__(721);
 
@@ -89815,7 +89815,7 @@ var transform;
 var options = { "hmr": true };
 options.transform = transform;
 // add the styles to the DOM
-var update = __webpack_require__(70)(content, options);
+var update = __webpack_require__(71)(content, options);
 if (content.locals) module.exports = content.locals;
 // Hot Module Replacement
 if (false) {
@@ -89837,7 +89837,7 @@ if (false) {
 /* 722 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(69)(false);
+exports = module.exports = __webpack_require__(70)(false);
 // Module
 exports.push([module.i, "#usernameAlert {\r\n    display: none;\r\n}\r\n\r\n#username:invalid+#usernameAlert {\r\n    display: block;\r\n}\r\n\r\n#passwordAlert {\r\n    display: none;\r\n}\r\n\r\n#password:invalid+#passwordAlert {\r\n    display: block;\r\n}", ""]);
 
@@ -89993,7 +89993,7 @@ var transform;
 var options = { "hmr": true };
 options.transform = transform;
 // add the styles to the DOM
-var update = __webpack_require__(70)(content, options);
+var update = __webpack_require__(71)(content, options);
 if (content.locals) module.exports = content.locals;
 // Hot Module Replacement
 if (false) {
@@ -90015,7 +90015,7 @@ if (false) {
 /* 725 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(69)(false);
+exports = module.exports = __webpack_require__(70)(false);
 // Module
 exports.push([module.i, ".emptyImage {\r\n    position: absolute;\r\n    top: 50%;\r\n    left: 50%;\r\n    transform: translate(-50%, -50%);\r\n    text-align: center;\r\n    font-size: 150%;\r\n}", ""]);
 
@@ -90058,7 +90058,7 @@ var _CreatingFormActions = __webpack_require__(390);
 
 var actions = _interopRequireWildcard(_CreatingFormActions);
 
-var _IndexActions = __webpack_require__(71);
+var _IndexActions = __webpack_require__(63);
 
 var commonActions = _interopRequireWildcard(_IndexActions);
 
@@ -90352,7 +90352,7 @@ var _SelectsActions = __webpack_require__(391);
 
 var actions = _interopRequireWildcard(_SelectsActions);
 
-var _IndexActions = __webpack_require__(71);
+var _IndexActions = __webpack_require__(63);
 
 var commonActions = _interopRequireWildcard(_IndexActions);
 
@@ -90555,7 +90555,7 @@ var _LocationsTableActions = __webpack_require__(392);
 
 var actions = _interopRequireWildcard(_LocationsTableActions);
 
-var _IndexActions = __webpack_require__(71);
+var _IndexActions = __webpack_require__(63);
 
 var commonActions = _interopRequireWildcard(_IndexActions);
 
@@ -90917,7 +90917,7 @@ var _reactBootstrap = __webpack_require__(44);
 
 __webpack_require__(735);
 
-var _reactRouterDom = __webpack_require__(67);
+var _reactRouterDom = __webpack_require__(68);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -91011,7 +91011,7 @@ var transform;
 var options = { "hmr": true };
 options.transform = transform;
 // add the styles to the DOM
-var update = __webpack_require__(70)(content, options);
+var update = __webpack_require__(71)(content, options);
 if (content.locals) module.exports = content.locals;
 // Hot Module Replacement
 if (false) {
@@ -91033,7 +91033,7 @@ if (false) {
 /* 736 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(69)(false);
+exports = module.exports = __webpack_require__(70)(false);
 // Module
 exports.push([module.i, "h1 {\r\n    text-align: center;\r\n    font-weight: 100;\r\n    letter-spacing: 10px;\r\n    font-size: 80px;\r\n    color: #efefef;\r\n}\r\n\r\nh2 {\r\n    text-align: center;\r\n    font-weight: 350;\r\n    letter-spacing: 15px;\r\n    font-size: 60px;\r\n    color: #cfcfcf;\r\n    padding-bottom: 5%;\r\n}\r\n\r\n@media only screen and (max-width: 830px) {\r\n    h1 {\r\n        color: black;\r\n    }\r\n    h2 {\r\n        color: black;\r\n    }\r\n    video {\r\n        display: none;\r\n    }\r\n}", ""]);
 
@@ -91172,7 +91172,7 @@ var _SameCarsCards = __webpack_require__(739);
 
 var _SameCarsCards2 = _interopRequireDefault(_SameCarsCards);
 
-var _configureStore = __webpack_require__(83);
+var _configureStore = __webpack_require__(72);
 
 var _EmptyNotificator = __webpack_require__(397);
 
@@ -91359,7 +91359,7 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactDom = __webpack_require__(26);
 
-var _reactRouterDom = __webpack_require__(67);
+var _reactRouterDom = __webpack_require__(68);
 
 var _reactBootstrap = __webpack_require__(44);
 
@@ -91779,9 +91779,9 @@ var _queryString2 = _interopRequireDefault(_queryString);
 
 var _dateFns = __webpack_require__(742);
 
-var _configureStore = __webpack_require__(83);
+var _configureStore = __webpack_require__(72);
 
-var _reactRouterDom = __webpack_require__(67);
+var _reactRouterDom = __webpack_require__(68);
 
 var _AuthFormContainer = __webpack_require__(227);
 
@@ -91990,7 +91990,7 @@ exports.default = (0, _reactRouterDom.withRouter)(BookingModal);
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__addBusinessDays_index_js__ = __webpack_require__(743);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "addBusinessDays", function() { return __WEBPACK_IMPORTED_MODULE_0__addBusinessDays_index_js__["a"]; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__addDays_index_js__ = __webpack_require__(81);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__addDays_index_js__ = __webpack_require__(82);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "addDays", function() { return __WEBPACK_IMPORTED_MODULE_1__addDays_index_js__["a"]; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__addHours_index_js__ = __webpack_require__(211);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "addHours", function() { return __WEBPACK_IMPORTED_MODULE_2__addHours_index_js__["a"]; });
@@ -92016,13 +92016,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "closestIndexTo", function() { return __WEBPACK_IMPORTED_MODULE_12__closestIndexTo_index_js__["a"]; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__closestTo_index_js__ = __webpack_require__(746);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "closestTo", function() { return __WEBPACK_IMPORTED_MODULE_13__closestTo_index_js__["a"]; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__compareAsc_index_js__ = __webpack_require__(72);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__compareAsc_index_js__ = __webpack_require__(73);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "compareAsc", function() { return __WEBPACK_IMPORTED_MODULE_14__compareAsc_index_js__["a"]; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__compareDesc_index_js__ = __webpack_require__(747);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "compareDesc", function() { return __WEBPACK_IMPORTED_MODULE_15__compareDesc_index_js__["a"]; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__differenceInBusinessDays_index_js__ = __webpack_require__(748);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "differenceInBusinessDays", function() { return __WEBPACK_IMPORTED_MODULE_16__differenceInBusinessDays_index_js__["a"]; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__differenceInCalendarDays_index_js__ = __webpack_require__(82);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__differenceInCalendarDays_index_js__ = __webpack_require__(83);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "differenceInCalendarDays", function() { return __WEBPACK_IMPORTED_MODULE_17__differenceInCalendarDays_index_js__["a"]; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__differenceInCalendarISOWeekYears_index_js__ = __webpack_require__(403);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "differenceInCalendarISOWeekYears", function() { return __WEBPACK_IMPORTED_MODULE_18__differenceInCalendarISOWeekYears_index_js__["a"]; });
@@ -92902,7 +92902,7 @@ function compareDesc(dirtyDateLeft, dirtyDateRight) {
 
 "use strict";
 /* harmony export (immutable) */ __webpack_exports__["a"] = differenceInBusinessDays;
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__compareAsc_index_js__ = __webpack_require__(72);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__compareAsc_index_js__ = __webpack_require__(73);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__eachDayOfInterval_index_js__ = __webpack_require__(228);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__isValid_index_js__ = __webpack_require__(117);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__isWeekend_index_js__ = __webpack_require__(152);
@@ -93118,7 +93118,7 @@ function differenceInHours(dirtyDateLeft, dirtyDateRight) {
 /* harmony export (immutable) */ __webpack_exports__["a"] = differenceInISOWeekYears;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__toDate_index_js__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__differenceInCalendarISOWeekYears_index_js__ = __webpack_require__(403);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__compareAsc_index_js__ = __webpack_require__(72);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__compareAsc_index_js__ = __webpack_require__(73);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__subISOWeekYears_index_js__ = __webpack_require__(407);
 
 
@@ -93308,7 +93308,7 @@ function differenceInWeeks(dirtyDateLeft, dirtyDateRight) {
 /* harmony export (immutable) */ __webpack_exports__["a"] = differenceInYears;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__toDate_index_js__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__differenceInCalendarYears_index_js__ = __webpack_require__(405);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__compareAsc_index_js__ = __webpack_require__(72);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__compareAsc_index_js__ = __webpack_require__(73);
 
 
 
@@ -93977,7 +93977,7 @@ function endOfYesterday() {
 "use strict";
 /* harmony export (immutable) */ __webpack_exports__["a"] = formatDistanceStrict;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__lib_getTimezoneOffsetInMilliseconds_index_js__ = __webpack_require__(54);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__compareAsc_index_js__ = __webpack_require__(72);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__compareAsc_index_js__ = __webpack_require__(73);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__toDate_index_js__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__differenceInSeconds_index_js__ = __webpack_require__(230);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__lib_cloneObject_index_js__ = __webpack_require__(411);
@@ -94357,7 +94357,7 @@ function formatDistanceToNow(dirtyDate, dirtyOptions) {
 
 "use strict";
 /* harmony export (immutable) */ __webpack_exports__["a"] = formatRelative;
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__differenceInCalendarDays_index_js__ = __webpack_require__(82);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__differenceInCalendarDays_index_js__ = __webpack_require__(83);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__format_index_js__ = __webpack_require__(208);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__locale_en_US_index_js__ = __webpack_require__(118);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__subMilliseconds_index_js__ = __webpack_require__(119);
@@ -94504,7 +94504,7 @@ function fromUnixTime(dirtyUnixTime) {
 /* harmony export (immutable) */ __webpack_exports__["a"] = getDayOfYear;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__toDate_index_js__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__startOfYear_index_js__ = __webpack_require__(150);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__differenceInCalendarDays_index_js__ = __webpack_require__(82);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__differenceInCalendarDays_index_js__ = __webpack_require__(83);
 
 
 
@@ -95736,7 +95736,7 @@ function isToday(dirtyDate) {
 
 "use strict";
 /* harmony export (immutable) */ __webpack_exports__["a"] = isTomorrow;
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__addDays_index_js__ = __webpack_require__(81);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__addDays_index_js__ = __webpack_require__(82);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__isSameDay_index_js__ = __webpack_require__(125);
 
 
@@ -96365,7 +96365,7 @@ function setDate(dirtyDate, dirtyDayOfMonth) {
 
 "use strict";
 /* harmony export (immutable) */ __webpack_exports__["a"] = setDay;
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__addDays_index_js__ = __webpack_require__(81);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__addDays_index_js__ = __webpack_require__(82);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__toDate_index_js__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__lib_toInteger_index_js__ = __webpack_require__(7);
 
@@ -96435,7 +96435,7 @@ function setDay(dirtyDate, dirtyDay, dirtyOptions) {
 /* harmony export (immutable) */ __webpack_exports__["a"] = setISODay;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__lib_toInteger_index_js__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__toDate_index_js__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__addDays_index_js__ = __webpack_require__(81);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__addDays_index_js__ = __webpack_require__(82);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__getISODay_index_js__ = __webpack_require__(413);
 
 
@@ -96693,7 +96693,7 @@ function setWeek(dirtyDate, dirtyWeek, dirtyOptions) {
 
 "use strict";
 /* harmony export (immutable) */ __webpack_exports__["a"] = setWeekYear;
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__differenceInCalendarDays_index_js__ = __webpack_require__(82);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__differenceInCalendarDays_index_js__ = __webpack_require__(83);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__startOfWeekYear_index_js__ = __webpack_require__(233);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__toDate_index_js__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__lib_toInteger_index_js__ = __webpack_require__(7);
@@ -97052,7 +97052,7 @@ var transform;
 var options = { "hmr": true };
 options.transform = transform;
 // add the styles to the DOM
-var update = __webpack_require__(70)(content, options);
+var update = __webpack_require__(71)(content, options);
 if (content.locals) module.exports = content.locals;
 // Hot Module Replacement
 if (false) {
@@ -97074,7 +97074,7 @@ if (false) {
 /* 828 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(69)(false);
+exports = module.exports = __webpack_require__(70)(false);
 // Module
 exports.push([module.i, ".pickedDates .react-datepicker__day:not(.react-datepicker__day--disabled) {\r\n    background-color: rgb(33, 107, 165);\r\n    border-radius: 25%;\r\n}\r\n\r\n.pickedDates .react-datepicker__day:not(.react-datepicker__day--disabled):nth-child(n) {\r\n    color: white;\r\n}\r\n\r\n.okImage {\r\n    position: absolute;\r\n    top: 50%;\r\n    left: 50%;\r\n    transform: translate(-50%, -50%);\r\n    z-index: 500;\r\n    animation: 0.4s ease-out 0s 1 slideInFromLeft;\r\n}\r\n\r\n.imageBackground {\r\n    position: absolute;\r\n    top: 0%;\r\n    left: 0%;\r\n    width: 100%;\r\n    height: 100%;\r\n    background-color: white;\r\n    z-index: 500;\r\n    animation: smooth_opacity 0.4s;\r\n}\r\n\r\n@keyframes slideInFromLeft {\r\n    0% {\r\n      transform: translate(-50%, -50%) translateX(-100%);\r\n    }\r\n    100% {\r\n      transform: translate(-50%, -50%) translateX(0);\r\n    }\r\n}\r\n\r\n@keyframes smooth_opacity {\r\n    0% {opacity: 0;}\r\n    100% {opacity: 1;}\r\n}", ""]);
 
@@ -97098,7 +97098,7 @@ var transform;
 var options = { "hmr": true };
 options.transform = transform;
 // add the styles to the DOM
-var update = __webpack_require__(70)(content, options);
+var update = __webpack_require__(71)(content, options);
 if (content.locals) module.exports = content.locals;
 // Hot Module Replacement
 if (false) {
@@ -97120,7 +97120,7 @@ if (false) {
 /* 830 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(69)(false);
+exports = module.exports = __webpack_require__(70)(false);
 // Module
 exports.push([module.i, ".sameCarsHeader:hover {\r\n    background-color: rgb(226, 230, 234);\r\n    cursor: pointer;\r\n    transition: 0.1s linear;\r\n}\r\n\r\n.sameCarsHeader:active {\r\n    background-color: rgb(218, 224, 229);\r\n}", ""]);
 
@@ -97159,7 +97159,7 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactRedux = __webpack_require__(45);
 
-var _IndexActions = __webpack_require__(71);
+var _IndexActions = __webpack_require__(63);
 
 var actions = _interopRequireWildcard(_IndexActions);
 
@@ -97459,7 +97459,7 @@ var has = __webpack_require__(39);
 var DESCRIPTORS = __webpack_require__(21);
 var $export = __webpack_require__(1);
 var redefine = __webpack_require__(33);
-var META = __webpack_require__(74).KEY;
+var META = __webpack_require__(75).KEY;
 var $fails = __webpack_require__(12);
 var shared = __webpack_require__(127);
 var setToStringTag = __webpack_require__(102);
@@ -97607,7 +97607,7 @@ if (!USE_NATIVE) {
   __webpack_require__(129).f = $propertyIsEnumerable;
   $GOPS.f = $getOwnPropertySymbols;
 
-  if (DESCRIPTORS && !__webpack_require__(73)) {
+  if (DESCRIPTORS && !__webpack_require__(74)) {
     redefine(ObjectProto, 'propertyIsEnumerable', $propertyIsEnumerable, true);
   }
 
@@ -97816,7 +97816,7 @@ __webpack_require__(57)('getOwnPropertyNames', function () {
 
 // 19.1.2.5 Object.freeze(O)
 var isObject = __webpack_require__(14);
-var meta = __webpack_require__(74).onFreeze;
+var meta = __webpack_require__(75).onFreeze;
 
 __webpack_require__(57)('freeze', function ($freeze) {
   return function freeze(it) {
@@ -97831,7 +97831,7 @@ __webpack_require__(57)('freeze', function ($freeze) {
 
 // 19.1.2.17 Object.seal(O)
 var isObject = __webpack_require__(14);
-var meta = __webpack_require__(74).onFreeze;
+var meta = __webpack_require__(75).onFreeze;
 
 __webpack_require__(57)('seal', function ($seal) {
   return function seal(it) {
@@ -97846,7 +97846,7 @@ __webpack_require__(57)('seal', function ($seal) {
 
 // 19.1.2.15 Object.preventExtensions(O)
 var isObject = __webpack_require__(14);
-var meta = __webpack_require__(74).onFreeze;
+var meta = __webpack_require__(75).onFreeze;
 
 __webpack_require__(57)('preventExtensions', function ($preventExtensions) {
   return function preventExtensions(it) {
@@ -99480,7 +99480,7 @@ var $export = __webpack_require__(1);
 
 $export($export.P, 'Array', { copyWithin: __webpack_require__(445) });
 
-__webpack_require__(75)('copyWithin');
+__webpack_require__(76)('copyWithin');
 
 
 /***/ }),
@@ -99492,7 +99492,7 @@ var $export = __webpack_require__(1);
 
 $export($export.P, 'Array', { fill: __webpack_require__(254) });
 
-__webpack_require__(75)('fill');
+__webpack_require__(76)('fill');
 
 
 /***/ }),
@@ -99513,7 +99513,7 @@ $export($export.P + $export.F * forced, 'Array', {
     return $find(this, callbackfn, arguments.length > 1 ? arguments[1] : undefined);
   }
 });
-__webpack_require__(75)(KEY);
+__webpack_require__(76)(KEY);
 
 
 /***/ }),
@@ -99534,7 +99534,7 @@ $export($export.P + $export.F * forced, 'Array', {
     return $find(this, callbackfn, arguments.length > 1 ? arguments[1] : undefined);
   }
 });
-__webpack_require__(75)(KEY);
+__webpack_require__(76)(KEY);
 
 
 /***/ }),
@@ -99982,7 +99982,7 @@ __webpack_require__(161)('split', 2, function (defined, SPLIT, $split, maybeCall
 
 "use strict";
 
-var LIBRARY = __webpack_require__(73);
+var LIBRARY = __webpack_require__(74);
 var global = __webpack_require__(11);
 var ctx = __webpack_require__(48);
 var classof = __webpack_require__(103);
@@ -100357,7 +100357,7 @@ $export($export.G + $export.W + $export.F * !__webpack_require__(164).ABV, {
 /* 948 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(63)('Int8', 1, function (init) {
+__webpack_require__(64)('Int8', 1, function (init) {
   return function Int8Array(data, byteOffset, length) {
     return init(this, data, byteOffset, length);
   };
@@ -100368,7 +100368,7 @@ __webpack_require__(63)('Int8', 1, function (init) {
 /* 949 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(63)('Uint8', 1, function (init) {
+__webpack_require__(64)('Uint8', 1, function (init) {
   return function Uint8Array(data, byteOffset, length) {
     return init(this, data, byteOffset, length);
   };
@@ -100379,7 +100379,7 @@ __webpack_require__(63)('Uint8', 1, function (init) {
 /* 950 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(63)('Uint8', 1, function (init) {
+__webpack_require__(64)('Uint8', 1, function (init) {
   return function Uint8ClampedArray(data, byteOffset, length) {
     return init(this, data, byteOffset, length);
   };
@@ -100390,7 +100390,7 @@ __webpack_require__(63)('Uint8', 1, function (init) {
 /* 951 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(63)('Int16', 2, function (init) {
+__webpack_require__(64)('Int16', 2, function (init) {
   return function Int16Array(data, byteOffset, length) {
     return init(this, data, byteOffset, length);
   };
@@ -100401,7 +100401,7 @@ __webpack_require__(63)('Int16', 2, function (init) {
 /* 952 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(63)('Uint16', 2, function (init) {
+__webpack_require__(64)('Uint16', 2, function (init) {
   return function Uint16Array(data, byteOffset, length) {
     return init(this, data, byteOffset, length);
   };
@@ -100412,7 +100412,7 @@ __webpack_require__(63)('Uint16', 2, function (init) {
 /* 953 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(63)('Int32', 4, function (init) {
+__webpack_require__(64)('Int32', 4, function (init) {
   return function Int32Array(data, byteOffset, length) {
     return init(this, data, byteOffset, length);
   };
@@ -100423,7 +100423,7 @@ __webpack_require__(63)('Int32', 4, function (init) {
 /* 954 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(63)('Uint32', 4, function (init) {
+__webpack_require__(64)('Uint32', 4, function (init) {
   return function Uint32Array(data, byteOffset, length) {
     return init(this, data, byteOffset, length);
   };
@@ -100434,7 +100434,7 @@ __webpack_require__(63)('Uint32', 4, function (init) {
 /* 955 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(63)('Float32', 4, function (init) {
+__webpack_require__(64)('Float32', 4, function (init) {
   return function Float32Array(data, byteOffset, length) {
     return init(this, data, byteOffset, length);
   };
@@ -100445,7 +100445,7 @@ __webpack_require__(63)('Float32', 4, function (init) {
 /* 956 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(63)('Float64', 8, function (init) {
+__webpack_require__(64)('Float64', 8, function (init) {
   return function Float64Array(data, byteOffset, length) {
     return init(this, data, byteOffset, length);
   };
@@ -100804,7 +100804,7 @@ $export($export.P, 'Array', {
   }
 });
 
-__webpack_require__(75)('includes');
+__webpack_require__(76)('includes');
 
 
 /***/ }),
@@ -100833,7 +100833,7 @@ $export($export.P, 'Array', {
   }
 });
 
-__webpack_require__(75)('flatMap');
+__webpack_require__(76)('flatMap');
 
 
 /***/ }),
@@ -100861,7 +100861,7 @@ $export($export.P, 'Array', {
   }
 });
 
-__webpack_require__(75)('flatten');
+__webpack_require__(76)('flatten');
 
 
 /***/ }),
@@ -101498,7 +101498,7 @@ $export($export.S, 'Promise', { 'try': function (callbackfn) {
 /* 1016 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var metadata = __webpack_require__(64);
+var metadata = __webpack_require__(65);
 var anObject = __webpack_require__(8);
 var toMetaKey = metadata.key;
 var ordinaryDefineOwnMetadata = metadata.set;
@@ -101512,7 +101512,7 @@ metadata.exp({ defineMetadata: function defineMetadata(metadataKey, metadataValu
 /* 1017 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var metadata = __webpack_require__(64);
+var metadata = __webpack_require__(65);
 var anObject = __webpack_require__(8);
 var toMetaKey = metadata.key;
 var getOrCreateMetadataMap = metadata.map;
@@ -101533,7 +101533,7 @@ metadata.exp({ deleteMetadata: function deleteMetadata(metadataKey, target /* , 
 /* 1018 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var metadata = __webpack_require__(64);
+var metadata = __webpack_require__(65);
 var anObject = __webpack_require__(8);
 var getPrototypeOf = __webpack_require__(42);
 var ordinaryHasOwnMetadata = metadata.has;
@@ -101558,7 +101558,7 @@ metadata.exp({ getMetadata: function getMetadata(metadataKey, target /* , target
 
 var Set = __webpack_require__(453);
 var from = __webpack_require__(462);
-var metadata = __webpack_require__(64);
+var metadata = __webpack_require__(65);
 var anObject = __webpack_require__(8);
 var getPrototypeOf = __webpack_require__(42);
 var ordinaryOwnMetadataKeys = metadata.keys;
@@ -101581,7 +101581,7 @@ metadata.exp({ getMetadataKeys: function getMetadataKeys(target /* , targetKey *
 /* 1020 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var metadata = __webpack_require__(64);
+var metadata = __webpack_require__(65);
 var anObject = __webpack_require__(8);
 var ordinaryGetOwnMetadata = metadata.get;
 var toMetaKey = metadata.key;
@@ -101596,7 +101596,7 @@ metadata.exp({ getOwnMetadata: function getOwnMetadata(metadataKey, target /* , 
 /* 1021 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var metadata = __webpack_require__(64);
+var metadata = __webpack_require__(65);
 var anObject = __webpack_require__(8);
 var ordinaryOwnMetadataKeys = metadata.keys;
 var toMetaKey = metadata.key;
@@ -101610,7 +101610,7 @@ metadata.exp({ getOwnMetadataKeys: function getOwnMetadataKeys(target /* , targe
 /* 1022 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var metadata = __webpack_require__(64);
+var metadata = __webpack_require__(65);
 var anObject = __webpack_require__(8);
 var getPrototypeOf = __webpack_require__(42);
 var ordinaryHasOwnMetadata = metadata.has;
@@ -101632,7 +101632,7 @@ metadata.exp({ hasMetadata: function hasMetadata(metadataKey, target /* , target
 /* 1023 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var metadata = __webpack_require__(64);
+var metadata = __webpack_require__(65);
 var anObject = __webpack_require__(8);
 var ordinaryHasOwnMetadata = metadata.has;
 var toMetaKey = metadata.key;
@@ -101647,7 +101647,7 @@ metadata.exp({ hasOwnMetadata: function hasOwnMetadata(metadataKey, target /* , 
 /* 1024 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var $metadata = __webpack_require__(64);
+var $metadata = __webpack_require__(65);
 var anObject = __webpack_require__(8);
 var aFunction = __webpack_require__(27);
 var toMetaKey = $metadata.key;
