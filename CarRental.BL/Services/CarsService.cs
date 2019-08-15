@@ -16,7 +16,7 @@ namespace CarRental.BL.Services
             _context = new CarRentalContext();
         }
 
-        public static Func<CarDTO, IComparable> GetPropertyToSort(string orderbyPropertyName)
+        public static Func<CarDTO, IComparable> ParsePropertyToSort(string orderbyPropertyName)
         {
             switch (orderbyPropertyName.ToLower())
             {
@@ -73,7 +73,7 @@ namespace CarRental.BL.Services
                          from dto in
                             (from dto in dtos
                              group dto by dto.RentalCompanyName into dtos2
-                             select dtos2.First().SetCount(dtos2.Count()))
+                             select ((CarDTOBuilder)dtos2.First()).SetCount(dtos2.Count()).ToDTO())
                          group dto by dtos;
             return result;
         }

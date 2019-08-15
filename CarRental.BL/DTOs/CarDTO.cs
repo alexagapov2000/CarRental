@@ -12,11 +12,29 @@ namespace CarRental.BL.DTOs
         public int Seats { get; set; }
         public int FuelConsumption { get; set; }
         public int Count { get; set; }
+    }
 
-        public CarDTO SetCount(int count)
+    public class CarDTOBuilder
+    {
+        private CarDTO resultObject { get; set; }
+        public CarDTOBuilder SetCount(int count)
         {
-            this.Count = count;
+            resultObject.Count = count;
             return this;
+        }
+
+        public static implicit operator CarDTO(CarDTOBuilder builder)
+        {
+            return builder.resultObject;
+        }
+
+        public CarDTO ToDTO()
+        {
+            return (CarDTO)this;
+        }
+        public static explicit operator CarDTOBuilder(CarDTO dto)
+        {
+            return new CarDTOBuilder { resultObject = dto };
         }
     }
 }

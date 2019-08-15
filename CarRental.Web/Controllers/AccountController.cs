@@ -6,8 +6,8 @@ using System.Security.Authentication;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using CarRental.BL;
-using CarRental.BL.ViewModels;
 using CarRental.DAL.Models.Auth;
+using CarRental.Web.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
@@ -21,23 +21,23 @@ namespace CarRental.Web.Controllers
     public class AccountController : ControllerBase
     {
         [HttpPost("token")]
-        public async Task<object> Token(Person person)
+        public async Task<object> Token([FromBody]Person person)
         {
             var token = new AccountService().Token(person);
             return token;
         }
 
         [HttpPost("decode")]
-        public async Task<string> DecodeToken([FromHeader] string jwt)
+        public async Task<string> DecodeToken([FromHeader]string jwt)
         {
             var result = new AccountService().DecodeToken(jwt);
             return result;
         }
 
         [HttpPost("register")]
-        public async Task<Person> RegisterUser(RegisterViewModel registerViewModel)
+        public async Task<Person> RegisterUser([FromBody]RegisterViewModel registerViewModel)
         {
-            var person = await new AccountService().RegisterUser(registerViewModel);
+            var person = await new AccountService().RegisterUser(registerViewModel.Username, registerViewModel.Password);
             return person;
         }
     }

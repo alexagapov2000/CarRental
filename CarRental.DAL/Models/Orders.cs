@@ -29,12 +29,5 @@ namespace CarRental.DAL.Models
                 };
             }
         }
-
-        public static Orders SetCarId(int carId)
-        {
-            var result = MinValue;
-            result.CarId = carId;
-            return result;
-        }
     }
 }

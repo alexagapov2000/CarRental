@@ -15,31 +15,5 @@ namespace EmptyApp.Controllers
         {
             return View();
         }
-
-        public IActionResult Errors(string errCode)
-        {
-            switch(errCode)
-            {
-                case "401":
-                case "403":
-                case "404":
-                case "500":
-                case "502":
-                case "503":
-                case "504":
-                    return View($"~/Views/Shared/Errors/{errCode}.cshtml");
-                default: return Error();
-            }
-        }
-
-        public IActionResult Errors(int errCode)
-        {
-            return Errors(errCode.ToString());
-        }
-
-        public IActionResult Error()
-        {
-            return View("~/Views/Shared/Errors/General.cshtml");
-        }
     }
 }

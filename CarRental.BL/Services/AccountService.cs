@@ -1,5 +1,4 @@
-﻿using CarRental.BL.ViewModels;
-using CarRental.CustomExceptions;
+﻿using CarRental.CustomExceptions;
 using CarRental.DAL;
 using CarRental.DAL.Models;
 using CarRental.DAL.Models.Auth;
@@ -93,14 +92,14 @@ namespace CarRental.BL
                 .Value;
         }
 
-        public async Task<Person> RegisterUser(RegisterViewModel registerViewModel)
+        public async Task<Person> RegisterUser(string username, string password)
         {
-            if (_context.Persons.Any(p => p.Username == registerViewModel.Username))
+            if (_context.Persons.Any(p => p.Username == username))
                 throw new SameDataException("This username is busy!");
             var person = new Person
             {
-                Username = registerViewModel.Username,
-                Password = registerViewModel.Password,
+                Username = username,
+                Password = password,
                 Role = "user",
             };
             await _context.Persons.AddAsync(person);

@@ -1,6 +1,7 @@
 ﻿using CarRental.BL;
 using CarRental.BL.DTOs;
 using CarRental.DAL.Models;
+using CarRental.Web.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -39,7 +40,7 @@ namespace CarRental.Web.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult<Cities>> DeleteCity(int id)
         {
-            var city = await new CitiesService().DeleteCity(id, this);
+            var city = await new CitiesService().DeleteCity(id);
             return city;
         }
 
@@ -50,10 +51,10 @@ namespace CarRental.Web.Controllers
             return cities;
         }
 
-        [HttpGet("withCountries")]
-        public async Task<IEnumerable<CityWithCountryDTO>> GetCitiesWithCountries([FromQuery]string substring = null)
+        [HttpPost("withCountries")]
+        public async Task<IEnumerable<CityWithCountryDTO>> GetCitiesWithCountries([FromBody]LocationsSubstringsViewModel locations = null)
         {
-            var result = new CitiesService().GetCitiesWithCountries(substring);
+            var result = new CitiesService().GetCitiesWithCountries(locations.LocationsSubstringsSplitted);
             return result;
         }
     }

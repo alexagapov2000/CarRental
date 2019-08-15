@@ -44,7 +44,6 @@ namespace CarRental.Web
             services.AddMvc();
             services.AddSpaStaticFiles();
             services.AddDbContext<CarRentalContext>();
-            services.AddBusiness();
         }
 
         public void Configure(IApplicationBuilder app)

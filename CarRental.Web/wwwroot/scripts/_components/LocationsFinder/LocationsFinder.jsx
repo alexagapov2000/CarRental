@@ -39,9 +39,8 @@ class LocationsFinder extends React.Component {
         </DatePicker>;
     }
 
-    renderLocations = substring => {
-        let request = '/api/cities/withCountries';
-        Axios.get(substring ? `${request}?substring=${substring}` : `${request}`)
+    renderLocations = locationsSubstrings => {
+        Axios.post('/api/cities/withCountries', { locationsSubstrings })
             .then(response => {
                 let cities = response.data.map(city => <ListGroup.Item
                     onClick={async e => {

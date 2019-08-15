@@ -64263,9 +64263,8 @@ var LocationsFinder = function (_React$Component) {
                 dateFormat: 'MMMM d, yyyy h:mm aa' });
         };
 
-        _this.renderLocations = function (substring) {
-            var request = '/api/cities/withCountries';
-            _axios2.default.get(substring ? request + '?substring=' + substring : '' + request).then(function (response) {
+        _this.renderLocations = function (locationsSubstrings) {
+            _axios2.default.post('/api/cities/withCountries', { locationsSubstrings: locationsSubstrings }).then(function (response) {
                 var cities = response.data.map(function (city) {
                     return _react2.default.createElement(
                         _reactBootstrap.ListGroup.Item,

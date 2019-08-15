@@ -1,4 +1,5 @@
 ﻿using CarRental.BL.DTOs;
+using CarRental.CustomExceptions;
 using CarRental.DAL.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -44,14 +45,12 @@ namespace CarRental.BL
             await _context.SaveChangesAsync();
         }
 
-        public async Task<ActionResult<Cities>> DeleteCity(int id, ControllerBase controller)
+        public async Task<ActionResult<Cities>> DeleteCity(int id)
         {
             var city = await _context.Cities.FindAsync(id);
 
             if (city == null)
-            {
-                return controller.NotFound();
-            }
+                throw new NotFoundException($"There is no city with id: {id}");
 
             _context.Cities.Remove(city);
             await _context.SaveChangesAsync();
@@ -61,32 +60,16 @@ namespace CarRental.BL
 
         public async Task<IEnumerable<Cities>> DeleteCities(int[] IDs)
         {
-            //map input data for intersection
-            var pseudoCities = IDs.Select(id => new Cities { Id = id }).ToList();
-
-            var cities = _context.Cities.Intersect(pseudoCities, new CitiesEqualityComparer());
-            _context.Cities.RemoveRange(pseudoCities);
+            var citiesToDelete = from id in IDs
+                                 join city in _context.Cities on id equals city.Id
+                                 select city;
+            _context.Cities.RemoveRange(citiesToDelete);
             await _context.SaveChangesAsync();
-            return pseudoCities;
-        }
-        class CitiesEqualityComparer : IEqualityComparer<Cities>
-        {
-            public bool Equals(Cities x, Cities y)
-            {
-                return x.Id == y.Id;
-            }
-
-            public int GetHashCode(Cities city)
-            {
-                return city.Id;
-            }
+            return citiesToDelete;
         }
 
-        public IEnumerable<CityWithCountryDTO> GetCitiesWithCountries(string locationsSubstrings)
+        public IEnumerable<CityWithCountryDTO> GetCitiesWithCountries(string[] locations)
         {
-            locationsSubstrings = locationsSubstrings == null ? "" : locationsSubstrings;
-            var locations = Regex.Split(locationsSubstrings, "[,;:./\\ ]+", RegexOptions.IgnoreCase)
-                .Where(location => location != "").ToList();
             var DTOs = _context.Cities
                 .Join(_context.Countries,
                     city => city.CountryId,

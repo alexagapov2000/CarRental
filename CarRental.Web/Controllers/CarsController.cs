@@ -24,7 +24,7 @@ namespace CarRental.Web.Controllers
             var cars = new CarsService().GetCarsByCity(
                 cityAndBookedRange.CityId, cityAndBookedRange.BookedFrom, cityAndBookedRange.BookedTo,
                 pageNumber, pageSize,
-                CarsService.GetPropertyToSort(orderbyPropertyName), isDescendingSort);
+                CarsService.ParsePropertyToSort(orderbyPropertyName), isDescendingSort);
             return cars;
         }
 
